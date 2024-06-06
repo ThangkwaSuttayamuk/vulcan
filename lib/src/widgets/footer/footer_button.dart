@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_application_1/src/pages/cart/cart.dart';
 import 'package:flutter_application_1/src/pages/favorite/favorite.dart';
+import 'package:flutter_application_1/src/pages/home/home_page.dart';
+import 'package:flutter_application_1/src/pages/setting/setting_page.dart';
 
 class FooterButton extends StatefulWidget {
   final String name;
@@ -27,12 +29,10 @@ class _FooterButtonState extends State<FooterButton> {
       color: Colors.white,
       child: InkWell(
         onTap: () {
-          name == "favorite"
-              ? Navigator.push(
-                  context,
-                  MaterialPageRoute<void>(
-                      builder: (BuildContext context) => const FavoritePage()))
-              : Null;
+          Navigator.push(
+              context,
+              MaterialPageRoute<void>(
+                  builder: (BuildContext context) => getPageByname(name)));
         },
         borderRadius: BorderRadius.circular(40),
         child: SizedBox(
@@ -50,5 +50,13 @@ class _FooterButtonState extends State<FooterButton> {
             )),
       ),
     );
+  }
+
+  getPageByname(String name) {
+    return name == 'cart'
+        ? CartPage()
+        : name == 'setting'
+            ? SettingPage()
+            : HomePage();
   }
 }

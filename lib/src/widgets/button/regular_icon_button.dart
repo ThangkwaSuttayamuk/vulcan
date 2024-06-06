@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_application_1/src/pages/cart/cart.dart';
 import 'package:flutter_application_1/src/pages/favorite/favorite.dart';
+import 'package:flutter_application_1/src/pages/home/home_page.dart';
 
 class RegularIconButton extends StatefulWidget {
   final String name;
@@ -46,6 +47,6 @@ class _RegularIconButtonState extends State<RegularIconButton> {
         ? CartPage()
         : name == 'favorite'
             ? FavoritePage()
-            : null;
+            : HomePage();
   }
 }
