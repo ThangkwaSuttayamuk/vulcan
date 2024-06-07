@@ -1,0 +1,136 @@
+[
+    {
+        "id": "1",
+        "name": "Hawaiian Pizza",
+        "description": "sjdoPAOWJKdoakwokdpoakwdpokapokdpoakwpokdpoawkdpoakpwokdpoawkpodkpaowkdpo",
+        "ingredient": [
+            "pieapple",
+            "tomato",
+            "cheese",
+            "basil"
+        ],
+        "price": "250",
+        "image": "hawaiian_pizza"
+    },
+    {
+        "id": "2",
+        "name": "Peperoni Pizza",
+        "description": "sjdoPAOWJKdoakwokdpoakwdpokapokdpoakwpokdpoawkdpoakpwokdpoawkpodkpaowkdpo",
+        "ingredient": [
+            "pepperoni",
+            "tomato",
+            "cheese",
+            "basil"
+        ],
+        "price": "278",
+        "image": "peperoni_pizza"
+    },
+    {
+        "id": "3",
+        "name": "Cheese Burger",
+        "description": "sjdoPAOWJKdoakwokdpoakwdpokapokdpoakwpokdpoawkdpoakpwokdpoawkpodkpaowkdpo",
+        "ingredient": [
+            "bread",
+            "tometo",
+            "cheese",
+            "lettuce",
+            "onion",
+            "grilled beef"
+        ],
+        "price": "80",
+        "image": "cheese_burger"
+    },
+    {
+        "id": "4",
+        "name": "Bacon Burger",
+        "description": "sjdoPAOWJKdoakwokdpoakwdpokapokdpoakwpokdpoawkdpoakpwokdpoawkpodkpaowkdpo",
+        "ingredient": [
+            "bread",
+            "tometo",
+            "cheese",
+            "lettuce",
+            "onion",
+            "grilled beef"
+        ],
+        "price": "90",
+        "image": "bacon_burger"
+    },
+    {
+        "id": "5",
+        "name": "Caesar Salad",
+        "description": "sjdoPAOWJKdoakwokdpoakwdpokapokdpoakwpokdpoawkdpoakpwokdpoawkpodkpaowkdpo",
+        "ingredient": [
+            "bread",
+            "bacon",
+            "parmesan cheese",
+            "lettuce",
+            "onion"
+        ],
+        "price": "120",
+        "image": "ceasar_salad"
+    },
+    {
+        "id": "6",
+        "name": "Vegan Salad",
+        "description": "sjdoPAOWJKdoakwokdpoakwdpokapokdpoakwpokdpoawkdpoakpwokdpoawkpodkpaowkdpo",
+        "ingredient": [
+            "nut",
+            "tomato",
+            "fruit",
+            "lettuce",
+            "onion"
+        ],
+        "price": "100",
+        "image": "vegan_salad"
+    },
+    {
+        "id": "7",
+        "name": "Banana Bread",
+        "description": "sjdoPAOWJKdoakwokdpoakwdpokapokdpoakwpokdpoawkdpoakpwokdpoawkpodkpaowkdpo",
+        "ingredient": [
+            "banana",
+            "flour",
+            "butter",
+            "sugar"
+        ],
+        "price": "40",
+        "image": "banana_bread"
+    },
+    {
+        "id": "8",
+        "name": "Custard Bread",
+        "description": "sjdoPAOWJKdoakwokdpoakwdpokapokdpoakwpokdpoawkdpoakpwokdpoawkpodkpaowkdpo",
+        "ingredient": [
+            "egg",
+            "flour",
+            "butter",
+            "sugar"
+        ],
+        "price": "30",
+        "image": "custard_bread"
+    },
+    {
+        "id": "9",
+        "name": "Fried Chicken",
+        "description": "sjdoPAOWJKdoakwokdpoakwdpokapokdpoakwpokdpoawkdpoakpwokdpoawkpodkpaowkdpo",
+        "ingredient": [
+            "chicken",
+            "flour",
+            "vegetable oil"
+        ],
+        "price": "30",
+        "image": "fried_chicken"
+    },
+    {
+        "id": "10",
+        "name": "Korean Fried Chicken",
+        "description": "sjdoPAOWJKdoakwokdpoakwdpokapokdpoakwpokdpoawkdpoakpwokdpoawkpodkpaowkdpo",
+        "ingredient": [
+            "chicken",
+            "flour",
+            "vegetable oil"
+        ],
+        "price": "80",
+        "image": "korean_fried_chicken"
+    }
+]

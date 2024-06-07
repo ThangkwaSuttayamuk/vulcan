@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_application_1/src/pages/favorite/favorite.dart';
-import 'package:flutter_application_1/src/pages/home/home_page.dart';
-import 'package:flutter_application_1/src/widgets/card/setting_group.dart';
+import 'package:flutter_application_1/src/presentation/pages/favorite.dart';
+import 'package:flutter_application_1/src/presentation/pages/home_page.dart';
+import 'package:flutter_application_1/src/presentation/widgets/card/setting_group.dart';
 
 class SettingPage extends StatefulWidget {
   const SettingPage({super.key});
@@ -40,7 +40,7 @@ class _SettingPageState extends State<SettingPage> {
                     side: BorderSide(color: Colors.grey),
                     borderRadius: BorderRadius.circular(10)),
                 onPressed: () {
-                  
+
                 },
                 child: Text('Log Out'),
               ),

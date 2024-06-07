@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_application_1/src/pages/cart/cart.dart';
-import 'package:flutter_application_1/src/pages/detail/food_detail.dart';
-import 'package:flutter_application_1/src/widgets/button/filter_button.dart';
-import 'package:flutter_application_1/src/widgets/button/regular_icon_button.dart';
-import 'package:flutter_application_1/src/widgets/card/food_card.dart';
-import 'package:flutter_application_1/src/widgets/footer/footer.dart';
+import 'package:flutter_application_1/src/presentation/pages/cart.dart';
+import 'package:flutter_application_1/src/presentation/pages/food_detail.dart';
+import 'package:flutter_application_1/src/presentation/widgets/button/filter_button.dart';
+import 'package:flutter_application_1/src/presentation/widgets/button/regular_icon_button.dart';
+import 'package:flutter_application_1/src/presentation/widgets/card/food_card.dart';
+import 'package:flutter_application_1/src/presentation/widgets/footer/footer.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});

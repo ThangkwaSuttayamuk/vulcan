@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
-import 'package:flutter_application_1/src/widgets/card/text_card.dart';
+import 'package:flutter_application_1/src/presentation/widgets/card/text_card.dart';
 
 class FoodDetail extends StatefulWidget {
   const FoodDetail({super.key});

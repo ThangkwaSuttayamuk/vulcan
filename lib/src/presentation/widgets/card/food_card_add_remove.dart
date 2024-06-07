@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_application_1/src/pages/detail/food_detail.dart';
+import 'package:flutter_application_1/src/presentation/pages/food_detail.dart';
 
 class FoodCardAddRemove extends StatefulWidget {
   const FoodCardAddRemove({super.key});

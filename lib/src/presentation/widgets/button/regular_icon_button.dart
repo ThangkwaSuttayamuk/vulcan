@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_application_1/src/pages/cart/cart.dart';
-import 'package:flutter_application_1/src/pages/favorite/favorite.dart';
-import 'package:flutter_application_1/src/pages/home/home_page.dart';
+import 'package:flutter_application_1/src/presentation/pages/cart.dart';
+import 'package:flutter_application_1/src/presentation/pages/favorite.dart';
+import 'package:flutter_application_1/src/presentation/pages/home_page.dart';
 
 class RegularIconButton extends StatefulWidget {
   final String name;
