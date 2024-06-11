@@ -1,0 +1,99 @@
+[
+    {
+        "id": "1",
+        "name": "Hawaiian Pizza",
+        "description": "aaaaaaaaa",
+        "ingredient": [
+            "pieapple",
+            "tomato",
+            "cheese",
+            "basil"
+        ],
+        "price": "250",
+        "image": "hawaiian_pizzsa"
+    },
+    {
+        "id": "2",
+        "name": "Peperoni Pizza",
+        "description": "bbbbbbb",
+        "ingredient": [
+            "pepperoni",
+            "tomato",
+            "cheese",
+            "basil"
+        ],
+        "price": "278",
+        "image": "peperoni_pizza"
+    },
+    {
+        "id": "3",
+        "name": "Cheese Burger",
+        "description": "cccccccc",
+        "ingredient": [
+            "bread",
+            "tometo",
+            "cheese",
+            "lettuce",
+            "onion",
+            "grilled beef"
+        ],
+        "price": "80",
+        "image": "cheese_burger"
+    },
+    {
+        "id": "4",
+        "name": "Bacon Burger",
+        "description": "dddddd",
+        "ingredient": [
+            "bread",
+            "tometo",
+            "cheese",
+            "lettuce",
+            "onion",
+            "grilled beef"
+        ],
+        "price": "90",
+        "image": "bacon_burger"
+    },
+    {
+        "id": "5",
+        "name": "Caesar Salad",
+        "description": "eeeeeeeeeeeee",
+        "ingredient": [
+            "bread",
+            "bacon",
+            "parmesan cheese",
+            "lettuce",
+            "onion"
+        ],
+        "price": "120",
+        "image": "ceasar_salad"
+    },
+    {
+        "id": "6",
+        "name": "Vegan Salad",
+        "description": "ffffffff",
+        "ingredient": [
+            "nut",
+            "tomato",
+            "fruit",
+            "lettuce",
+            "onion"
+        ],
+        "price": "100",
+        "image": "vegan_salad"
+    },
+    {
+        "id": "7",
+        "name": "Banana Bread",
+        "description": "ggggggggg",
+        "ingredient": [
+            "banana",
+            "flour",
+            "butter",
+            "sugar"
+        ],
+        "price": "40",
+        "image": "banana_bread"
+    }
+]
