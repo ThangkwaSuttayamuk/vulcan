@@ -19,10 +19,10 @@ class _FoodCardAddRemoveState extends State<FoodCardAddRemove> {
         child: InkWell(
           onTap: () {
             //
-            Navigator.push(
-                context,
-                MaterialPageRoute<void>(
-                    builder: (BuildContext context) => const FoodDetail()));
+            // Navigator.push(
+            //     context,
+            //     MaterialPageRoute<void>(
+            //         builder: (BuildContext context) => const FoodDetail()));
           },
           borderRadius: BorderRadius.circular(20),
           child: Padding(

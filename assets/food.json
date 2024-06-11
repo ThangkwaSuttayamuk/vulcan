@@ -1,35 +1,35 @@
 [
     {
-        "id": "1",
+        "id": 1,
         "name": "Hawaiian Pizza",
         "description": "sjdoPAOWJKdoakwokdpoakwdpokapokdpoakwpokdpoawkdpoakpwokdpoawkpodkpaowkdpo",
-        "ingredient": [
+        "ingredients": [
             "pieapple",
             "tomato",
             "cheese",
             "basil"
         ],
-        "price": "250",
-        "image": "hawaiian_pizza"
+        "price": 250.0,
+        "image": "hawaiian_pizza.jpg"
     },
     {
-        "id": "2",
-        "name": "Peperoni Pizza",
+        "id": 2,
+        "name": "Pepperoni Pizza",
         "description": "sjdoPAOWJKdoakwokdpoakwdpokapokdpoakwpokdpoawkdpoakpwokdpoawkpodkpaowkdpo",
-        "ingredient": [
+        "ingredients": [
             "pepperoni",
             "tomato",
             "cheese",
             "basil"
         ],
-        "price": "278",
-        "image": "peperoni_pizza"
+        "price": 278.0,
+        "image": "pepperoni_pizza.jpg"
     },
     {
-        "id": "3",
+        "id": 3,
         "name": "Cheese Burger",
         "description": "sjdoPAOWJKdoakwokdpoakwdpokapokdpoakwpokdpoawkdpoakpwokdpoawkpodkpaowkdpo",
-        "ingredient": [
+        "ingredients": [
             "bread",
             "tometo",
             "cheese",
@@ -37,14 +37,14 @@
             "onion",
             "grilled beef"
         ],
-        "price": "80",
-        "image": "cheese_burger"
+        "price": 80.0,
+        "image": "cheese_burger.jpg"
     },
     {
-        "id": "4",
+        "id": 4,
         "name": "Bacon Burger",
         "description": "sjdoPAOWJKdoakwokdpoakwdpokapokdpoakwpokdpoawkdpoakpwokdpoawkpodkpaowkdpo",
-        "ingredient": [
+        "ingredients": [
             "bread",
             "tometo",
             "cheese",
@@ -52,85 +52,85 @@
             "onion",
             "grilled beef"
         ],
-        "price": "90",
-        "image": "bacon_burger"
+        "price": 90.5,
+        "image": "bacon_burger.jpg"
     },
     {
-        "id": "5",
+        "id": 5,
         "name": "Caesar Salad",
         "description": "sjdoPAOWJKdoakwokdpoakwdpokapokdpoakwpokdpoawkdpoakpwokdpoawkpodkpaowkdpo",
-        "ingredient": [
+        "ingredients": [
             "bread",
             "bacon",
             "parmesan cheese",
             "lettuce",
             "onion"
         ],
-        "price": "120",
-        "image": "ceasar_salad"
+        "price": 120.5,
+        "image": "ceasar_salad.png"
     },
     {
-        "id": "6",
+        "id": 6,
         "name": "Vegan Salad",
         "description": "sjdoPAOWJKdoakwokdpoakwdpokapokdpoakwpokdpoawkdpoakpwokdpoawkpodkpaowkdpo",
-        "ingredient": [
+        "ingredients": [
             "nut",
             "tomato",
             "fruit",
             "lettuce",
             "onion"
         ],
-        "price": "100",
-        "image": "vegan_salad"
+        "price": 100.5,
+        "image": "vegan_salad.jpg"
     },
     {
-        "id": "7",
+        "id": 7,
         "name": "Banana Bread",
         "description": "sjdoPAOWJKdoakwokdpoakwdpokapokdpoakwpokdpoawkdpoakpwokdpoawkpodkpaowkdpo",
-        "ingredient": [
+        "ingredients": [
             "banana",
             "flour",
             "butter",
             "sugar"
         ],
-        "price": "40",
-        "image": "banana_bread"
+        "price": 40.5,
+        "image": "banana_bread.jpg"
     },
     {
-        "id": "8",
+        "id": 8,
         "name": "Custard Bread",
         "description": "sjdoPAOWJKdoakwokdpoakwdpokapokdpoakwpokdpoawkdpoakpwokdpoawkpodkpaowkdpo",
-        "ingredient": [
+        "ingredients": [
             "egg",
             "flour",
             "butter",
             "sugar"
         ],
-        "price": "30",
-        "image": "custard_bread"
+        "price": 30.0,
+        "image": "custard_bread.jpg"
     },
     {
-        "id": "9",
+        "id": 9,
         "name": "Fried Chicken",
         "description": "sjdoPAOWJKdoakwokdpoakwdpokapokdpoakwpokdpoawkdpoakpwokdpoawkpodkpaowkdpo",
-        "ingredient": [
+        "ingredients": [
             "chicken",
             "flour",
             "vegetable oil"
         ],
-        "price": "30",
-        "image": "fried_chicken"
+        "price": 30.5,
+        "image": "fried_chicken.jpg"
     },
     {
-        "id": "10",
+        "id": 10,
         "name": "Korean Fried Chicken",
-        "description": "sjdoPAOWJKdoakwokdpoakwdpokapokdpoakwpokdpoawkdpoakpwokdpoawkpodkpaowkdpo",
-        "ingredient": [
+        "description": "sjdoPAO",
+        "ingredients": [
             "chicken",
             "flour",
             "vegetable oil"
         ],
-        "price": "80",
-        "image": "korean_fried_chicken"
+        "price": 80.0,
+        "image": "korean_fried_chicken.jpg"
     }
 ]

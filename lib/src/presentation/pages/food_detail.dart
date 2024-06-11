@@ -1,16 +1,36 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
+import 'package:flutter_application_1/src/domain/entities/food.dart';
 import 'package:flutter_application_1/src/presentation/widgets/card/text_card.dart';
+import 'package:flutter_application_1/utils/database_service.dart';
 
 class FoodDetail extends StatefulWidget {
-  const FoodDetail({super.key});
+  final Food foodItem;
+  const FoodDetail({
+    super.key,
+    required this.foodItem,
+  });
 
   @override
   State<FoodDetail> createState() => _FoodDetailState();
 }
 
 class _FoodDetailState extends State<FoodDetail> {
-  bool favorite = false;
+  late bool favorite = false;
+
+  Future<void> checkFavorite() async {
+    final isFav = await DatabaseHelper().isFavorite(widget.foodItem.id);
+    setState(() {
+      favorite = isFav;
+    });
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    checkFavorite();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Stack(
@@ -46,17 +66,14 @@ class _FoodDetailState extends State<FoodDetail> {
                               image: DecorationImage(
                                   fit: BoxFit.cover,
                                   image: AssetImage(
-                                      'assets/images/fried_chicken.jpg'))),
+                                      'assets/images/${widget.foodItem.image}'))),
                         ),
                         Padding(
                           padding: EdgeInsets.all(5),
                           child: FloatingActionButton.small(
                             backgroundColor: Colors.white,
                             onPressed: () {
-                              favorite = !favorite;
-                              setState(() {
-                                
-                              });
+                              toggleFavorite();
                             },
                             shape: RoundedRectangleBorder(
                                 borderRadius: BorderRadius.circular(30)),
@@ -75,7 +92,7 @@ class _FoodDetailState extends State<FoodDetail> {
                     children: [
                       Expanded(
                         child: Text(
-                          'Pepperoni Pizza',
+                          widget.foodItem.name,
                           style: TextStyle(
                               fontSize: 22, fontWeight: FontWeight.bold),
                         ),
@@ -88,7 +105,7 @@ class _FoodDetailState extends State<FoodDetail> {
                       children: [
                         Expanded(
                           child: Text(
-                            'Pepperoni Pizza detaildlkpaokdpaokpsoarjioepisiefpsfoekpoekfpsoekp',
+                            widget.foodItem.description,
                             style: TextStyle(
                                 fontSize: 14, color: Colors.grey.shade800),
                           ),
@@ -109,7 +126,9 @@ class _FoodDetailState extends State<FoodDetail> {
                       ),
                     ],
                   ),
-                  TextCard("name")
+                  // TextCard(
+                  //   listOfItem: widget.foodItem.ingredients,
+                  // )
                 ],
               ),
             )),
@@ -128,6 +147,7 @@ class _FoodDetailState extends State<FoodDetail> {
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     Material(
+                      color: Colors.white,
                       borderRadius: BorderRadius.circular(30),
                       child: InkWell(
                         borderRadius: BorderRadius.circular(30),
@@ -147,12 +167,14 @@ class _FoodDetailState extends State<FoodDetail> {
                     SizedBox(
                         width: 50,
                         child: Material(
+                          color: Colors.white,
                           child: Text(
                             '1',
                             textAlign: TextAlign.center,
                           ),
                         )),
                     Material(
+                      color: Colors.white,
                       borderRadius: BorderRadius.circular(30),
                       child: InkWell(
                         borderRadius: BorderRadius.circular(30),
@@ -181,7 +203,7 @@ class _FoodDetailState extends State<FoodDetail> {
                       padding: const EdgeInsets.symmetric(
                           horizontal: 30, vertical: 10),
                       child: Text(
-                        'Add to Cart - \$7.00',
+                        'Add to Cart - \$${widget.foodItem.price}',
                         style: TextStyle(color: Colors.white),
                       ),
                     ),
@@ -193,5 +215,24 @@ class _FoodDetailState extends State<FoodDetail> {
         )
       ],
     );
+  }
+
+  void toggleFavorite() {
+    setState(() {
+      favorite = !favorite;
+    });
+    if (favorite) {
+      addFavorite();
+    } else {
+      removeFavorite();
+    }
+  }
+
+  void addFavorite() {
+    DatabaseHelper().addToFavorites(widget.foodItem.id);
+  }
+
+  void removeFavorite() {
+    DatabaseHelper().removeFavorite(widget.foodItem.id);
   }
 }

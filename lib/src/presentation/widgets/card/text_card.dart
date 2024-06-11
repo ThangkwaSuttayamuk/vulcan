@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 
 class TextCard extends StatelessWidget {
-  final String name;
+  final List<String> listOfItem;
 
-  const TextCard(this.name, {super.key});
+  const TextCard({super.key, required this.listOfItem});
 
   @override
   Widget build(BuildContext context) {
@@ -16,13 +16,13 @@ class TextCard extends StatelessWidget {
           spacing: 10.0,
           runSpacing: 10.0,
           children: List.generate(
-              19,
+              listOfItem.length,
               (index) => Container(
                     padding: EdgeInsets.all(10),
                     decoration: BoxDecoration(
                         color: Colors.grey.shade300,
                         borderRadius: BorderRadius.circular(30)),
-                    child: Text('dhdmalwdaijpo'),
+                    child: Text(listOfItem[index]),
                   )),
         ),
       ),
