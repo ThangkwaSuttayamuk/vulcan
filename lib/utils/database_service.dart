@@ -1,3 +1,4 @@
+import 'package:flutter_application_1/src/domain/entities/cart.dart';
 import 'package:flutter_application_1/src/domain/entities/food.dart';
 import 'package:path/path.dart';
 import 'package:sqflite/sqflite.dart';
@@ -23,7 +24,6 @@ class DatabaseHelper {
     return await openDatabase(
       path,
       onCreate: (db, version) {
-        
         db.execute('''
           CREATE TABLE foods (
             id INTEGER PRIMARY KEY,
@@ -80,6 +80,14 @@ class DatabaseHelper {
     });
   }
 
+  Future<List<Cart>> getCart() async {
+    final db = await database;
+    final List<Map<String, dynamic>> maps = await db.query('cart');
+    return List.generate(maps.length, (i) {
+      return Cart.fromMap(maps[i]);
+    });
+  }
+
   Future<Food> getFoodById(int id) async {
     final db = await database;
     final List<Map<String, dynamic>> maps = await db.query(
@@ -106,14 +114,29 @@ class DatabaseHelper {
     return favoritesList;
   }
 
+  // Future<List<Cart>> getAllCartFoods() async {
+  //   final dbHelper = DatabaseHelper();
+  //   final cartMapList = await dbHelper.getCart();
+  //   List<Cart> cartList = [];
+  //   for (var cartMap in cartMapList) {
+  //     final foodId = cartMap['food_id'] as int;
+  //     final food = await dbHelper.getFoodById(foodId);
+  //   }
+  //   return cartList;
+  // }
+
   Future<void> addToCart(int foodId, int quantity) async {
     final db = await database;
-    await db.insert('cart', {'food_id': foodId, 'quantity': quantity});
-  }
-
-  Future<List<Map<String, dynamic>>> getCart() async {
-    final db = await database;
-    return await db.query('cart');
+    final result = await db.query(
+      'cart',
+      where: 'food_id = ?',
+      whereArgs: [foodId],
+    );
+    result.isNotEmpty
+        ? null
+        : await db.insert('cart', {'food_id': foodId, 'quantity': quantity});
+    ;
+    // await db.insert('cart', {'food_id': foodId, 'quantity': quantity});
   }
 
   Future<bool> isFavorite(int foodId) async {

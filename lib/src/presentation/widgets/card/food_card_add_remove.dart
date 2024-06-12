@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_application_1/src/presentation/pages/food_detail.dart';
+import 'package:flutter_application_1/src/presentation/pages/food_detail_page.dart';
 
 class FoodCardAddRemove extends StatefulWidget {
   const FoodCardAddRemove({super.key});
@@ -18,7 +18,6 @@ class _FoodCardAddRemoveState extends State<FoodCardAddRemove> {
         color: Colors.white,
         child: InkWell(
           onTap: () {
-            //
             // Navigator.push(
             //     context,
             //     MaterialPageRoute<void>(
@@ -67,6 +66,7 @@ class _FoodCardAddRemoveState extends State<FoodCardAddRemove> {
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
                               Material(
+                                color: Colors.white,
                                 borderRadius: BorderRadius.circular(30),
                                 child: InkWell(
                                   borderRadius: BorderRadius.circular(30),
@@ -91,6 +91,7 @@ class _FoodCardAddRemoveState extends State<FoodCardAddRemove> {
                                     textAlign: TextAlign.center,
                                   )),
                               Material(
+                                color: Colors.white,
                                 borderRadius: BorderRadius.circular(30),
                                 child: InkWell(
                                   borderRadius: BorderRadius.circular(30),

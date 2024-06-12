@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_application_1/src/presentation/pages/favorite.dart';
+import 'package:flutter_application_1/src/presentation/pages/favorite_page.dart';
 import 'package:flutter_application_1/src/presentation/pages/home_page.dart';
 import 'package:flutter_application_1/src/presentation/widgets/card/setting_group.dart';
 

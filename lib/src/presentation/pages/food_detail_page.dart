@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:flutter_application_1/src/domain/entities/food.dart';
-import 'package:flutter_application_1/src/presentation/widgets/card/text_card.dart';
-import 'package:flutter_application_1/utils/database_service.dart';
+import 'package:flutter_application_1/src/presentation/controller/quantity/quantity_provider.dart';
+import 'package:flutter_application_1/src/presentation/widgets/button/favorite_button.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-class FoodDetail extends StatefulWidget {
+class FoodDetail extends ConsumerStatefulWidget {
   final Food foodItem;
   const FoodDetail({
     super.key,
@@ -12,27 +12,26 @@ class FoodDetail extends StatefulWidget {
   });
 
   @override
-  State<FoodDetail> createState() => _FoodDetailState();
+  _FoodDetailState createState() => _FoodDetailState();
 }
 
-class _FoodDetailState extends State<FoodDetail> {
-  late bool favorite = false;
-
-  Future<void> checkFavorite() async {
-    final isFav = await DatabaseHelper().isFavorite(widget.foodItem.id);
-    setState(() {
-      favorite = isFav;
-    });
-  }
-
+class _FoodDetailState extends ConsumerState<FoodDetail> {
   @override
   void initState() {
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      ref.read(quantityProvider.notifier).initData();
+      // ref.read(quan)
+    });
     super.initState();
-    checkFavorite();
   }
 
   @override
   Widget build(BuildContext context) {
+    final quantityState = ref.watch(quantityProvider);
+    final quantityControllerState = ref.read(quantityProvider.notifier);
+    // final quan
+    
+
     return Stack(
       alignment: Alignment.bottomCenter,
       children: [
@@ -69,22 +68,24 @@ class _FoodDetailState extends State<FoodDetail> {
                                       'assets/images/${widget.foodItem.image}'))),
                         ),
                         Padding(
-                          padding: EdgeInsets.all(5),
-                          child: FloatingActionButton.small(
-                            backgroundColor: Colors.white,
-                            onPressed: () {
-                              toggleFavorite();
-                            },
-                            shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(30)),
-                            child: Icon(
-                              favorite
-                                  ? Icons.favorite_rounded
-                                  : Icons.favorite_border_outlined,
-                              color: Colors.pink,
+                            padding: EdgeInsets.all(5),
+                            child: FavoriteButton(foodId: widget.foodItem.id)
+                            // FloatingActionButton.small(
+                            //   backgroundColor: Colors.white,
+                            //   onPressed: () {
+                            //     toggleFavorite();
+                            //   },
+                            //   shape: RoundedRectangleBorder(
+                            //       borderRadius: BorderRadius.circular(30)),
+                            //   child: Icon(
+                            //     favorite
+                            //         ? Icons.favorite_rounded
+                            //         : Icons.favorite_border_outlined,
+                            //     color: Colors.pink,
+                            //   ),
+                            // ),
                             ),
-                          ),
-                        ),
+                        // FavoriteButton(foodId: widget.foodItem.id)
                       ],
                     ),
                   ),
@@ -151,7 +152,9 @@ class _FoodDetailState extends State<FoodDetail> {
                       borderRadius: BorderRadius.circular(30),
                       child: InkWell(
                         borderRadius: BorderRadius.circular(30),
-                        onTap: () {},
+                        onTap: () {
+                          quantityControllerState.decrease();
+                        },
                         child: Container(
                           decoration: BoxDecoration(
                               borderRadius: BorderRadius.circular(40),
@@ -169,7 +172,7 @@ class _FoodDetailState extends State<FoodDetail> {
                         child: Material(
                           color: Colors.white,
                           child: Text(
-                            '1',
+                            quantityState.quantity.toString(),
                             textAlign: TextAlign.center,
                           ),
                         )),
@@ -178,7 +181,9 @@ class _FoodDetailState extends State<FoodDetail> {
                       borderRadius: BorderRadius.circular(30),
                       child: InkWell(
                         borderRadius: BorderRadius.circular(30),
-                        onTap: () {},
+                        onTap: () {
+                          quantityControllerState.increase();
+                        },
                         child: Container(
                           decoration: BoxDecoration(
                               borderRadius: BorderRadius.circular(40),
@@ -217,22 +222,22 @@ class _FoodDetailState extends State<FoodDetail> {
     );
   }
 
-  void toggleFavorite() {
-    setState(() {
-      favorite = !favorite;
-    });
-    if (favorite) {
-      addFavorite();
-    } else {
-      removeFavorite();
-    }
-  }
+  // void toggleFavorite() {
+  //   setState(() {
+  //     favorite = !favorite;
+  //   });
+  //   if (favorite) {
+  //     addFavorite();
+  //   } else {
+  //     removeFavorite();
+  //   }
+  // }
 
-  void addFavorite() {
-    DatabaseHelper().addToFavorites(widget.foodItem.id);
-  }
+  // void addFavorite() {
+  //   DatabaseHelper().addToFavorites(widget.foodItem.id);
+  // }
 
-  void removeFavorite() {
-    DatabaseHelper().removeFavorite(widget.foodItem.id);
-  }
+  // void removeFavorite() {
+  //   DatabaseHelper().removeFavorite(widget.foodItem.id);
+  // }
 }

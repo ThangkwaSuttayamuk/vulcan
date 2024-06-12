@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_application_1/src/presentation/pages/cart.dart';
-import 'package:flutter_application_1/src/presentation/pages/favorite.dart';
+import 'package:flutter_application_1/src/presentation/pages/cart_page.dart';
+import 'package:flutter_application_1/src/presentation/pages/favorite_page.dart';
 import 'package:flutter_application_1/src/presentation/pages/home_page.dart';
 import 'package:flutter_application_1/src/presentation/pages/setting_page.dart';
 

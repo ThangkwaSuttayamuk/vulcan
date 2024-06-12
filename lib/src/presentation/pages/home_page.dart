@@ -3,10 +3,8 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_application_1/src/domain/entities/food.dart';
-import 'package:flutter_application_1/src/presentation/controller/filter_state.dart';
-import 'package:flutter_application_1/src/presentation/controller/food_state.dart';
-import 'package:flutter_application_1/src/presentation/controller/text_provider.dart';
-import 'package:flutter_application_1/src/presentation/pages/food_detail.dart';
+import 'package:flutter_application_1/src/presentation/controller/food/food_provider.dart';
+import 'package:flutter_application_1/src/presentation/pages/food_detail_page.dart';
 import 'package:flutter_application_1/src/presentation/widgets/button/filter_button.dart';
 import 'package:flutter_application_1/src/presentation/widgets/button/regular_icon_button.dart';
 import 'package:flutter_application_1/src/presentation/widgets/card/food_card.dart';
@@ -49,7 +47,6 @@ class _HomePageState extends ConsumerState<HomePage> {
     // WidgetsBinding.instance.addPostFrameCallback((_) {
     //   ref.read(textProvider.notifier).initData();
     // });
-    super.initState();
     // ref.read(foodListProvider.notifier).fetchFoods();
   }
 
@@ -83,9 +80,8 @@ class _HomePageState extends ConsumerState<HomePage> {
   @override
   Widget build(BuildContext context) {
     final foodListState = ref.watch(foodListProvider);
-    final filterState = ref.watch(filterProvider);
-
-    // final textController = ref.read(textProvider.notifier);
+    
+    // final searchState = ref.watch(searchProvider);
 
     return Stack(
       alignment: Alignment.bottomCenter,
@@ -120,31 +116,33 @@ class _HomePageState extends ConsumerState<HomePage> {
                     ),
                     Padding(
                       padding: const EdgeInsets.symmetric(vertical: 20),
-                      child: Container(
+                      child: SizedBox(
                         height: 50,
-                        child: TextField(
-                          // controller: textController.inputController,
-                          controller: _searchController,
-                          onChanged: (value) {
-                            ref
-                                .read(foodListProvider.notifier)
-                                .filterFoods(value);
-                          },
-                          decoration: InputDecoration(
-                              focusedBorder: OutlineInputBorder(
-                                  borderRadius: BorderRadius.circular(30),
-                                  borderSide: BorderSide(
-                                    color: Colors.black,
-                                  )),
-                              prefixIcon: const Icon(Icons.search),
-                              hintText: "Search...",
-                              border: OutlineInputBorder(
-                                  borderRadius: BorderRadius.circular(30.0))),
-                        ),
+                        child: Consumer(builder: (BuildContext context,
+                            WidgetRef ref, Widget? child) {
+                          return TextField(
+                              controller: _searchController,
+                              onChanged: (value) {
+                                ref
+                                    .read(foodListProvider.notifier)
+                                    .filterFoods(value);
+                              },
+                              decoration: InputDecoration(
+                                  focusedBorder: OutlineInputBorder(
+                                      borderRadius: BorderRadius.circular(30),
+                                      borderSide: BorderSide(
+                                        color: Colors.black,
+                                      )),
+                                  prefixIcon: const Icon(Icons.search),
+                                  hintText: "Search...",
+                                  border: OutlineInputBorder(
+                                      borderRadius:
+                                          BorderRadius.circular(30.0))));
+                        }),
                       ),
                     ),
                     Padding(
-                      padding: const EdgeInsets.all(16.0),
+                      padding: const EdgeInsets.all(10.0),
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: List.generate(

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_application_1/src/presentation/controller/filter_state.dart';
-import 'package:flutter_application_1/src/presentation/controller/food_state.dart';
+import 'package:flutter_application_1/src/presentation/controller/filter/filter_provider.dart';
+import 'package:flutter_application_1/src/presentation/controller/food/food_provider.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 class FilterButton extends ConsumerWidget {
@@ -13,8 +13,6 @@ class FilterButton extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final filterState = ref.watch(filterProvider);
-    final foodListState =
-        ref.watch(foodListProvider); // Watch the foodListProvider
 
     return Material(
       shape: RoundedRectangleBorder(
@@ -30,22 +28,22 @@ class FilterButton extends ConsumerWidget {
       child: InkWell(
         borderRadius: BorderRadius.circular(10),
         onTap: () {
-          ref.read(filterProvider.notifier).setFilter(filters[index]);
+          // ref.read(filterProvider.notifier).setFilter(filters[index]);
 
-          ref
-              .read(foodListProvider.notifier)
-              .filterFoodsByCategory(filterState.filterName);
-          // final selectedFilter = filters[index];
+          // ref
+          //     .read(foodListProvider.notifier)
+          //     .filterFoodsByCategory(filterState.filterName);
+          final selectedFilter = filters[index];
 
-          // ref.read(filterProvider.notifier).setFilter(selectedFilter);
+          ref.read(filterProvider.notifier).setFilter(selectedFilter);
 
-          // if (filterState.filterName == selectedFilter) {
-          //   ref.read(foodListProvider.notifier).filterFoodsByCategory('');
-          // } else {
-          //   ref
-          //       .read(foodListProvider.notifier)
-          //       .filterFoodsByCategory(selectedFilter);
-          // }
+          if (filterState.filterName == selectedFilter) {
+            ref.read(foodListProvider.notifier).filterFoodsByCategory('');
+          } else {
+            ref
+                .read(foodListProvider.notifier)
+                .filterFoodsByCategory(selectedFilter);
+          }
         },
         child: Padding(
           padding: EdgeInsets.all(8),
