@@ -1,17 +1,91 @@
-// import 'dart:convert';
+import 'dart:convert';
 
-// import 'package:flutter/services.dart';
-// import 'package:flutter_application_1/src/domain/entities/food.dart';
-// import 'package:flutter_application_1/src/domain/repositories/food_repository.dart';
+import 'package:flutter/services.dart';
+import 'package:flutter_application_1/src/data/datasources/local/database_helper.dart';
+import 'package:sqflite/sqflite.dart';
 
-// class FoodRepositoryImpl implements FoodRepository {
+import '../../domain/entities/food_entity.dart';
+import '../../domain/repositories/food_repository.dart';
 
-//   @override
-//   Future<List<Food>> getAllFoods() async {
-//     final jsonString = await rootBundle.loadString('assets/food.json');
-//     final List<dynamic> jsonResponse = json.decode(jsonString);
-//     print(jsonResponse);
-//     print(jsonResponse.map((json) => Food.fromJson(json)).toList());
-//     return jsonResponse.map((json) => Food.fromJson(json)).toList();
-//   }
-// }
+class FoodRepositoryImpl implements FoodRepository {
+  final DatabaseHelper databaseHelper;
+
+  FoodRepositoryImpl(this.databaseHelper);
+
+  @override
+  Future<void> insertFood(FoodEntity food) async {
+    final db = await databaseHelper.database;
+    await db.insert('foods', food.toMap(),
+        conflictAlgorithm: ConflictAlgorithm.replace);
+  }
+
+  @override
+  Future<void> insertMultipleFoods(List<FoodEntity> foods) async {
+    final db = await databaseHelper.database;
+    Batch batch = db.batch();
+    for (var food in foods) {
+      batch.insert('foods', food.toMap(),
+          conflictAlgorithm: ConflictAlgorithm.replace);
+    }
+    await batch.commit(noResult: true);
+  }
+
+  @override
+  Future<List<FoodEntity>> getFoods() async {
+    final db = await databaseHelper.database;
+    final List<Map<String, dynamic>> maps = await db.query('foods');
+    return List.generate(maps.length, (i) {
+      return FoodEntity.fromMap(maps[i]);
+    });
+  }
+
+  @override
+  Future<FoodEntity> getFoodById(int id) async {
+    final db = await databaseHelper.database;
+    final List<Map<String, dynamic>> maps = await db.query(
+      'foods',
+      where: 'id = ?',
+      whereArgs: [id],
+    );
+   
+    if (maps.isNotEmpty) {
+      return FoodEntity.fromMap(maps.first);
+    } else {
+      throw Exception('Food not found');
+    }
+  }
+
+  @override
+  Future<List<FoodEntity>> getAllFavorites() async {
+    final db = await databaseHelper.database;
+    final favoritesMapList = await db.query('favorites');
+    List<FoodEntity> favoritesList = [];
+    for (var favoriteMap in favoritesMapList) {
+      final foodId = favoriteMap['food_id'] as int;
+      final food = await getFoodById(foodId);
+      favoritesList.add(food);
+    }
+    return favoritesList;
+  }
+
+  @override
+  Future<void> addToFavorites(int foodId) async {
+    final db = await databaseHelper.database;
+    await db.insert('favorites', {'food_id': foodId},
+        conflictAlgorithm: ConflictAlgorithm.ignore);
+  }
+
+  @override
+  Future<void> removeFavorite(int foodId) async {
+    final db = await databaseHelper.database;
+    await db.delete('favorites', where: 'food_id = ?', whereArgs: [foodId]);
+  }
+
+  @override
+  Future<bool> isFavorite(int foodId) async {
+    final db = await databaseHelper.database;
+    final result =
+        await db.query('favorites', where: 'food_id = ?', whereArgs: [foodId]);
+    return result.isNotEmpty;
+  }
+}

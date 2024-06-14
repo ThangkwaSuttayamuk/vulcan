@@ -19,4 +19,8 @@ class QuantityNotifier extends StateNotifier<QuantityState> {
         ? state = state.copyWith(quantity: state.quantity+1)
         : null;
   }
+
+  
+
+
 }

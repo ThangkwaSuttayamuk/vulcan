@@ -1,15 +1,11 @@
-import 'dart:convert';
-
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
-import 'package:flutter_application_1/src/domain/entities/food.dart';
+import 'package:flutter_application_1/src/presentation/controller/cart/cart_provider.dart';
 import 'package:flutter_application_1/src/presentation/controller/food/food_provider.dart';
 import 'package:flutter_application_1/src/presentation/pages/food_detail_page.dart';
 import 'package:flutter_application_1/src/presentation/widgets/button/filter_button.dart';
 import 'package:flutter_application_1/src/presentation/widgets/button/regular_icon_button.dart';
 import 'package:flutter_application_1/src/presentation/widgets/card/food_card.dart';
 import 'package:flutter_application_1/src/presentation/widgets/footer/footer.dart';
-import 'package:flutter_application_1/utils/database_service.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 class HomePage extends ConsumerStatefulWidget {
@@ -20,12 +16,6 @@ class HomePage extends ConsumerStatefulWidget {
 }
 
 class _HomePageState extends ConsumerState<HomePage> {
-  // final GetAllFood getAllFood = GetAllFood(FoodRepositoryImpl());
-  // final DatabaseService _databaseService = DatabaseService.instance;
-  final DatabaseHelper dbHelper = DatabaseHelper();
-
-  // List<Food> _foodItems = [];
-
   final _searchController = TextEditingController();
 
   final List<String> _filter = [
@@ -36,52 +26,18 @@ class _HomePageState extends ConsumerState<HomePage> {
     "fried_chicken"
   ];
 
-  bool _checkFilter = false;
-
   @override
   void initState() {
-    super.initState();
-    // loadFoodItems();
-    importData();
     _searchController.text = "";
-    // WidgetsBinding.instance.addPostFrameCallback((_) {
-    //   ref.read(textProvider.notifier).initData();
-    // });
-    // ref.read(foodListProvider.notifier).fetchFoods();
-  }
-
-  // Future<void> loadFoodItems() async {
-  //   final jsonString = await rootBundle.loadString('assets/food.json');
-  //   // final List<dynamic> jsonResponse = json.decode(jsonString);
-  //   List<dynamic> response = json.decode(jsonString);
-  //   print(response);
-  //   // print("1 ${jsonResponse}");
-
-  //   _foodItems = response.map<Food>((json) => Food.fromJson(json)).toList();
-
-  //   setState(() {});
-  // }
-
-  Future<void> importData() async {
-    String jsonString = await rootBundle.loadString('assets/food.json');
-    List<dynamic> jsonData = jsonDecode(jsonString);
-
-    List<Food> foodList = jsonData.map((item) {
-      return Food.fromJson(item);
-    }).toList();
-
-    await dbHelper.insertMultipleFoods(foodList);
-
-    ref.read(foodListProvider.notifier).fetchFoods();
-
-    setState(() {}); // Refresh the UI after inserting data
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      ref.read(foodListProvider.notifier).fetchFoods();
+    });
+    super.initState();
   }
 
   @override
   Widget build(BuildContext context) {
     final foodListState = ref.watch(foodListProvider);
-    
-    // final searchState = ref.watch(searchProvider);
 
     return Stack(
       alignment: Alignment.bottomCenter,
@@ -153,48 +109,6 @@ class _HomePageState extends ConsumerState<HomePage> {
                         ),
                       ),
                     ),
-                    // Expanded(
-                    //   child: Center(
-                    //     child: Text(
-                    //         'Current Filter: ${filterState.filterName ?? 'None'}'),
-                    //   ),
-                    // ),
-                    // Row(
-                    //     mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    //     children: List.generate(
-                    //       _filter.length,
-                    //       (i) {
-                    //         return FilterButton(
-                    //           filter: _filter,
-                    //           index: i,
-                    //           onTap: () {
-                    //             print("Tapped on ${_filter[i]}");
-                    //             ref
-                    //                 .read(foodListProvider.notifier)
-                    //                 .filterFoodsByCategory(_filter[i]);
-                    //           },
-                    //         );
-                    //         // GestureDetector(
-                    //         //   onTap: () {
-                    //         //     print(
-                    //         //         "Tapped on ${_filter[i]}"); // Print to verify onTap is triggered
-                    //         //   },
-                    //         //   child: Text(_filter[
-                    //         //       i]), // Display category name directly
-                    //         // ),
-
-                    //         // GestureDetector(
-                    //         //     onTap: () {
-                    //         //       // print(_filter[i]);
-                    //         //       print(_filter[
-                    //         //           i]); // Print the category to verify onTap is triggered
-                    //         //       ref
-                    //         //           .read(foodListProvider.notifier)
-                    //         //           .filterFoodsByCategory(_filter[i]);
-                    //         //     },
-                    //         //     child: FilterButton(filter: _filter, index: i));
-                    //       },
-                    //     )),
                     Padding(
                       padding:
                           EdgeInsets.symmetric(vertical: 15, horizontal: 5),
@@ -240,7 +154,12 @@ class _HomePageState extends ConsumerState<HomePage> {
                                       MaterialPageRoute<void>(
                                           builder: (BuildContext context) =>
                                               FoodDetail(
-                                                foodItem: foodItem,
+                                                id: foodItem.id,
+                                                name: foodItem.name,
+                                                description:
+                                                    foodItem.description,
+                                                price: foodItem.price,
+                                                image: foodItem.image,
                                               )));
                                 },
                                 child: FoodCard(
@@ -250,150 +169,6 @@ class _HomePageState extends ConsumerState<HomePage> {
                             },
                           ),
               ),
-              // FutureBuilder<List<Food>>(
-              //   future: dbHelper.getFoods(),
-              //   builder: (context, snapshot) {
-              //     if (snapshot.connectionState == ConnectionState.waiting) {
-              //       return Center(child: CircularProgressIndicator());
-              //     } else if (snapshot.hasError) {
-              //       return Center(child: Text('Error: ${snapshot.error}'));
-              //     } else if (!snapshot.hasData || snapshot.data!.isEmpty) {
-              //       return Center(child: Text('No data found'));
-              //     } else {
-              //       return Expanded(
-              //         child: SizedBox(
-              //           height: MediaQuery.of(context).size.height,
-              //           width: MediaQuery.of(context).size.width,
-              //           child: GridView.builder(
-              //             padding: const EdgeInsets.only(
-              //                 bottom: 100, left: 20, right: 20),
-              //             gridDelegate:
-              //                 SliverGridDelegateWithFixedCrossAxisCount(
-              //               crossAxisCount: 2,
-              //               crossAxisSpacing: 20,
-              //               mainAxisSpacing: 40,
-              //               childAspectRatio:
-              //                   (MediaQuery.of(context).size.width /
-              //                           MediaQuery.of(context).size.height) /
-              //                       0.5,
-              //             ),
-              //             itemCount: snapshot.data!.length,
-              //             itemBuilder: (context, index) {
-              //               final foodItem = snapshot.data![index];
-              //               return GestureDetector(
-              //                 onTap: () {
-              //                   Navigator.push(
-              //                       context,
-              //                       MaterialPageRoute<void>(
-              //                           builder: (BuildContext context) =>
-              //                               FoodDetail(
-              //                                 foodItem: foodItem,
-              //                                 // id: foodItem.id,
-              //                                 // name: foodItem.name,
-              //                                 // description: foodItem.description,
-              //                                 // price: foodItem.price,
-              //                                 // image: foodItem.image,
-              //                               )));
-              //                 },
-              //                 child: FoodCard(
-              //                   food: foodItem,
-              //                 ),
-              //               );
-              //             },
-              //           ),
-              //         ),
-              //       );
-              //     }
-              //   },
-              // ),
-
-              // FutureBuilder<List<Food>>(
-              //   future: getAllFood(),
-              //   builder: (context, snapshot) {
-              //     if (snapshot.connectionState == ConnectionState.waiting) {
-              //       return Center(child: CircularProgressIndicator());
-              //     } else if (snapshot.hasError) {
-              //       return Center(child: Text('Error: ${snapshot.error}'));
-              //     } else if (!snapshot.hasData || snapshot.data!.isEmpty) {
-              //       return Center(child: Text('No data found'));
-              //     } else {
-              //       return Expanded(
-              //         child: SizedBox(
-              //           height: MediaQuery.of(context).size.height,
-              //           width: MediaQuery.of(context).size.width,
-              //           child: GridView.builder(
-              //             padding: const EdgeInsets.only(
-              //                 bottom: 100, left: 20, right: 20),
-              //             gridDelegate:
-              //                 SliverGridDelegateWithFixedCrossAxisCount(
-              //               crossAxisCount: 2,
-              //               crossAxisSpacing: 20,
-              //               mainAxisSpacing: 40,
-              //               childAspectRatio:
-              //                   (MediaQuery.of(context).size.width /
-              //                           MediaQuery.of(context).size.height) /
-              //                       0.5,
-              //             ),
-              //             itemCount: snapshot.data!.length,
-              //             itemBuilder: (context, index) {
-              //               final foodItem = snapshot.data![index];
-              //               return GestureDetector(
-              //                 onTap: () {
-              //                   Navigator.push(
-              //                       context,
-              //                       MaterialPageRoute<void>(
-              //                           builder: (BuildContext context) =>
-              //                               FoodDetail(
-              //                                 foodItem: foodItem,
-              //                               )));
-              //                 },
-              //                 child: FoodCard(
-              //                   name: foodItem.name,
-              //                   description: foodItem.description,
-              //                   image: foodItem.image,
-              //                 ),
-              //               );
-              //             },
-              //           ),
-              //         ),
-              //       );
-              //     }
-              //   },
-              // ),
-
-              // Expanded(
-              //   child: GridView.builder(
-              //     padding:
-              //         const EdgeInsets.only(bottom: 100, left: 20, right: 20),
-              //     gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-              //         crossAxisCount: 2,
-              //         crossAxisSpacing: 20,
-              //         mainAxisSpacing: 40,
-              //         childAspectRatio: 9 / 10),
-              //     itemCount: 5,
-              //     itemBuilder: (context, int i) {
-              //       return FoodCard();
-              //     },
-              //   ),
-              // ),
-
-              // Expanded(
-              //   child: GridView.builder(
-              //     padding:
-              //         const EdgeInsets.only(bottom: 100, left: 20, right: 20),
-              //     gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-              //         crossAxisCount: 2,
-              //         crossAxisSpacing: 20,
-              //         mainAxisSpacing: 40,
-              //         childAspectRatio: 9 / 10),
-              //     itemCount: _foodItems.length,
-              //     itemBuilder: (context, index) {
-              //       return FoodCard(
-              //         food: _foodItems[index],
-              //       );
-              //     },
-              //   ),
-              // ),
             ],
           ),
         ),

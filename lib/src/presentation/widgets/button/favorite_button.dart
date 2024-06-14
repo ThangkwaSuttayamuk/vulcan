@@ -16,8 +16,7 @@ class _FavoriteButtonState extends ConsumerState<FavoriteButton> {
   void initState() {
     WidgetsBinding.instance.addPostFrameCallback((_) {
       ref.read(favoriteProvider.notifier).checkFavorite(widget.foodId);
-
-      // ref.read(favoriteProvider.notifier).fetchFavoriteFoods();
+      ref.read(favoriteFoodProvider.notifier).fetchFavoriteFoods();
     });
     super.initState();
   }
@@ -25,8 +24,8 @@ class _FavoriteButtonState extends ConsumerState<FavoriteButton> {
   @override
   Widget build(BuildContext context) {
     final favoriteState = ref.watch(favoriteProvider);
-    final favoriteFoodState = ref.read(favoriteFoodProvider.notifier);
     final favoritelistState = ref.watch(favoriteFoodProvider);
+    final favoriteFoodState = ref.read(favoriteFoodProvider.notifier);
 
     return FloatingActionButton.small(
       backgroundColor: Colors.white,
@@ -34,13 +33,15 @@ class _FavoriteButtonState extends ConsumerState<FavoriteButton> {
         // toggleFavorite();
         // favoriteFoodState.removeFavorite(widget.foodId);
         // favoriteFoodState.addFavorite(widget.foodId);
-        
+
         print(favoritelistState.favoriteFoods);
         favoriteState.isFavorite == true
             ? favoriteFoodState.removeFavorite(widget.foodId)
             : favoriteFoodState.addFavorite(widget.foodId);
 
-        ref.read(favoriteProvider.notifier).statusFavorite(favoriteState.isFavorite);
+        ref
+            .read(favoriteProvider.notifier)
+            .statusFavorite(favoriteState.isFavorite);
       },
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(30)),
       child: Icon(

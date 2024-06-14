@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_application_1/src/domain/entities/food.dart';
+import 'package:flutter_application_1/src/domain/entities/food_entity.dart';
 import 'package:flutter_application_1/src/presentation/pages/food_detail_page.dart';
 
 class FoodCard extends StatelessWidget {
-  final Food food;
+  final FoodEntity food;
 
   const FoodCard({super.key, required this.food});
 
@@ -26,7 +26,13 @@ class FoodCard extends StatelessWidget {
             Navigator.push(
                 context,
                 MaterialPageRoute(
-                    builder: (context) => FoodDetail(foodItem: food)));
+                    builder: (context) => FoodDetail(
+                          id: food.id,
+                          name: food.name,
+                          description: food.description,
+                          price: food.price,
+                          image: food.image,
+                        )));
           },
           borderRadius: BorderRadius.circular(10),
           child: Column(

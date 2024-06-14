@@ -1,17 +1,16 @@
-import 'package:flutter/material.dart';
-import 'package:flutter_application_1/src/domain/entities/food.dart';
-import 'package:flutter_application_1/utils/database_service.dart';
-import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:flutter_application_1/src/domain/entities/food_entity.dart';
+
+enum HomeStatus { initial, loading, success, failure, empty }
 
 class FoodListState {
-  final List<Food> foods;
+  final List<FoodEntity> foods;
   final bool isLoading;
   final String? error;
 
   FoodListState({required this.foods, this.isLoading = false, this.error});
 
   FoodListState copyWith({
-    List<Food>? foods,
+    List<FoodEntity>? foods,
     bool? isLoading,
     String? error,
   }) {
@@ -22,4 +21,3 @@ class FoodListState {
     );
   }
 }
-

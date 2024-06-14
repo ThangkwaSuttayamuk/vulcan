@@ -1,8 +1,8 @@
-import 'package:flutter_application_1/src/domain/entities/food.dart';
+import 'package:flutter_application_1/src/domain/entities/food_entity.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 class FavoriteFoodState {
-  final List<Food> favoriteFoods;
+  final List<FoodEntity> favoriteFoods;
   final bool isLoading;
   final String? error;
 
@@ -13,7 +13,7 @@ class FavoriteFoodState {
   });
 
   FavoriteFoodState copyWith({
-    List<Food>? favoriteFoods,
+    List<FoodEntity>? favoriteFoods,
     bool? isLoading,
     String? error,
   }) {

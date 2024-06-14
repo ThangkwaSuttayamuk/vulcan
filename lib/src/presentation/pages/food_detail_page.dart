@@ -1,14 +1,24 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_application_1/src/domain/entities/food.dart';
+import 'package:flutter_application_1/src/presentation/controller/cart/cart_provider.dart';
 import 'package:flutter_application_1/src/presentation/controller/quantity/quantity_provider.dart';
+import 'package:flutter_application_1/src/presentation/widgets/button/add_to_cart_button.dart';
 import 'package:flutter_application_1/src/presentation/widgets/button/favorite_button.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 class FoodDetail extends ConsumerStatefulWidget {
-  final Food foodItem;
+  final int id;
+  final String name;
+  final String description;
+  final double price;
+  final String image;
+
   const FoodDetail({
     super.key,
-    required this.foodItem,
+    required this.id,
+    required this.name,
+    required this.description,
+    required this.price,
+    required this.image,
   });
 
   @override
@@ -20,7 +30,7 @@ class _FoodDetailState extends ConsumerState<FoodDetail> {
   void initState() {
     WidgetsBinding.instance.addPostFrameCallback((_) {
       ref.read(quantityProvider.notifier).initData();
-      // ref.read(quan)
+      ref.read(cartProvider.notifier);
     });
     super.initState();
   }
@@ -29,8 +39,7 @@ class _FoodDetailState extends ConsumerState<FoodDetail> {
   Widget build(BuildContext context) {
     final quantityState = ref.watch(quantityProvider);
     final quantityControllerState = ref.read(quantityProvider.notifier);
-    // final quan
-    
+    // final cartlistState = ref.read(cartProvider.notifier);
 
     return Stack(
       alignment: Alignment.bottomCenter,
@@ -65,27 +74,11 @@ class _FoodDetailState extends ConsumerState<FoodDetail> {
                               image: DecorationImage(
                                   fit: BoxFit.cover,
                                   image: AssetImage(
-                                      'assets/images/${widget.foodItem.image}'))),
+                                      'assets/images/${widget.image}'))),
                         ),
                         Padding(
                             padding: EdgeInsets.all(5),
-                            child: FavoriteButton(foodId: widget.foodItem.id)
-                            // FloatingActionButton.small(
-                            //   backgroundColor: Colors.white,
-                            //   onPressed: () {
-                            //     toggleFavorite();
-                            //   },
-                            //   shape: RoundedRectangleBorder(
-                            //       borderRadius: BorderRadius.circular(30)),
-                            //   child: Icon(
-                            //     favorite
-                            //         ? Icons.favorite_rounded
-                            //         : Icons.favorite_border_outlined,
-                            //     color: Colors.pink,
-                            //   ),
-                            // ),
-                            ),
-                        // FavoriteButton(foodId: widget.foodItem.id)
+                            child: FavoriteButton(foodId: widget.id)),
                       ],
                     ),
                   ),
@@ -93,7 +86,7 @@ class _FoodDetailState extends ConsumerState<FoodDetail> {
                     children: [
                       Expanded(
                         child: Text(
-                          widget.foodItem.name,
+                          widget.name,
                           style: TextStyle(
                               fontSize: 22, fontWeight: FontWeight.bold),
                         ),
@@ -106,7 +99,7 @@ class _FoodDetailState extends ConsumerState<FoodDetail> {
                       children: [
                         Expanded(
                           child: Text(
-                            widget.foodItem.description,
+                            widget.description,
                             style: TextStyle(
                                 fontSize: 14, color: Colors.grey.shade800),
                           ),
@@ -198,22 +191,7 @@ class _FoodDetailState extends ConsumerState<FoodDetail> {
                     ),
                   ],
                 ),
-                Material(
-                  borderRadius: BorderRadius.circular(10),
-                  color: Colors.blue.shade700,
-                  child: InkWell(
-                    borderRadius: BorderRadius.circular(10),
-                    onTap: () {},
-                    child: Padding(
-                      padding: const EdgeInsets.symmetric(
-                          horizontal: 30, vertical: 10),
-                      child: Text(
-                        'Add to Cart - \$${widget.foodItem.price}',
-                        style: TextStyle(color: Colors.white),
-                      ),
-                    ),
-                  ),
-                )
+                AddToCartButton(id: widget.id, price: widget.price)
               ],
             ),
           ),
