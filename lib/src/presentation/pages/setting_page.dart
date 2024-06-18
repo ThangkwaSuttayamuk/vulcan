@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_application_1/src/presentation/pages/favorite_page.dart';
-import 'package:flutter_application_1/src/presentation/pages/home_page.dart';
+
 import 'package:flutter_application_1/src/presentation/widgets/card/setting_group.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class SettingPage extends StatefulWidget {
   const SettingPage({super.key});
@@ -19,19 +19,23 @@ class _SettingPageState extends State<SettingPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+        backgroundColor: Theme.of(context).scaffoldBackgroundColor,
         appBar: AppBar(
           title: Text(
-            'Setting',
+            AppLocalizations.of(context)?.setting_header ?? 'Setting',
             style: TextStyle(
-                fontWeight: FontWeight.bold,
-                fontSize: 20,
-                color: Colors.grey.shade800),
+              fontWeight: FontWeight.bold,
+              fontSize: 20,
+            ),
           ),
-          backgroundColor: Colors.white,
+          backgroundColor: Theme.of(context).colorScheme.secondary,
         ),
         body: SingleChildScrollView(
           child: Column(children: [
-            SettingGroup(header: 'Setting', setting: _setting),
+            SettingGroup(
+                header: AppLocalizations.of(context)?.setting_header_group ??
+                    'Setting',
+                setting: _setting),
             Padding(
               padding: const EdgeInsets.all(8.0),
               child: MaterialButton(
@@ -39,21 +43,13 @@ class _SettingPageState extends State<SettingPage> {
                 shape: RoundedRectangleBorder(
                     side: BorderSide(color: Colors.grey),
                     borderRadius: BorderRadius.circular(10)),
-                onPressed: () {
-
-                },
-                child: Text('Log Out'),
+                onPressed: () {},
+                child: Text(
+                  AppLocalizations.of(context)?.log_out ?? 'Log Out',
+                ),
               ),
             ),
           ]),
         ));
-  }
-
-  getPageByname(String name) {
-    return name == 'setting'
-        ? SettingPage()
-        : name == 'favorite'
-            ? FavoritePage()
-            : HomePage();
   }
 }

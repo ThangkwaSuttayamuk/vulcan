@@ -1,5 +1,3 @@
-import 'package:flutter_riverpod/flutter_riverpod.dart';
-
 class FilterState {
   final String filterName;
 
@@ -9,4 +7,3 @@ class FilterState {
     return FilterState(filterName: filterName ?? this.filterName);
   }
 }
-

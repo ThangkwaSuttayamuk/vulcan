@@ -3,8 +3,8 @@ import 'dart:convert';
 import 'package:flutter/services.dart';
 import 'package:path/path.dart';
 import 'package:sqflite/sqflite.dart';
+
 import '../../../domain/entities/food_entity.dart';
-import '../../../domain/entities/cart_entity.dart';
 
 class DatabaseHelper {
   static final DatabaseHelper _instance = DatabaseHelper._internal();
@@ -19,6 +19,7 @@ class DatabaseHelper {
   Future<Database> get database async {
     if (_database != null) return _database!;
     _database = await _initDatabase();
+    importFood();
     return _database!;
   }
 
@@ -40,6 +41,15 @@ class DatabaseHelper {
 
         db.execute('''
           CREATE TABLE cart (
+            id INTEGER PRIMARY KEY,
+            food_id INTEGER,
+            quantity INTEGER,
+            FOREIGN KEY (food_id) REFERENCES foods(id)
+          )
+        ''');
+
+        db.execute('''
+          CREATE TABLE cartUser (
             id INTEGER PRIMARY KEY,
             food_id INTEGER,
             quantity INTEGER,

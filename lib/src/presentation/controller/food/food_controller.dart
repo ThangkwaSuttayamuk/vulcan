@@ -14,47 +14,60 @@ class FoodListNotifier extends StateNotifier<FoodListState> {
   final InsertMultipleFoodsUsecase insertMultipleFoodsUsecase;
 
   FoodListNotifier(this.getFoodsUsecase, this.insertMultipleFoodsUsecase)
-      : super(FoodListState(
-          foods: [],
-        ));
+      : super(const FoodListState());
 
   Future<void> fetchFoods() async {
-    state = state.copyWith(isLoading: true);
+    state = state.copyWith(status: HomeStatus.loading);
+    // await Future.delayed(Duration(seconds: 1));
     try {
-      String jsonString = await rootBundle.loadString('assets/food.json');
-      List<dynamic> jsonData = jsonDecode(jsonString);
-      List<FoodEntity> foodList = jsonData.map((item) {
-        return FoodEntity.fromJson(item);
-      }).toList();
-      await insertMultipleFoodsUsecase(foodList);
       List<FoodEntity> response = await getFoodsUsecase.call(NoParams());
-      state = state.copyWith(foods: response, isLoading: false);
+      state = state.copyWith(
+          foods: response,
+          status: response == [] ? HomeStatus.empty : HomeStatus.success);
     } catch (e) {
-      state = state.copyWith(error: e.toString(), isLoading: false);
+      state = state.copyWith(error: e.toString(), status: HomeStatus.failure);
     }
   }
 
-  void filterFoods(String query) {
-    if (query.isEmpty) {
-      fetchFoods();
-    } else {
-      final filteredFoods = state.foods
-          .where(
-              (food) => food.name.toLowerCase().contains(query.toLowerCase()))
-          .toList();
-      state = state.copyWith(foods: filteredFoods);
+  void searchFoods(String query) async {
+    state = state.copyWith(searchStatus: HomeStatus.loading);
+    try {
+      if (query == '') {
+        state =
+            state.copyWith(searchfoods: [], searchStatus: HomeStatus.initial);
+      } else {
+        List<FoodEntity>? filteredFoods = state.foods
+            ?.where(
+                (food) => food.name.toLowerCase().contains(query.toLowerCase()))
+            .toList();
+        state = state.copyWith(
+            searchfoods: filteredFoods,
+            searchStatus: filteredFoods == null || filteredFoods.isEmpty
+                ? HomeStatus.empty
+                : HomeStatus.success);
+      }
+    } catch (e) {
+      state = state.copyWith(error: e.toString(), status: HomeStatus.failure);
     }
   }
 
-  void filterFoodsByCategory(String category) {
-    if (category == '' || category.isEmpty) {
-      fetchFoods();
-    } else {
+  Future<void> filterFoodsByCategory(String category) async {
+    state = state.copyWith(status: HomeStatus.loading);
+    // await Future.delayed(Duration(seconds: 1));
+
+    try {
       final filteredFoods = state.foods
-          .where((food) =>
+          ?.where((food) =>
               food.name.toLowerCase().contains(category.toLowerCase()))
           .toList();
-      state = state.copyWith(foods: filteredFoods);
+      state = state.copyWith(
+          filterfoods: filteredFoods,
+          status: filteredFoods == null || filteredFoods.isEmpty
+              ? HomeStatus.empty
+              : HomeStatus.success);
+      print(filteredFoods);
+    } catch (e) {
+      state = state.copyWith(error: e.toString(), status: HomeStatus.failure);
     }
   }
 }

@@ -1,12 +1,14 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_application_1/src/presentation/controller/cart/cart_provider.dart';
+
 import 'package:flutter_application_1/src/presentation/controller/food/food_provider.dart';
-import 'package:flutter_application_1/src/presentation/pages/food_detail_page.dart';
+import 'package:flutter_application_1/src/presentation/controller/theme/theme_provider.dart';
+import 'package:flutter_application_1/src/presentation/pages/search_page.dart';
 import 'package:flutter_application_1/src/presentation/widgets/button/filter_button.dart';
 import 'package:flutter_application_1/src/presentation/widgets/button/regular_icon_button.dart';
-import 'package:flutter_application_1/src/presentation/widgets/card/food_card.dart';
 import 'package:flutter_application_1/src/presentation/widgets/footer/footer.dart';
+import 'package:flutter_application_1/src/presentation/widgets/list/food_list.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class HomePage extends ConsumerStatefulWidget {
   const HomePage({super.key});
@@ -16,8 +18,6 @@ class HomePage extends ConsumerStatefulWidget {
 }
 
 class _HomePageState extends ConsumerState<HomePage> {
-  final _searchController = TextEditingController();
-
   final List<String> _filter = [
     "burger",
     "pizza",
@@ -28,7 +28,6 @@ class _HomePageState extends ConsumerState<HomePage> {
 
   @override
   void initState() {
-    _searchController.text = "";
     WidgetsBinding.instance.addPostFrameCallback((_) {
       ref.read(foodListProvider.notifier).fetchFoods();
     });
@@ -37,8 +36,6 @@ class _HomePageState extends ConsumerState<HomePage> {
 
   @override
   Widget build(BuildContext context) {
-    final foodListState = ref.watch(foodListProvider);
-
     return Stack(
       alignment: Alignment.bottomCenter,
       children: [
@@ -53,11 +50,10 @@ class _HomePageState extends ConsumerState<HomePage> {
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
                         Text(
-                          'Cashier',
-                          style: TextStyle(
-                              fontSize: 20,
-                              fontWeight: FontWeight.bold,
-                              color: Colors.blue.shade900),
+                          AppLocalizations.of(context)?.home_header ??
+                              'Cashier',
+                          style: Theme.of(context).textTheme.titleLarge,
+                          // color: Colors.blue.shade800
                         ),
                         Row(
                           children: [
@@ -73,29 +69,44 @@ class _HomePageState extends ConsumerState<HomePage> {
                     Padding(
                       padding: const EdgeInsets.symmetric(vertical: 20),
                       child: SizedBox(
-                        height: 50,
-                        child: Consumer(builder: (BuildContext context,
-                            WidgetRef ref, Widget? child) {
-                          return TextField(
-                              controller: _searchController,
-                              onChanged: (value) {
-                                ref
-                                    .read(foodListProvider.notifier)
-                                    .filterFoods(value);
-                              },
-                              decoration: InputDecoration(
-                                  focusedBorder: OutlineInputBorder(
-                                      borderRadius: BorderRadius.circular(30),
-                                      borderSide: BorderSide(
-                                        color: Colors.black,
-                                      )),
-                                  prefixIcon: const Icon(Icons.search),
-                                  hintText: "Search...",
-                                  border: OutlineInputBorder(
-                                      borderRadius:
-                                          BorderRadius.circular(30.0))));
-                        }),
-                      ),
+                          height: 50,
+                          child: GestureDetector(
+                            onTap: () {
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) => SearchPage()),
+                              );
+                            },
+                            child: AbsorbPointer(
+                              child: TextField(
+                                  onTap: () {
+                                    Navigator.push(
+                                        context,
+                                        MaterialPageRoute(
+                                            builder: (context) =>
+                                                SearchPage()));
+                                  },
+                                  decoration: InputDecoration(
+                                      filled: true,
+                                      fillColor: Theme.of(context)
+                                          .colorScheme
+                                          .secondary,
+                                      focusedBorder: OutlineInputBorder(
+                                          borderRadius:
+                                              BorderRadius.circular(30),
+                                          borderSide: BorderSide(
+                                            color: Colors.black,
+                                          )),
+                                      prefixIcon: const Icon(Icons.search),
+                                      hintText: AppLocalizations.of(context)
+                                              ?.home_search ??
+                                          'Search...',
+                                      border: OutlineInputBorder(
+                                          borderRadius:
+                                              BorderRadius.circular(30.0)))),
+                            ),
+                          )),
                     ),
                     Padding(
                       padding: const EdgeInsets.all(10.0),
@@ -115,9 +126,12 @@ class _HomePageState extends ConsumerState<HomePage> {
                       child: Row(
                         children: [
                           Text(
-                            "Menu",
+                            AppLocalizations.of(context)?.home_menu ?? 'Menu',
                             style: TextStyle(
-                                color: Color.fromARGB(190, 13, 72, 161),
+                                color: Theme.of(context)
+                                    .textTheme
+                                    .titleLarge
+                                    ?.color,
                                 fontWeight: FontWeight.bold),
                           ),
                         ],
@@ -126,49 +140,7 @@ class _HomePageState extends ConsumerState<HomePage> {
                   ],
                 ),
               ),
-              Expanded(
-                child: foodListState.isLoading
-                    ? Center(child: CircularProgressIndicator())
-                    : foodListState.error != null
-                        ? Center(child: Text('Error: ${foodListState.error}'))
-                        : GridView.builder(
-                            padding: const EdgeInsets.only(
-                                bottom: 100, left: 20, right: 20),
-                            gridDelegate:
-                                SliverGridDelegateWithFixedCrossAxisCount(
-                              crossAxisCount: 2,
-                              crossAxisSpacing: 20,
-                              mainAxisSpacing: 40,
-                              childAspectRatio:
-                                  (MediaQuery.of(context).size.width /
-                                          MediaQuery.of(context).size.height) /
-                                      0.5,
-                            ),
-                            itemCount: foodListState.foods.length,
-                            itemBuilder: (context, index) {
-                              final foodItem = foodListState.foods[index];
-                              return GestureDetector(
-                                onTap: () {
-                                  Navigator.push(
-                                      context,
-                                      MaterialPageRoute<void>(
-                                          builder: (BuildContext context) =>
-                                              FoodDetail(
-                                                id: foodItem.id,
-                                                name: foodItem.name,
-                                                description:
-                                                    foodItem.description,
-                                                price: foodItem.price,
-                                                image: foodItem.image,
-                                              )));
-                                },
-                                child: FoodCard(
-                                  food: foodItem,
-                                ),
-                              );
-                            },
-                          ),
-              ),
+              FoodList()
             ],
           ),
         ),

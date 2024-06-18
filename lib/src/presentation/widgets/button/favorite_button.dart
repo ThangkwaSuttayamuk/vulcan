@@ -30,11 +30,7 @@ class _FavoriteButtonState extends ConsumerState<FavoriteButton> {
     return FloatingActionButton.small(
       backgroundColor: Colors.white,
       onPressed: () {
-        // toggleFavorite();
-        // favoriteFoodState.removeFavorite(widget.foodId);
-        // favoriteFoodState.addFavorite(widget.foodId);
-
-        print(favoritelistState.favoriteFoods);
+     
         favoriteState.isFavorite == true
             ? favoriteFoodState.removeFavorite(widget.foodId)
             : favoriteFoodState.addFavorite(widget.foodId);

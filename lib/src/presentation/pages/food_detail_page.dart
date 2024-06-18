@@ -4,6 +4,7 @@ import 'package:flutter_application_1/src/presentation/controller/quantity/quant
 import 'package:flutter_application_1/src/presentation/widgets/button/add_to_cart_button.dart';
 import 'package:flutter_application_1/src/presentation/widgets/button/favorite_button.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class FoodDetail extends ConsumerStatefulWidget {
   final int id;
@@ -39,21 +40,21 @@ class _FoodDetailState extends ConsumerState<FoodDetail> {
   Widget build(BuildContext context) {
     final quantityState = ref.watch(quantityProvider);
     final quantityControllerState = ref.read(quantityProvider.notifier);
-    // final cartlistState = ref.read(cartProvider.notifier);
 
     return Stack(
       alignment: Alignment.bottomCenter,
       children: [
         Scaffold(
+          backgroundColor: Theme.of(context).scaffoldBackgroundColor,
           appBar: AppBar(
             title: Text(
-              'Items',
+              AppLocalizations.of(context)?.detail_header ?? 'Items',
               style: TextStyle(
-                  fontWeight: FontWeight.bold,
-                  fontSize: 20,
-                  color: Colors.grey.shade800),
+                fontWeight: FontWeight.bold,
+                fontSize: 20,
+              ),
             ),
-            backgroundColor: Theme.of(context).colorScheme.background,
+            backgroundColor: Theme.of(context).colorScheme.secondary,
           ),
           body: SingleChildScrollView(
             child: SafeArea(
@@ -62,7 +63,7 @@ class _FoodDetailState extends ConsumerState<FoodDetail> {
               child: Column(
                 children: [
                   Padding(
-                    padding: const EdgeInsets.only(top: 10, bottom: 15),
+                    padding: const EdgeInsets.only(top: 15, bottom: 15),
                     child: Stack(
                       alignment: Alignment.bottomRight,
                       children: [
@@ -101,7 +102,12 @@ class _FoodDetailState extends ConsumerState<FoodDetail> {
                           child: Text(
                             widget.description,
                             style: TextStyle(
-                                fontSize: 14, color: Colors.grey.shade800),
+                              fontSize: 14,
+                              color: Theme.of(context)
+                                  .textTheme
+                                  .titleMedium
+                                  ?.color,
+                            ),
                           ),
                         ),
                       ],
@@ -111,11 +117,12 @@ class _FoodDetailState extends ConsumerState<FoodDetail> {
                     children: [
                       Expanded(
                         child: Text(
-                          'Ingredients:',
+                          AppLocalizations.of(context)?.detail_ingredient ??
+                              'Ingredints:',
                           style: TextStyle(
-                              fontSize: 18,
-                              fontWeight: FontWeight.bold,
-                              color: Colors.black),
+                            fontSize: 18,
+                            fontWeight: FontWeight.bold,
+                          ),
                         ),
                       ),
                     ],
@@ -131,7 +138,7 @@ class _FoodDetailState extends ConsumerState<FoodDetail> {
         Container(
           alignment: Alignment.topCenter,
           height: 100,
-          color: Colors.white,
+          color: Theme.of(context).colorScheme.secondary,
           child: Padding(
             padding: const EdgeInsets.only(left: 30, right: 30, top: 15),
             child: Row(
@@ -141,7 +148,7 @@ class _FoodDetailState extends ConsumerState<FoodDetail> {
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     Material(
-                      color: Colors.white,
+                      color: Theme.of(context).colorScheme.secondary,
                       borderRadius: BorderRadius.circular(30),
                       child: InkWell(
                         borderRadius: BorderRadius.circular(30),
@@ -154,7 +161,6 @@ class _FoodDetailState extends ConsumerState<FoodDetail> {
                               border: Border.all(color: Colors.grey.shade800)),
                           child: Icon(
                             Icons.remove,
-                            color: Colors.grey.shade800,
                             size: 20,
                           ),
                         ),
@@ -163,14 +169,14 @@ class _FoodDetailState extends ConsumerState<FoodDetail> {
                     SizedBox(
                         width: 50,
                         child: Material(
-                          color: Colors.white,
+                          color: Theme.of(context).colorScheme.secondary,
                           child: Text(
                             quantityState.quantity.toString(),
                             textAlign: TextAlign.center,
                           ),
                         )),
                     Material(
-                      color: Colors.white,
+                      color: Theme.of(context).colorScheme.secondary,
                       borderRadius: BorderRadius.circular(30),
                       child: InkWell(
                         borderRadius: BorderRadius.circular(30),
@@ -183,7 +189,6 @@ class _FoodDetailState extends ConsumerState<FoodDetail> {
                               border: Border.all(color: Colors.grey.shade800)),
                           child: Icon(
                             Icons.add,
-                            color: Colors.grey.shade800,
                             size: 20,
                           ),
                         ),

@@ -1,13 +1,25 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_application_1/src/domain/entities/cart_entity.dart';
 import 'package:flutter_application_1/src/presentation/controller/cart/cart_provider.dart';
 import 'package:flutter_application_1/src/presentation/pages/food_detail_page.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 class FoodCardAddRemove extends ConsumerWidget {
-  final CartEntity food;
+  final int foodId;
+  final String name;
+  final String description;
+  final double price;
+  final String image;
+  final int quantity;
 
-  const FoodCardAddRemove({super.key, required this.food});
+  const FoodCardAddRemove({
+    super.key,
+    required this.foodId,
+    required this.name,
+    required this.description,
+    required this.price,
+    required this.image,
+    required this.quantity,
+  });
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -17,27 +29,26 @@ class FoodCardAddRemove extends ConsumerWidget {
       child: Container(
         decoration: BoxDecoration(boxShadow: [
           BoxShadow(
-            color: Colors.grey,
+            color: Theme.of(context).cardTheme.color!,
             spreadRadius: -6,
             blurRadius: 7,
-            offset: Offset(0, 10),
+            offset: const Offset(0, 10),
           )
         ]),
         child: Material(
           borderRadius: BorderRadius.circular(20),
-          color: Colors.white,
+          color: Theme.of(context).colorScheme.secondary,
           child: InkWell(
             onTap: () {
-              print(food.foodId);
               Navigator.push(
                   context,
                   MaterialPageRoute<void>(
                       builder: (BuildContext context) => FoodDetail(
-                            id: food.foodId,
-                            name: food.name,
-                            description: food.description,
-                            price: food.price,
-                            image: food.image,
+                            id: foodId,
+                            name: name,
+                            description: description,
+                            price: price,
+                            image: image,
                           )));
             },
             borderRadius: BorderRadius.circular(20),
@@ -54,8 +65,7 @@ class FoodCardAddRemove extends ConsumerWidget {
                           borderRadius: BorderRadius.circular(20),
                           image: DecorationImage(
                               fit: BoxFit.cover,
-                              image:
-                                  AssetImage('assets/images/${food.image}'))),
+                              image: AssetImage('assets/images/$image'))),
                     ),
                   ),
                   Expanded(
@@ -65,7 +75,7 @@ class FoodCardAddRemove extends ConsumerWidget {
                           children: [
                             Expanded(
                               child: Text(
-                                food.name.toString(),
+                                name.toString(),
                                 maxLines: 1,
                                 overflow: TextOverflow.ellipsis,
                               ),
@@ -78,18 +88,18 @@ class FoodCardAddRemove extends ConsumerWidget {
                         Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
-                            Text('\$${food.price}'),
+                            Text('\$$price'),
                             Row(
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
                                 Material(
-                                  color: Colors.white,
+                                  color:
+                                      Theme.of(context).colorScheme.secondary,
                                   borderRadius: BorderRadius.circular(30),
                                   child: InkWell(
                                     borderRadius: BorderRadius.circular(30),
                                     onTap: () {
-                                      // print(food.foodId);
-                                      cartState.removeToCart(food.foodId);
+                                      cartState.removeToCart(foodId);
                                     },
                                     child: Container(
                                       decoration: BoxDecoration(
@@ -99,7 +109,6 @@ class FoodCardAddRemove extends ConsumerWidget {
                                               color: Colors.grey.shade800)),
                                       child: Icon(
                                         Icons.remove,
-                                        color: Colors.grey.shade800,
                                         size: 20,
                                       ),
                                     ),
@@ -108,16 +117,17 @@ class FoodCardAddRemove extends ConsumerWidget {
                                 SizedBox(
                                     width: 50,
                                     child: Text(
-                                      food.quantity.toString(),
+                                      quantity.toString(),
                                       textAlign: TextAlign.center,
                                     )),
                                 Material(
-                                  color: Colors.white,
+                                  color:
+                                      Theme.of(context).colorScheme.secondary,
                                   borderRadius: BorderRadius.circular(30),
                                   child: InkWell(
                                     borderRadius: BorderRadius.circular(30),
                                     onTap: () {
-                                      cartState.addToCart(food.foodId, 1);
+                                      cartState.addToCart(foodId, 1);
                                     },
                                     child: Container(
                                       decoration: BoxDecoration(
@@ -127,7 +137,6 @@ class FoodCardAddRemove extends ConsumerWidget {
                                               color: Colors.grey.shade800)),
                                       child: Icon(
                                         Icons.add,
-                                        color: Colors.grey.shade800,
                                         size: 20,
                                       ),
                                     ),

@@ -12,15 +12,22 @@ class CartNotifier extends StateNotifier<CartState> {
 
   CartNotifier(
       this.getCartUsecase, this.addToCartUsecase, this.removeToCartUsecase)
-      : super(CartState(cartList: []));
+      : super(CartState());
 
   Future<void> cartFoods() async {
+    state = state.copyWith(status: CartStatus.loading);
+    // await Future.delayed(Duration(seconds: 1));
+
     state = state.copyWith(isLoading: true);
     try {
       final cartList = await getCartUsecase.call(NoParams());
-      state = state.copyWith(cartList: cartList, isLoading: false);
+      state = state.copyWith(
+          cartList: cartList,
+          isLoading: false,
+          status: cartList.isEmpty ? CartStatus.empty : CartStatus.success);
     } catch (e) {
-      state = state.copyWith(error: e.toString(), isLoading: false);
+      state = state.copyWith(
+          error: e.toString(), isLoading: false, status: CartStatus.failure);
     }
   }
 
@@ -32,7 +39,10 @@ class CartNotifier extends StateNotifier<CartState> {
     try {
       await addToCartUsecase.call(params);
       final cartList = await getCartUsecase.call(NoParams());
-      state = state.copyWith(cartList: cartList, isLoading: false);
+      state = state.copyWith(
+          cartList: cartList,
+          isLoading: false,
+          status: cartList.isEmpty ? CartStatus.empty : CartStatus.success);
     } catch (e) {
       state = state.copyWith(error: e.toString(), isLoading: false);
     }
@@ -44,19 +54,23 @@ class CartNotifier extends StateNotifier<CartState> {
     try {
       await removeToCartUsecase.call(id);
       final cartList = await getCartUsecase.call(NoParams());
-      state = state.copyWith(cartList: cartList, isLoading: false);
+      state = state.copyWith(
+          cartList: cartList,
+          isLoading: false,
+          status: cartList.isEmpty ? CartStatus.empty : CartStatus.success);
     } catch (e) {
       state = state.copyWith(error: e.toString(), isLoading: false);
     }
   }
 
   int getTotalAmount() {
-    return state.cartList.length;
+    return state.cartList?.length ?? 0;
   }
 
   double getTotal() {
     double total = 0;
-    for (var cart in state.cartList) {
+
+    for (var cart in state.cartList ?? []) {
       total = total + (cart.quantity * cart.price);
     }
     return total;

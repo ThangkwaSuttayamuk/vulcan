@@ -13,16 +13,31 @@ class _FooterState extends State<Footer> {
   Widget build(BuildContext context) {
     return Container(
       height: 80,
-      decoration: BoxDecoration(color: Colors.white),
+      decoration: BoxDecoration(
+          color: Theme.of(context).colorScheme.secondary,
+          boxShadow: [
+            BoxShadow(
+              color: Colors.black,
+              spreadRadius: 6,
+              blurRadius: 7,
+              offset: Offset(0, 10),
+            )
+          ]),
       child: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 30),
         child: Row(
           crossAxisAlignment: CrossAxisAlignment.start,
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
-            FooterButton(name: "favorite",),
-            FooterButton(name: "home",),
-            FooterButton(name: "setting",)
+            FooterButton(
+              name: "order",
+            ),
+            FooterButton(
+              name: "home",
+            ),
+            FooterButton(
+              name: "setting",
+            )
           ],
         ),
       ),

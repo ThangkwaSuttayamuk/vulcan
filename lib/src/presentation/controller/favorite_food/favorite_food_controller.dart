@@ -15,37 +15,47 @@ class FavoriteFoodNotifier extends StateNotifier<FavoriteFoodState> {
       : super(FavoriteFoodState(favoriteFoods: []));
 
   Future<void> fetchFavoriteFoods() async {
-    print('object');
-    state = state.copyWith(isLoading: true);
-    print('object');
+    state = state.copyWith(status: FavoriteFoodStatus.loading);
+    // await Future.delayed(Duration(seconds: 1));
+
     try {
       final favoriteFoods = await getAllFavoritesUsecase.call(NoParams());
-      state = state.copyWith(favoriteFoods: favoriteFoods, isLoading: false);
+      state = state.copyWith(
+          favoriteFoods: favoriteFoods,
+          status: favoriteFoods.isEmpty
+              ? FavoriteFoodStatus.empty
+              : FavoriteFoodStatus.success);
     } catch (e) {
-      state = state.copyWith(error: e.toString(), isLoading: false);
+      state = state.copyWith(
+          error: e.toString(), status: FavoriteFoodStatus.failure);
     }
   }
 
   Future<void> addFavorite(int id) async {
-    state = state.copyWith(isLoading: true);
     try {
       await addToFavoritesUsecase.call(id);
       final favoriteFoods = await getAllFavoritesUsecase.call(NoParams());
-      state = state.copyWith(favoriteFoods: favoriteFoods, isLoading: false);
+      state = state.copyWith(
+          favoriteFoods: favoriteFoods,
+          status: favoriteFoods.isEmpty
+              ? FavoriteFoodStatus.empty
+              : FavoriteFoodStatus.success);
     } catch (e) {
-      state = state.copyWith(error: e.toString(), isLoading: false);
+      state = state.copyWith(error: e.toString());
     }
   }
 
   Future<void> removeFavorite(int id) async {
-    state = state.copyWith(isLoading: true);
     try {
       await removeFavoriteUsecase.call(id);
       final favoriteFoods = await getAllFavoritesUsecase.call(NoParams());
-      state = state.copyWith(favoriteFoods: favoriteFoods, isLoading: false);
-      state = state.copyWith(isLoading: false);
+      state = state.copyWith(
+          favoriteFoods: favoriteFoods,
+          status: favoriteFoods.isEmpty
+              ? FavoriteFoodStatus.empty
+              : FavoriteFoodStatus.success);
     } catch (e) {
-      state = state.copyWith(error: e.toString(), isLoading: false);
+      state = state.copyWith(error: e.toString());
     }
   }
 }

@@ -1,18 +1,20 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_application_1/src/presentation/controller/theme/theme_provider.dart';
 import 'package:flutter_application_1/src/presentation/pages/cart_page.dart';
 import 'package:flutter_application_1/src/presentation/pages/favorite_page.dart';
 import 'package:flutter_application_1/src/presentation/pages/home_page.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-class RegularIconButton extends StatefulWidget {
+class RegularIconButton extends ConsumerStatefulWidget {
   final String name;
 
   const RegularIconButton({super.key, required this.name});
 
   @override
-  State<RegularIconButton> createState() => _RegularIconButtonState();
+  _RegularIconButtonState createState() => _RegularIconButtonState();
 }
 
-class _RegularIconButtonState extends State<RegularIconButton> {
+class _RegularIconButtonState extends ConsumerState<RegularIconButton> {
   @override
   Widget build(BuildContext context) {
     final Map<String, IconData> iconMap = {
@@ -24,6 +26,7 @@ class _RegularIconButtonState extends State<RegularIconButton> {
     final IconData? selectedIcon = iconMap[name];
 
     return Material(
+      color: Theme.of(context).colorScheme.primary,
       borderRadius: BorderRadius.circular(30),
       child: InkWell(
         borderRadius: BorderRadius.circular(30),
@@ -36,7 +39,7 @@ class _RegularIconButtonState extends State<RegularIconButton> {
         },
         child: Icon(
           selectedIcon ?? Icons.error, // default icon if not found
-          color: Color.fromARGB(190, 13, 72, 161),
+          color: Theme.of(context).textTheme.titleLarge?.color,
         ),
       ),
     );

@@ -15,7 +15,7 @@ class AddToCartButton extends ConsumerWidget {
 
     return Material(
       borderRadius: BorderRadius.circular(10),
-      color: Colors.blue.shade700,
+      color: Colors.blue.shade800,
       child: InkWell(
         borderRadius: BorderRadius.circular(10),
         onTap: () {

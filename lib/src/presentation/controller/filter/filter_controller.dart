@@ -7,7 +7,6 @@ class FilterNotifier extends StateNotifier<FilterState> {
 
   void setFilter(String filterName) {
     if (state.filterName != filterName) {
-      // print(state.filterName);
       state = state.copyWith(filterName: filterName);
     } else {
       state = state.copyWith(filterName: '');

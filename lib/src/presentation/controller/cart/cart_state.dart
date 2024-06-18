@@ -1,16 +1,16 @@
 import 'package:flutter_application_1/src/domain/entities/cart_entity.dart';
 
-enum HomeStatus { initial, loading, success, failure, empty }
+enum CartStatus { initial, loading, success, failure, empty }
 
 class CartState {
-  final List<CartEntity> cartList;
-  final HomeStatus? status;
+  final List<CartEntity>? cartList;
+  final CartStatus status;
   final bool isLoading;
   final String? error;
 
   CartState({
-    required this.cartList,
-    this.status,
+     this.cartList,
+    this.status = CartStatus.initial,
     this.isLoading = false,
     this.error,
   });
@@ -19,7 +19,7 @@ class CartState {
       {List<CartEntity>? cartList,
       bool? isLoading,
       String? error,
-      HomeStatus? status}) {
+      CartStatus? status}) {
     return CartState(
         cartList: cartList ?? this.cartList,
         isLoading: isLoading ?? this.isLoading,

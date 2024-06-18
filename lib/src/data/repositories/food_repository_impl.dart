@@ -47,7 +47,7 @@ class FoodRepositoryImpl implements FoodRepository {
       where: 'id = ?',
       whereArgs: [id],
     );
-   
+
     if (maps.isNotEmpty) {
       return FoodEntity.fromMap(maps.first);
     } else {
@@ -76,9 +76,32 @@ class FoodRepositoryImpl implements FoodRepository {
   }
 
   @override
+  Future<void> addToUserFavorite(int userId, int foodId) async {
+    final db = await databaseHelper.database;
+    await db.insert(
+      'favorites',
+      {
+        'user_id': userId,
+        'food_id': foodId,
+      },
+      conflictAlgorithm: ConflictAlgorithm.replace,
+    );
+  }
+
+  @override
   Future<void> removeFavorite(int foodId) async {
     final db = await databaseHelper.database;
     await db.delete('favorites', where: 'food_id = ?', whereArgs: [foodId]);
+  }
+
+  @override
+  Future<void> removeUserFavorite(int userId, int foodId) async {
+    final db = await databaseHelper.database;
+    await db.delete(
+      'favorites',
+      where: 'user_id = ? AND food_id = ?',
+      whereArgs: [userId, foodId],
+    );
   }
 
   @override

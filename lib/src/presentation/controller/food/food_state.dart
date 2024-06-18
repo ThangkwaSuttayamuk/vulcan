@@ -2,21 +2,39 @@ import 'package:flutter_application_1/src/domain/entities/food_entity.dart';
 
 enum HomeStatus { initial, loading, success, failure, empty }
 
+
 class FoodListState {
-  final List<FoodEntity> foods;
-  final bool isLoading;
+  final HomeStatus status;
+  final HomeStatus searchStatus;
+  final List<FoodEntity>? foods;
+  final List<FoodEntity>? filterfoods;
+  final List<FoodEntity>? searchfoods;
+
   final String? error;
 
-  FoodListState({required this.foods, this.isLoading = false, this.error});
+  const FoodListState({
+    this.status = HomeStatus.initial,
+    this.searchStatus = HomeStatus.initial,
+    this.foods,
+    this.filterfoods,
+    this.searchfoods,
+    this.error,
+  });
 
   FoodListState copyWith({
+    HomeStatus? status,
+    HomeStatus? searchStatus,
     List<FoodEntity>? foods,
-    bool? isLoading,
+    List<FoodEntity>? filterfoods,
+    List<FoodEntity>? searchfoods,
     String? error,
   }) {
     return FoodListState(
+      status: status ?? this.status,
+      searchStatus: searchStatus ?? this.searchStatus,
       foods: foods ?? this.foods,
-      isLoading: isLoading ?? this.isLoading,
+      filterfoods: filterfoods ?? this.filterfoods,
+      searchfoods: searchfoods ?? this.searchfoods,
       error: error ?? this.error,
     );
   }
