@@ -1,13 +1,12 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_application_1/src/presentation/pages/cart_page.dart';
 import 'package:flutter_application_1/src/presentation/pages/home_page.dart';
 import 'package:flutter_application_1/src/presentation/pages/order_page.dart';
 import 'package:flutter_application_1/src/presentation/pages/setting_page.dart';
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class FooterButton extends StatefulWidget {
   final String name;
-  const FooterButton({super.key, required this.name});
+  final String title;
+  const FooterButton({super.key, required this.name, required this.title});
 
   @override
   State<FooterButton> createState() => _FooterButtonState();
@@ -52,7 +51,7 @@ class _FooterButtonState extends State<FooterButton> {
                 Icon(
                   selectedIcon ?? Icons.error, // default icon if not found
                 ),
-                Text(widget.name)
+                Text(widget.title)
               ],
             )),
       ),

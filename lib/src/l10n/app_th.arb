@@ -25,5 +25,8 @@
     "theme_header": "เลือกธีม",
     "theme_light": "ธีมสว่าง",
     "theme_dark": "ธีมมืด",
+    "footer_order": "คำสั่งซื้อ",
+    "footer_home": "หน้าหลัก",
+    "footer_setting": "ตั้งค่า",
     "log_out": "ออกจากระบบ"
 }

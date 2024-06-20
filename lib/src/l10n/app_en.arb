@@ -25,6 +25,9 @@
     "theme_header": "Choose Theme",
     "theme_light": "Light Theme",
     "theme_dark": "Dark Theme",
+    "footer_order": "order",
+    "footer_home": "home",
+    "footer_setting": "setting",
     "log_out": "Log Out"
 }
   

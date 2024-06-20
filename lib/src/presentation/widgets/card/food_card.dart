@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_application_1/src/domain/entities/food_entity.dart';
 import 'package:flutter_application_1/src/presentation/pages/food_detail_page.dart';
 
 class FoodCard extends StatelessWidget {

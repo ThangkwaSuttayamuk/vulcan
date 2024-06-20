@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_application_1/src/presentation/widgets/footer/footer_button.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class Footer extends StatefulWidget {
   const Footer({super.key});
@@ -31,12 +32,15 @@ class _FooterState extends State<Footer> {
           children: [
             FooterButton(
               name: "order",
+              title: AppLocalizations.of(context)?.footer_order ?? 'order',
             ),
             FooterButton(
               name: "home",
+              title: AppLocalizations.of(context)?.footer_home ?? 'home',
             ),
             FooterButton(
               name: "setting",
+              title: AppLocalizations.of(context)?.footer_setting ?? 'setting',
             )
           ],
         ),

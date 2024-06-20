@@ -1,3 +1,5 @@
+import 'dart:ui';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_application_1/src/presentation/controller/cart/cart_provider.dart';
 import 'package:flutter_application_1/src/presentation/controller/quantity/quantity_provider.dart';
@@ -5,6 +7,7 @@ import 'package:flutter_application_1/src/presentation/widgets/button/add_to_car
 import 'package:flutter_application_1/src/presentation/widgets/button/favorite_button.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:flutter_application_1/gen/assets.gen.dart';
 
 class FoodDetail extends ConsumerStatefulWidget {
   final int id;

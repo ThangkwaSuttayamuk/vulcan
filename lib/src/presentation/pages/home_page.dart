@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 
 import 'package:flutter_application_1/src/presentation/controller/food/food_provider.dart';
-import 'package:flutter_application_1/src/presentation/controller/theme/theme_provider.dart';
 import 'package:flutter_application_1/src/presentation/pages/search_page.dart';
 import 'package:flutter_application_1/src/presentation/widgets/button/filter_button.dart';
 import 'package:flutter_application_1/src/presentation/widgets/button/regular_icon_button.dart';

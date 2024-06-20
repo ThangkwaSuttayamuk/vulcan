@@ -19,16 +19,17 @@ class DatabaseHelper {
   Future<Database> get database async {
     if (_database != null) return _database!;
     _database = await _initDatabase();
-    importFood();
+    await importFood();
     return _database!;
   }
 
   Future<Database> _initDatabase() async {
-    String path = join(await getDatabasesPath(), 'food_db.db');
+    String path = join(await getDatabasesPath(), 'food_database.db');
     return await openDatabase(
       path,
-      onCreate: (db, version) {
-        db.execute('''
+      version: 1,
+      onCreate: (Database db, int version) async {
+        await db.execute('''
           CREATE TABLE foods (
             id INTEGER PRIMARY KEY,
             name TEXT,
@@ -39,7 +40,7 @@ class DatabaseHelper {
           )
         ''');
 
-        db.execute('''
+        await db.execute('''
           CREATE TABLE cart (
             id INTEGER PRIMARY KEY,
             food_id INTEGER,
@@ -48,24 +49,34 @@ class DatabaseHelper {
           )
         ''');
 
-        db.execute('''
-          CREATE TABLE cartUser (
-            id INTEGER PRIMARY KEY,
-            food_id INTEGER,
-            quantity INTEGER,
-            FOREIGN KEY (food_id) REFERENCES foods(id)
-          )
-        ''');
-
-        db.execute('''
+        await db.execute('''
           CREATE TABLE favorites (
             id INTEGER PRIMARY KEY,
             food_id INTEGER,
             FOREIGN KEY (food_id) REFERENCES foods(id)
           )
         ''');
+
+        await db.execute('''
+          CREATE TABLE orders (
+            id INTEGER PRIMARY KEY AUTOINCREMENT,
+            address TEXT,
+            tel TEXT,
+            order_date TEXT
+          )
+        ''');
+
+        await db.execute('''
+          CREATE TABLE order_items (
+            id INTEGER PRIMARY KEY AUTOINCREMENT,
+            order_id INTEGER,
+            food_id INTEGER,
+            quantity INTEGER,
+            FOREIGN KEY (order_id) REFERENCES orders(id),
+            FOREIGN KEY (food_id) REFERENCES foods(id)
+          )
+        ''');
       },
-      version: 1,
     );
   }
 

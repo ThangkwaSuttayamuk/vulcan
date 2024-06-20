@@ -65,7 +65,6 @@ class FoodListNotifier extends StateNotifier<FoodListState> {
           status: filteredFoods == null || filteredFoods.isEmpty
               ? HomeStatus.empty
               : HomeStatus.success);
-      print(filteredFoods);
     } catch (e) {
       state = state.copyWith(error: e.toString(), status: HomeStatus.failure);
     }

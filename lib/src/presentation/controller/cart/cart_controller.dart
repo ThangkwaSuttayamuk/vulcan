@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter_application_1/src/core/usecase/usecase.dart';
 import 'package:flutter_application_1/src/domain/usecases/add_to_cart_usecase.dart';
 import 'package:flutter_application_1/src/domain/usecases/get_cart_usecase.dart';
@@ -63,8 +65,36 @@ class CartNotifier extends StateNotifier<CartState> {
     }
   }
 
+  Future<void> initData() async {
+    state = state.copyWith(
+        address: '',
+        tel: '',
+        telStatus: CartStatus.empty,
+        addressStatus: CartStatus.empty);
+  }
+
+  Future<void> setAddress(String address) async {
+    state = state.copyWith(
+        address: address,
+        addressStatus: address.isEmpty ? CartStatus.empty : CartStatus.success);
+  }
+
+  Future<void> setTel(String tel) async {
+    state = state.copyWith(
+        tel: tel,
+        telStatus: tel.isEmpty ? CartStatus.empty : CartStatus.success);
+  }
+
   int getTotalAmount() {
     return state.cartList?.length ?? 0;
+  }
+
+  String getAddress() {
+    return state.address ?? '';
+  }
+
+  String getTel() {
+    return state.tel ?? '';
   }
 
   double getTotal() {

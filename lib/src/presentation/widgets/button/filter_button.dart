@@ -21,7 +21,7 @@ class FilterButton extends ConsumerWidget {
           borderRadius: BorderRadius.circular(10),
           side: BorderSide(
             color: theme.theme ? Colors.transparent : Colors.blue.shade800,
-            width: filterState.filterName == filters[index] ? 2 : 2,
+            width: 2,
           )),
       color: filterState.filterName == filters[index]
           ? Colors.white
