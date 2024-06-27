@@ -3,8 +3,10 @@ import 'package:flutter_application_1/src/presentation/controller/favorite_food/
 import 'package:flutter_application_1/src/presentation/controller/favorite_food/favorite_food_state.dart';
 import 'package:flutter_application_1/src/presentation/pages/food_detail_page.dart';
 import 'package:flutter_application_1/src/presentation/widgets/card/food_card.dart';
+import 'package:flutter_application_1/src/presentation/widgets/loading/shimmer_box.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:go_router/go_router.dart';
 
 class FavoriteList extends ConsumerWidget {
   const FavoriteList({super.key});
@@ -17,7 +19,11 @@ class FavoriteList extends ConsumerWidget {
         builder: (BuildContext context, WidgetRef refHome, Widget? widget) {
       switch (favoritelistState.status) {
         case FavoriteFoodStatus.loading:
-          return Expanded(child: Center(child: CircularProgressIndicator()));
+          return const Expanded(
+            child: ShimmerView(
+              length: 6,
+            ),
+          );
         case FavoriteFoodStatus.failure:
           return Expanded(
               child: Center(child: Text('Error: ${favoritelistState.error}')));
@@ -25,8 +31,9 @@ class FavoriteList extends ConsumerWidget {
           return Expanded(
               child: Center(
             child: Text(
-              AppLocalizations.of(context)?.favorite_empty ?? 'No Favorite List',
-              style: TextStyle(
+              AppLocalizations.of(context)?.favorite_empty ??
+                  'No Favorite List',
+              style: const TextStyle(
                 color: Colors.grey,
               ),
             ),
@@ -41,7 +48,7 @@ class FavoriteList extends ConsumerWidget {
                 mainAxisSpacing: 40,
                 childAspectRatio: (MediaQuery.of(context).size.width /
                         MediaQuery.of(context).size.height) /
-                    0.5,
+                    0.53,
               ),
               itemCount: favoritelistState.favoriteFoods.length,
               itemBuilder: (context, index) {
@@ -53,10 +60,6 @@ class FavoriteList extends ConsumerWidget {
                         MaterialPageRoute<void>(
                             builder: (BuildContext context) => FoodDetail(
                                   id: foodItem.id,
-                                  name: foodItem.name,
-                                  description: foodItem.description,
-                                  price: foodItem.price,
-                                  image: foodItem.image,
                                 )));
                   },
                   child: FoodCard(
@@ -64,6 +67,7 @@ class FavoriteList extends ConsumerWidget {
                     name: foodItem.name,
                     description: foodItem.description,
                     price: foodItem.price,
+                    ingredients: foodItem.ingredients,
                     image: foodItem.image,
                   ),
                 );
@@ -71,7 +75,7 @@ class FavoriteList extends ConsumerWidget {
             ),
           );
         default:
-          return Expanded(
+          return const Expanded(
               child: Center(
             child: Text('Not Found'),
           ));

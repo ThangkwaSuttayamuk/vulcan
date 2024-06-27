@@ -1,7 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_application_1/src/presentation/controller/cart/cart_provider.dart';
+import 'package:flutter_application_1/src/presentation/controller/food/food_provider.dart';
+import 'package:flutter_application_1/src/presentation/controller/food/food_state.dart';
 import 'package:flutter_application_1/src/presentation/controller/quantity/quantity_provider.dart';
+import 'package:flutter_application_1/src/presentation/widgets/loading/shimmer_box.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class AddToCartButton extends ConsumerWidget {
   final int id;
@@ -13,6 +17,16 @@ class AddToCartButton extends ConsumerWidget {
     ref.watch(cartProvider.notifier);
     final cartlistStateRead = ref.read(cartProvider.notifier);
 
+    final food = ref.watch(foodListProvider);
+
+    if (food.status != HomeStatus.success) {
+      return SizedBox(
+        height: 40.h,
+        width: 200.h,
+        child: const ShimmerBox(),
+      );
+    }
+
     return Material(
       borderRadius: BorderRadius.circular(10),
       color: Colors.blue.shade800,
@@ -23,10 +37,10 @@ class AddToCartButton extends ConsumerWidget {
           Navigator.pop(context);
         },
         child: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 30, vertical: 10),
+          padding: EdgeInsets.symmetric(horizontal: 30.w, vertical: 10.h),
           child: Text(
             'Add to Cart - \$$price',
-            style: TextStyle(color: Colors.white),
+            style: TextStyle(color: Colors.white, fontSize: 14.sp),
           ),
         ),
       ),

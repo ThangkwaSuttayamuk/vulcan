@@ -1,9 +1,6 @@
 import 'package:flutter_application_1/src/data/datasources/local/database_helper.dart';
-import 'package:flutter_application_1/src/domain/entities/food_entity.dart';
 import 'package:flutter_application_1/src/domain/repositories/cart_repository.dart';
-import 'package:flutter_application_1/src/domain/usecases/get_food_by_id_usecase.dart';
 import 'package:sqflite/sqflite.dart';
-
 import '../../domain/entities/cart_entity.dart';
 
 class CartRepositoryImpl implements CartRepository {

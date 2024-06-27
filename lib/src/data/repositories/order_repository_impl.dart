@@ -1,5 +1,6 @@
 import 'package:flutter_application_1/src/data/datasources/local/database_helper.dart';
 import 'package:flutter_application_1/src/domain/entities/order_entity.dart';
+import 'package:flutter_application_1/src/domain/entities/order_item_entity.dart';
 import 'package:flutter_application_1/src/domain/repositories/order_repository.dart';
 import 'package:sqflite/sqflite.dart';
 
@@ -45,10 +46,24 @@ class OrderRepositoryImpl implements OrderRepository {
   @override
   Future<List<OrderEntity>> getOrders() async {
     final db = await databaseHelper.database;
-    final  maps = await db.query('orders');
-   
+    final maps = await db.query('orders');
     return List.generate(maps.length, (i) {
       return OrderEntity.fromMap(maps[i]);
+    });
+  }
+
+  @override
+  Future<List<OrderItemEntity>> getOrderListById(int id) async {
+    final db = await databaseHelper.database;
+    final List<Map<String, dynamic>> result = await db.rawQuery('''
+      SELECT order_items.order_id as orderItemId, order_items.food_id, order_items.quantity,foods.name ,foods.image, foods.price
+      FROM orders
+      INNER JOIN order_items ON orders.id = order_items.order_id
+      INNER JOIN foods ON foods.id = order_items.food_id
+      WHERE orders.id = $id
+    ''');
+    return List.generate(result.length, (i) {
+      return OrderItemEntity.fromMap(result[i]);
     });
   }
 }

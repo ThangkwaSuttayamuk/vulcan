@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_application_1/src/presentation/pages/home_page.dart';
 import 'package:flutter_application_1/src/presentation/pages/language_page.dart';
 import 'package:flutter_application_1/src/presentation/pages/theme_page.dart';
+
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class SettingCard extends StatelessWidget {
@@ -20,24 +21,26 @@ class SettingCard extends StatelessWidget {
               onTap: () {
                 Navigator.push(
                     context,
-                    MaterialPageRoute(
-                        builder: (context) => getPageByname(name)));
+                    MaterialPageRoute<void>(
+                        builder: (BuildContext context) =>
+                            getPageByname(name)));
               },
               child: Padding(
-                padding: EdgeInsets.symmetric(horizontal: 20, vertical: 10),
+                padding:
+                    const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
                 child: Column(
                   children: [
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-                        Text(name == 'Language'
+                        Text(name == 'language'
                             ? AppLocalizations.of(context)?.setting_language ??
                                 'Language'
-                            : name == 'Theme'
+                            : name == 'theme'
                                 ? AppLocalizations.of(context)?.setting_theme ??
                                     'Theme'
                                 : ''),
-                        Icon(
+                        const Icon(
                           Icons.arrow_forward_ios,
                           color: Colors.grey,
                           size: 15,
@@ -49,21 +52,21 @@ class SettingCard extends StatelessWidget {
               ),
             )),
         checkIndex
-            ? Divider(
+            ? const Divider(
                 color: Colors.grey,
                 indent: 20,
                 endIndent: 20,
                 height: 0,
               )
-            : SizedBox()
+            : const SizedBox()
       ],
     );
   }
 
   getPageByname(String name) {
-    return name == 'Language'
+    return name == 'language'
         ? LanguagePage()
-        : name == 'Theme'
+        : name == 'theme'
             ? ThemePage()
             : HomePage();
   }

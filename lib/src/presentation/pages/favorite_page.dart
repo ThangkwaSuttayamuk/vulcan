@@ -27,13 +27,13 @@ class _FavoritePageState extends ConsumerState<FavoritePage> {
           backgroundColor: Theme.of(context).colorScheme.secondary,
           title: Text(
             AppLocalizations.of(context)?.favorite_header ?? 'My Likes',
-            style: TextStyle(
+            style: const TextStyle(
               fontWeight: FontWeight.bold,
               fontSize: 20,
             ),
           ),
         ),
-        body: Column(
+        body: const Column(
           children: [
             SizedBox(
               height: 15,

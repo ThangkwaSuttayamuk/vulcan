@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_application_1/src/presentation/controller/theme/theme_provider.dart';
 import 'package:flutter_application_1/src/presentation/pages/cart_page.dart';
 import 'package:flutter_application_1/src/presentation/pages/favorite_page.dart';
 import 'package:flutter_application_1/src/presentation/pages/home_page.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:go_router/go_router.dart';
 
 class RegularIconButton extends ConsumerStatefulWidget {
   final String name;
@@ -34,8 +34,7 @@ class _RegularIconButtonState extends ConsumerState<RegularIconButton> {
           Navigator.push(
               context,
               MaterialPageRoute<void>(
-                  builder: (BuildContext context) =>
-                      getPageByname(widget.name)));
+                  builder: (BuildContext context) => getPageByname(name)));
         },
         child: Icon(
           selectedIcon ?? Icons.error, // default icon if not found
@@ -47,9 +46,9 @@ class _RegularIconButtonState extends ConsumerState<RegularIconButton> {
 
   getPageByname(String name) {
     return name == 'cart'
-        ? CartPage()
+        ? const CartPage()
         : name == 'favorite'
-            ? FavoritePage()
-            : HomePage();
+            ? const FavoritePage()
+            : const HomePage();
   }
 }

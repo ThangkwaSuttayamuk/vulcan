@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_application_1/src/data/datasources/local/database_helper.dart';
 
 import 'package:flutter_application_1/src/presentation/controller/food/food_provider.dart';
 import 'package:flutter_application_1/src/presentation/pages/search_page.dart';
@@ -8,6 +9,9 @@ import 'package:flutter_application_1/src/presentation/widgets/footer/footer.dar
 import 'package:flutter_application_1/src/presentation/widgets/list/food_list.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:go_router/go_router.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class HomePage extends ConsumerStatefulWidget {
   const HomePage({super.key});
@@ -25,6 +29,8 @@ class _HomePageState extends ConsumerState<HomePage> {
     "fried_chicken"
   ];
 
+  late SharedPreferences loginData;
+
   @override
   void initState() {
     WidgetsBinding.instance.addPostFrameCallback((_) {
@@ -32,6 +38,13 @@ class _HomePageState extends ConsumerState<HomePage> {
     });
     super.initState();
   }
+
+  void initial() async {
+    loginData = await SharedPreferences.getInstance();
+    setState(() {});
+  }
+
+  late DatabaseHelper databaseHelper;
 
   @override
   Widget build(BuildContext context) {
@@ -42,7 +55,7 @@ class _HomePageState extends ConsumerState<HomePage> {
           body: Column(
             children: [
               Padding(
-                padding: const EdgeInsets.only(left: 20, right: 20, top: 60),
+                padding: EdgeInsets.only(left: 20.w, right: 20.w, top: 60.h),
                 child: Column(
                   children: [
                     Row(
@@ -56,36 +69,27 @@ class _HomePageState extends ConsumerState<HomePage> {
                         ),
                         Row(
                           children: [
-                            RegularIconButton(name: "cart"),
+                            const RegularIconButton(name: "cart"),
                             SizedBox(
-                              width: 5,
+                              width: 5.w,
                             ),
-                            RegularIconButton(name: "favorite"),
+                            const RegularIconButton(name: "favorite"),
                           ],
                         ),
                       ],
                     ),
                     Padding(
-                      padding: const EdgeInsets.symmetric(vertical: 20),
+                      padding: EdgeInsets.symmetric(vertical: 15.h),
                       child: SizedBox(
-                          height: 50,
+                          height: 50.h,
                           child: GestureDetector(
-                            onTap: () {
-                              Navigator.push(
+                            onTap: () => Navigator.push(
                                 context,
-                                MaterialPageRoute(
-                                    builder: (context) => SearchPage()),
-                              );
-                            },
+                                MaterialPageRoute<void>(
+                                    builder: (BuildContext context) =>
+                                        const SearchPage())),
                             child: AbsorbPointer(
                               child: TextField(
-                                  onTap: () {
-                                    Navigator.push(
-                                        context,
-                                        MaterialPageRoute(
-                                            builder: (context) =>
-                                                SearchPage()));
-                                  },
                                   decoration: InputDecoration(
                                       filled: true,
                                       fillColor: Theme.of(context)
@@ -94,7 +98,7 @@ class _HomePageState extends ConsumerState<HomePage> {
                                       focusedBorder: OutlineInputBorder(
                                           borderRadius:
                                               BorderRadius.circular(30),
-                                          borderSide: BorderSide(
+                                          borderSide: const BorderSide(
                                             color: Colors.black,
                                           )),
                                       prefixIcon: const Icon(Icons.search),
@@ -108,7 +112,7 @@ class _HomePageState extends ConsumerState<HomePage> {
                           )),
                     ),
                     Padding(
-                      padding: const EdgeInsets.all(10.0),
+                      padding: const EdgeInsets.all(5.0),
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: List.generate(
@@ -121,7 +125,7 @@ class _HomePageState extends ConsumerState<HomePage> {
                     ),
                     Padding(
                       padding:
-                          EdgeInsets.symmetric(vertical: 15, horizontal: 5),
+                          EdgeInsets.symmetric(vertical: 15.h, horizontal: 5.w),
                       child: Row(
                         children: [
                           Text(
@@ -131,7 +135,8 @@ class _HomePageState extends ConsumerState<HomePage> {
                                     .textTheme
                                     .titleLarge
                                     ?.color,
-                                fontWeight: FontWeight.bold),
+                                fontWeight: FontWeight.bold,
+                                fontSize: 14.sp),
                           ),
                         ],
                       ),
@@ -139,11 +144,11 @@ class _HomePageState extends ConsumerState<HomePage> {
                   ],
                 ),
               ),
-              FoodList()
+              const FoodList()
             ],
           ),
         ),
-        Footer()
+        const Footer()
       ],
     );
   }

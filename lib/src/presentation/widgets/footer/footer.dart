@@ -16,7 +16,7 @@ class _FooterState extends State<Footer> {
       height: 80,
       decoration: BoxDecoration(
           color: Theme.of(context).colorScheme.secondary,
-          boxShadow: [
+          boxShadow: const [
             BoxShadow(
               color: Colors.black,
               spreadRadius: 6,

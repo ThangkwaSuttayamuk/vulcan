@@ -12,7 +12,7 @@ class OrderEntity {
 
   factory OrderEntity.fromMap(Map<String, dynamic> map) {
     return OrderEntity(
-      id: map['cartId'] ?? 0,
+      id: map['id'] ?? 0,
       address: map['address'] ?? '',
       tel: map['tel'] ?? '',
       orderDate: map['order_date'],

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_application_1/src/presentation/controller/food/food_provider.dart';
 import 'package:flutter_application_1/src/presentation/widgets/form/search_form.dart';
 import 'package:flutter_application_1/src/presentation/widgets/list/search_list.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -12,6 +13,14 @@ class SearchPage extends ConsumerStatefulWidget {
 
 class _SearchPageState extends ConsumerState<SearchPage> {
   @override
+  void initState() {
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      ref.read(foodListProvider.notifier).initSearch();
+    });
+    super.initState();
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Theme.of(context).scaffoldBackgroundColor,
@@ -23,23 +32,25 @@ class _SearchPageState extends ConsumerState<SearchPage> {
             child: Row(
               children: [
                 Padding(
-                  padding: const EdgeInsets.only(right: 10),
-                  child: Material(
-                      color: Theme.of(context).scaffoldBackgroundColor,
-                      child: InkWell(
-                          onTap: () {
-                            Navigator.pop(context);
-                          },
-                          child: Icon(
-                            Icons.arrow_back_ios,
-                            size: 20,
-                          ))),
-                ),
-                SearchForm(),
+                    padding: const EdgeInsets.only(right: 10),
+                    child: Consumer(builder:
+                        (BuildContext context, WidgetRef ref, Widget? child) {
+                      return Material(
+                          color: Theme.of(context).scaffoldBackgroundColor,
+                          child: InkWell(
+                              onTap: () {
+                                Navigator.pop(context);
+                              },
+                              child:  const  Icon(
+                                Icons.arrow_back_ios,
+                                size: 20,
+                              )));
+                    })),
+                const  SearchForm(),
               ],
             ),
           ),
-          SearchList()
+          const SearchList()
         ],
       )),
     );

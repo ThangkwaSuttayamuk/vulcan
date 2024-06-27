@@ -5,10 +5,12 @@ Color lightPrimaryColor = Colors.grey.shade200;
 Color lightSecondaryColor = Colors.white;
 
 ThemeData lightTheme = ThemeData(
+  cardColor: Colors.grey.shade300,
   scaffoldBackgroundColor: lightPrimaryColor,
   colorScheme: ColorScheme.light(
       primary: lightPrimaryColor, secondary: lightSecondaryColor),
   cardTheme: CardTheme(
+    shadowColor: Colors.grey.shade500,
     color: Colors.grey.shade500,
   ),
   textTheme: TextTheme(
@@ -25,7 +27,7 @@ ThemeData lightTheme = ThemeData(
     filled: true,
     fillColor: lightSecondaryColor,
     focusedBorder: OutlineInputBorder(
-      borderSide: BorderSide(color: Colors.black),
+      borderSide: const BorderSide(color: Colors.black),
       borderRadius: BorderRadius.circular(30),
     ),
     border: OutlineInputBorder(

@@ -6,6 +6,8 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class LanguagePage extends ConsumerWidget {
+  const LanguagePage({super.key});
+
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final language = ref.watch(languageProvider);
@@ -46,7 +48,7 @@ class LanguagePage extends ConsumerWidget {
                                 PageRouteBuilder(
                                   pageBuilder: (context, animation,
                                           secondaryAnimation) =>
-                                      HomePage(),
+                                      const HomePage(),
                                   transitionsBuilder: (context, animation,
                                       secondaryAnimation, child) {
                                     return child;
@@ -57,7 +59,7 @@ class LanguagePage extends ConsumerWidget {
                             child: Text(
                               AppLocalizations.of(context)?.language_save ??
                                   'Done',
-                              style: TextStyle(fontSize: 14),
+                              style: const TextStyle(fontSize: 14),
                             ),
                           ),
                         )
@@ -66,7 +68,7 @@ class LanguagePage extends ConsumerWidget {
                     Text(
                       AppLocalizations.of(context)?.language_header ??
                           'Choose Language',
-                      style: TextStyle(
+                      style: const TextStyle(
                         fontWeight: FontWeight.bold,
                         fontSize: 20,
                       ),
@@ -76,9 +78,9 @@ class LanguagePage extends ConsumerWidget {
               ),
             ),
             divider(0),
-            LanguageCard(title: 'en'),
+            const LanguageCard(title: 'en'),
             divider(20),
-            LanguageCard(title: 'th'),
+            const LanguageCard(title: 'th'),
             divider(0)
           ],
         ));

@@ -1,11 +1,16 @@
 import 'package:flutter_application_1/src/data/repositories/order_repository_impl.dart';
+import 'package:flutter_application_1/src/data/repositories/user_repository_impl.dart';
 import 'package:flutter_application_1/src/domain/repositories/order_repository.dart';
+import 'package:flutter_application_1/src/domain/repositories/user_repository.dart';
 import 'package:flutter_application_1/src/domain/usecases/add_order_usecase.dart';
+import 'package:flutter_application_1/src/domain/usecases/get_order_list_by_id.dart';
 import 'package:flutter_application_1/src/domain/usecases/get_order_usecase.dart';
+import 'package:flutter_application_1/src/domain/usecases/get_user_usecase.dart';
 import 'package:flutter_application_1/src/domain/usecases/insert_multiple_foods_usecase.dart';
 import 'package:flutter_application_1/src/domain/usecases/remove_to_cart_usecase.dart';
 import 'package:flutter_application_1/src/presentation/bloc/cart_bloc.dart';
 import 'package:flutter_application_1/src/presentation/bloc/order_bloc.dart';
+import 'package:flutter_application_1/src/presentation/bloc/user_bloc.dart';
 import 'package:get_it/get_it.dart';
 import 'data/datasources/local/database_helper.dart';
 import 'data/repositories/food_repository_impl.dart';
@@ -33,6 +38,7 @@ void init() {
   sl.registerLazySingleton<FoodRepository>(() => FoodRepositoryImpl(sl()));
   sl.registerLazySingleton<CartRepository>(() => CartRepositoryImpl(sl()));
   sl.registerLazySingleton<OrderRepository>(() => OrderRepositoryImpl(sl()));
+  sl.registerLazySingleton<UserRepository>(() => UserRepositoryImpl(sl()));
 
   // Use cases
   sl.registerLazySingleton(() => GetFoodsUsecase(sl()));
@@ -48,6 +54,8 @@ void init() {
   sl.registerLazySingleton(() => RemoveToCartUsecase(sl()));
   sl.registerLazySingleton(() => AddOrderUsecase(sl()));
   sl.registerLazySingleton(() => GetOrderUsecase(sl()));
+  sl.registerLazySingleton(() => GetOrderListByIdUsecase(sl()));
+  sl.registerLazySingleton(() => GetUserUsecase(sl()));
 
   // Blocs
   sl.registerFactory(() => FoodBloc(
@@ -60,6 +68,9 @@ void init() {
       ));
   sl.registerFactory(
       () => CartBloc(getCart: sl(), addToCart: sl(), removeToCart: sl()));
-  sl.registerFactory(
-      () => OrderBloc(addOrderUsecase: sl(), getOrderUsecase: sl()));
+  sl.registerFactory(() => OrderBloc(
+      addOrderUsecase: sl(),
+      getOrderUsecase: sl(),
+      getOrderListByIdUsecase: sl()));
+  sl.registerFactory(() => UserBloc(getUser: sl()));
 }

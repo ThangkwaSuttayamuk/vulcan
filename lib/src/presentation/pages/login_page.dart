@@ -1,75 +1,205 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_application_1/src/data/datasources/local/database_helper.dart';
+import 'package:flutter_application_1/src/presentation/controller/user/user_provider.dart';
+import 'package:flutter_application_1/src/presentation/controller/user/user_state.dart';
 import 'package:flutter_application_1/src/presentation/pages/home_page.dart';
+import 'package:flutter_application_1/src/presentation/pages/test.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
-class LoginPage extends StatefulWidget {
+class LoginPage extends ConsumerStatefulWidget {
   const LoginPage({super.key});
 
   @override
-  State<LoginPage> createState() => _LoginPageState();
+  _LoginPageState createState() => _LoginPageState();
 }
 
-class _LoginPageState extends State<LoginPage> {
+class _LoginPageState extends ConsumerState<LoginPage> {
   final _usernameController = TextEditingController();
   final _passwordController = TextEditingController();
 
-  final String username = "";
-  final String password = "";
+  bool username = false;
+  bool password = false;
+
+  bool isRemember = false;
+
+  late DatabaseHelper databaseHelper;
+
+  late SharedPreferences loginData ;
+  late bool newUser;
 
   @override
   void initState() {
-    super.initState();
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      ref.read(userProvider.notifier).checkLogin();
+    });
     _usernameController.text = "";
     _passwordController.text = "";
+    checkRemember();
+    super.initState();
   }
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: Colors.white,
-      body: SafeArea(
-        child: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 20),
-          child: Column(
-            children: [
-              Text("Login Page"),
-              Row(
+    final user = ref.watch(userProvider);
+    final userState = ref.read(userProvider.notifier);
+    switch (user.loginStatus) {
+      case UserStatus.initial:
+        return Scaffold(
+          backgroundColor: Colors.white,
+          body: SafeArea(
+            child: Padding(
+              padding: EdgeInsets.symmetric(horizontal: 20.w),
+              child: Column(
                 children: [
-                  Text("Username"),
+                  const Text("Login Page"),
+                  Row(
+                    children: [
+                      Text("Username "),
+                      username
+                          ? Text(
+                              "*required username",
+                              style: TextStyle(color: Colors.red),
+                            )
+                          : user.status == UserStatus.failure
+                              ? Text(
+                                  '*wrong username or password',
+                                  style: TextStyle(color: Colors.red),
+                                )
+                              : SizedBox()
+                    ],
+                  ),
+                  SizedBox(
+                    height: 10,
+                  ),
+                  TextField(
+                    onChanged: (value) {
+                      _usernameController.text = value;
+                      username = false;
+                      // userState.statusInit();
+                    },
+                    controller: _usernameController,
+                  ),
+                  SizedBox(
+                    height: 10,
+                  ),
+                  Row(
+                    children: [
+                      Text("Password "),
+                      password
+                          ? Text(
+                              "*required password",
+                              style: TextStyle(color: Colors.red),
+                            )
+                          : SizedBox()
+                    ],
+                  ),
+                  SizedBox(
+                    height: 10,
+                  ),
+                  TextField(
+                    onChanged: (value) {
+                      _passwordController.text = value;
+                      password = false;
+                    },
+                    controller: _passwordController,
+                  ),
+                  Row(
+                    children: [
+                      Checkbox(
+                          value: isRemember,
+                          onChanged: (bool? value) {
+                            setState(() {
+                              isRemember = value!;
+                            });
+                          }),
+                      const Text('Remember me')
+                    ],
+                  ),
+                  MaterialButton(
+                    onPressed: () async {
+                      if (_usernameController.text.isNotEmpty &&
+                          _passwordController.text.isNotEmpty) {
+                        userState.getUser(
+                            _usernameController.text, _passwordController.text);
+                        if (user.user?.username != '') {
+                          loginData = await SharedPreferences.getInstance();
+                          loginData.setBool('login', false);
+                          loginData.setInt('id', user.user?.id ?? 0);
+                          loginData.setString(
+                              'username', _usernameController.text);
+                          loginData.setString(
+                              'password', _passwordController.text);
+                          if (isRemember) {
+                            loginData.setString(
+                                'username', _usernameController.text);
+                            loginData.setString(
+                                'password', _passwordController.text);
+                          } else {
+                            await loginData.remove('username');
+                            await loginData.remove('password');
+                          }
+
+                          Navigator.push(
+                            context,
+                            PageRouteBuilder(
+                              pageBuilder:
+                                  (context, animation, secondaryAnimation) =>
+                                      const TestPage(),
+                              transitionsBuilder: (context, animation,
+                                  secondaryAnimation, child) {
+                                return child;
+                              },
+                            ),
+                          );
+                        } else {
+                          // print(user.status);
+                        }
+                      }
+                      if (_usernameController.text.isEmpty) {
+                        setState(() {
+                          username = true;
+                        });
+                      }
+                      if (_passwordController.text.isEmpty) {
+                        setState(() {
+                          password = true;
+                        });
+                      }
+                    },
+                    child: const Text("เข้าสู่ระบบ"),
+                    color: Colors.deepOrange,
+                  )
                 ],
               ),
-              TextField(
-                onChanged: (value) {
-                  _usernameController.text = value;
-                },
-                controller: _usernameController,
-              ),
-              Row(
-                children: [
-                  Text("Password"),
-                ],
-              ),
-              TextField(
-                onChanged: (value) {
-                  _passwordController.text = value;
-                },
-                controller: _usernameController,
-              ),
-              MaterialButton(
-                onPressed: () {
-                  Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                          builder: (context) => const HomePage()));
-                },
-                child: Container(
-                  child: Text("เข้าสู่ระบบ"),
-                ),
-                color: Colors.deepOrange,
-              )
-            ],
+            ),
           ),
-        ),
-      ),
-    );
+        );
+      case UserStatus.success:
+        return const TestPage();
+      case UserStatus.loading:
+        return const Scaffold(
+          body: Center(
+            child: CircularProgressIndicator(
+              color: Colors.black,
+            ),
+          ),
+        );
+      default:
+        return const Scaffold(
+          body: Center(child: Text('error')),
+        );
+    }
+  }
+
+
+  void checkRemember() async {
+    loginData = await SharedPreferences.getInstance();
+    String remember = (loginData.getString('username') ?? '');
+    if (remember != '') {
+      _usernameController.text = loginData.getString('username') ?? '';
+      _passwordController.text = loginData.getString('password') ?? '';
+    }
   }
 }

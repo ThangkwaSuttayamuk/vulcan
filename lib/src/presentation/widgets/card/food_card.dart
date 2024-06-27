@@ -1,11 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_application_1/src/presentation/pages/food_detail_page.dart';
+import 'package:flutter_application_1/src/presentation/pages/test_detail_page.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:go_router/go_router.dart';
 
 class FoodCard extends StatelessWidget {
   final int id;
   final String name;
   final String description;
   final double price;
+  final String ingredients;
   final String image;
 
   const FoodCard({
@@ -14,6 +18,7 @@ class FoodCard extends StatelessWidget {
     required this.name,
     required this.description,
     required this.price,
+    required this.ingredients,
     required this.image,
   });
 
@@ -22,10 +27,10 @@ class FoodCard extends StatelessWidget {
     return Container(
       decoration: BoxDecoration(boxShadow: [
         BoxShadow(
-          color: Theme.of(context).cardTheme.color!,
+          color: Theme.of(context).cardTheme.shadowColor!,
           spreadRadius: -6,
           blurRadius: 7,
-          offset: Offset(0, 10),
+          offset: const Offset(0, 10),
         )
       ]),
       child: Material(
@@ -35,27 +40,26 @@ class FoodCard extends StatelessWidget {
           onTap: () {
             Navigator.push(
                 context,
-                MaterialPageRoute(
-                    builder: (context) => FoodDetail(
-                          id: id,
-                          name: name,
-                          description: description,
-                          price: price,
-                          image: image,
-                        )));
+                MaterialPageRoute<void>(
+                    builder: (BuildContext context) => 
+                    // FoodDetail(
+                    //       id: id,
+                    //     )
+                    TestDetailPage(id:id)
+                        ));
           },
           borderRadius: BorderRadius.circular(10),
           child: Column(
             children: [
               Container(
-                height: 120,
+                height: 100.h,
                 decoration: BoxDecoration(
-                    borderRadius: BorderRadius.only(
+                    borderRadius: const BorderRadius.only(
                         topLeft: Radius.circular(10),
                         topRight: Radius.circular(10)),
                     image: DecorationImage(
                         fit: BoxFit.cover,
-                        image: AssetImage('assets/images/${image}'))),
+                        image: AssetImage('assets/images/$image'))),
               ),
               Padding(
                 padding: const EdgeInsets.all(10),
@@ -67,11 +71,13 @@ class FoodCard extends StatelessWidget {
                       name,
                       maxLines: 1,
                       overflow: TextOverflow.ellipsis,
+                      style: TextStyle(fontSize: 14.sp),
                     ),
                     Text(
                       description,
                       maxLines: 1,
                       overflow: TextOverflow.ellipsis,
+                      style: TextStyle(fontSize: 14.sp),
                     ),
                   ],
                 ),

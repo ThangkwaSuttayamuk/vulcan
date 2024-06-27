@@ -16,7 +16,7 @@ class FavoriteFoodNotifier extends StateNotifier<FavoriteFoodState> {
 
   Future<void> fetchFavoriteFoods() async {
     state = state.copyWith(status: FavoriteFoodStatus.loading);
-    // await Future.delayed(Duration(seconds: 1));
+    await Future.delayed(const Duration(seconds: 1));
 
     try {
       final favoriteFoods = await getAllFavoritesUsecase.call(NoParams());
@@ -26,8 +26,7 @@ class FavoriteFoodNotifier extends StateNotifier<FavoriteFoodState> {
               ? FavoriteFoodStatus.empty
               : FavoriteFoodStatus.success);
     } catch (e) {
-      state = state.copyWith(
-          error: e.toString(), status: FavoriteFoodStatus.failure);
+      state = state.copyWith(error: e.toString());
     }
   }
 

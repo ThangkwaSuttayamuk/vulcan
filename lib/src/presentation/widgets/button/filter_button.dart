@@ -3,6 +3,7 @@ import 'package:flutter_application_1/src/presentation/controller/filter/filter_
 import 'package:flutter_application_1/src/presentation/controller/food/food_provider.dart';
 import 'package:flutter_application_1/src/presentation/controller/theme/theme_provider.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class FilterButton extends ConsumerWidget {
   final List<String> filters;
@@ -21,7 +22,7 @@ class FilterButton extends ConsumerWidget {
           borderRadius: BorderRadius.circular(10),
           side: BorderSide(
             color: theme.theme ? Colors.transparent : Colors.blue.shade800,
-            width: 2,
+            width: 2.w,
           )),
       color: filterState.filterName == filters[index]
           ? Colors.white
@@ -45,11 +46,11 @@ class FilterButton extends ConsumerWidget {
           }
         },
         child: Padding(
-          padding: EdgeInsets.all(8),
+          padding: const EdgeInsets.all(8),
           child: Image.asset(
             'assets/images/icon_${filterState.filterName == filters[index] && theme.theme ? filters[index] + "_active_dark" : filterState.filterName == filters[index] ? filters[index] + "_active" : filters[index]}.png',
-            height: 40,
-            width: 40,
+            height: 40.h,
+            width: 40.h,
           ),
         ),
       ),

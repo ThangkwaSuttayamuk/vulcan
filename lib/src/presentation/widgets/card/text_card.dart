@@ -18,9 +18,9 @@ class TextCard extends StatelessWidget {
           children: List.generate(
               listOfItem.length,
               (index) => Container(
-                    padding: EdgeInsets.all(10),
+                    padding: const EdgeInsets.all(10),
                     decoration: BoxDecoration(
-                        color: Colors.grey.shade300,
+                        color: Theme.of(context).colorScheme.secondary,
                         borderRadius: BorderRadius.circular(30)),
                     child: Text(listOfItem[index]),
                   )),

@@ -1,6 +1,7 @@
 import 'dart:convert';
 
 import 'package:flutter/services.dart';
+import 'package:flutter_application_1/src/domain/entities/user_entity.dart';
 import 'package:path/path.dart';
 import 'package:sqflite/sqflite.dart';
 
@@ -19,16 +20,26 @@ class DatabaseHelper {
   Future<Database> get database async {
     if (_database != null) return _database!;
     _database = await _initDatabase();
-    await importFood();
+    await importData();
     return _database!;
   }
 
   Future<Database> _initDatabase() async {
     String path = join(await getDatabasesPath(), 'food_database.db');
+    print(path);
     return await openDatabase(
       path,
       version: 1,
       onCreate: (Database db, int version) async {
+        
+        await db.execute('''
+          CREATE TABLE users (
+            id INTEGER PRIMARY KEY,
+            username TEXT,
+            password TEXT
+          )
+        ''');
+
         await db.execute('''
           CREATE TABLE foods (
             id INTEGER PRIMARY KEY,
@@ -80,7 +91,7 @@ class DatabaseHelper {
     );
   }
 
-  Future<void> importFood() async {
+  Future<void> importData() async {
     String jsonString = await rootBundle.loadString('assets/food.json');
     List<dynamic> jsonData = jsonDecode(jsonString);
     List<FoodEntity> foodList = jsonData.map((item) {
@@ -90,6 +101,17 @@ class DatabaseHelper {
     Batch batch = db.batch();
     for (var food in foodList) {
       batch.insert('foods', food.toMap(),
+          conflictAlgorithm: ConflictAlgorithm.replace);
+    }
+    await batch.commit(noResult: true);
+
+    String jsonStringUser = await rootBundle.loadString('assets/user.json');
+    List<dynamic> jsonDataUser = jsonDecode(jsonStringUser);
+    List<UserEntity> userlist = jsonDataUser.map((item) {
+      return UserEntity.fromJson(item);
+    }).toList();
+    for (var user in userlist) {
+      batch.insert('users', user.toMap(),
           conflictAlgorithm: ConflictAlgorithm.replace);
     }
     await batch.commit(noResult: true);

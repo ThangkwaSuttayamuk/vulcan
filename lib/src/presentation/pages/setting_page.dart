@@ -1,29 +1,52 @@
 import 'package:flutter/material.dart';
-
+import 'package:flutter_application_1/src/presentation/controller/user/user_provider.dart';
+import 'package:flutter_application_1/src/presentation/pages/login_page.dart';
 import 'package:flutter_application_1/src/presentation/widgets/card/setting_group.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+// import 'package:go_router/go_router.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
-class SettingPage extends StatefulWidget {
+class SettingPage extends ConsumerStatefulWidget {
   const SettingPage({super.key});
 
   @override
-  State<SettingPage> createState() => _SettingPageState();
+  _SettingPageState createState() => _SettingPageState();
 }
 
-class _SettingPageState extends State<SettingPage> {
+class _SettingPageState extends ConsumerState<SettingPage> {
   final List<String> _setting = [
-    "Language",
-    "Theme",
+    "language",
+    "theme",
   ];
+
+  late SharedPreferences loginData;
+  late String username;
+
+  @override
+  void initState() {
+    super.initState();
+    initial();
+  }
+
+  void initial() async {
+    loginData = await SharedPreferences.getInstance();
+    // setState(() {
+    //   username = loginData.getString('username') ?? '';
+    // });
+  }
 
   @override
   Widget build(BuildContext context) {
+    ref.watch(userProvider);
+    final userState = ref.read(userProvider.notifier);
+
     return Scaffold(
         backgroundColor: Theme.of(context).scaffoldBackgroundColor,
         appBar: AppBar(
           title: Text(
             AppLocalizations.of(context)?.setting_header ?? 'Setting',
-            style: TextStyle(
+            style: const TextStyle(
               fontWeight: FontWeight.bold,
               fontSize: 20,
             ),
@@ -41,9 +64,18 @@ class _SettingPageState extends State<SettingPage> {
               child: MaterialButton(
                 minWidth: double.infinity,
                 shape: RoundedRectangleBorder(
-                    side: BorderSide(color: Colors.grey),
+                    side: const BorderSide(color: Colors.grey),
                     borderRadius: BorderRadius.circular(10)),
-                onPressed: () {},
+                onPressed: () {
+                  userState.logOut();
+                  loginData.setBool('login', true);
+                  loginData.setInt('id', 0);
+                  if (loginData.getInt('id') == 0 &&
+                      loginData.getBool('login') == true) {
+                    Navigator.pushReplacement(context,
+                        MaterialPageRoute(builder: (context) => LoginPage()));
+                  }
+                },
                 child: Text(
                   AppLocalizations.of(context)?.log_out ?? 'Log Out',
                 ),

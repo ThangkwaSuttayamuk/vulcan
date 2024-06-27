@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_application_1/src/presentation/controller/cart/cart_provider.dart';
 import 'package:flutter_application_1/src/presentation/pages/food_detail_page.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:go_router/go_router.dart';
 
 class FoodCardAddRemove extends ConsumerWidget {
   final int foodId;
@@ -25,11 +26,11 @@ class FoodCardAddRemove extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final cartState = ref.read(cartProvider.notifier);
     return Padding(
-      padding: EdgeInsets.only(left: 20, right: 20, bottom: 15),
+      padding: const EdgeInsets.only(left: 20, right: 20, bottom: 15),
       child: Container(
         decoration: BoxDecoration(boxShadow: [
           BoxShadow(
-            color: Theme.of(context).cardTheme.color!,
+            color: Theme.of(context).cardTheme.shadowColor!,
             spreadRadius: -6,
             blurRadius: 7,
             offset: const Offset(0, 10),
@@ -45,15 +46,11 @@ class FoodCardAddRemove extends ConsumerWidget {
                   MaterialPageRoute<void>(
                       builder: (BuildContext context) => FoodDetail(
                             id: foodId,
-                            name: name,
-                            description: description,
-                            price: price,
-                            image: image,
                           )));
             },
             borderRadius: BorderRadius.circular(20),
             child: Padding(
-              padding: EdgeInsets.all(20),
+              padding: const EdgeInsets.all(20),
               child: Row(
                 children: [
                   Padding(
@@ -82,7 +79,7 @@ class FoodCardAddRemove extends ConsumerWidget {
                             ),
                           ],
                         ),
-                        SizedBox(
+                        const SizedBox(
                           height: 40,
                         ),
                         Row(
@@ -107,7 +104,7 @@ class FoodCardAddRemove extends ConsumerWidget {
                                               BorderRadius.circular(40),
                                           border: Border.all(
                                               color: Colors.grey.shade800)),
-                                      child: Icon(
+                                      child: const Icon(
                                         Icons.remove,
                                         size: 20,
                                       ),
@@ -135,7 +132,7 @@ class FoodCardAddRemove extends ConsumerWidget {
                                               BorderRadius.circular(40),
                                           border: Border.all(
                                               color: Colors.grey.shade800)),
-                                      child: Icon(
+                                      child: const Icon(
                                         Icons.add,
                                         size: 20,
                                       ),

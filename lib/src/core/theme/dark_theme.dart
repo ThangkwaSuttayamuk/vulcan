@@ -5,15 +5,17 @@ Color darkPrimaryColor = Colors.grey.shade900;
 Color darkSecondaryColor = Colors.grey.shade800;
 
 ThemeData darkTheme = ThemeData(
+  cardColor: Colors.grey.shade700,
   scaffoldBackgroundColor: darkPrimaryColor,
   colorScheme: ColorScheme.dark(
       primary: darkPrimaryColor, secondary: darkSecondaryColor),
   iconTheme: const IconThemeData(color: Colors.white),
   cardTheme: CardTheme(
+    shadowColor: darkPrimaryColor,
     color: darkPrimaryColor,
   ),
   textTheme: TextTheme(
-    titleLarge: TextStyle(
+    titleLarge: const TextStyle(
       fontSize: 20,
       fontWeight: FontWeight.bold,
       color: Colors.white,
@@ -22,12 +24,11 @@ ThemeData darkTheme = ThemeData(
       color: Colors.grey.shade300,
     ),
   ),
-  
   inputDecorationTheme: InputDecorationTheme(
     filled: true,
     fillColor: darkSecondaryColor,
     focusedBorder: OutlineInputBorder(
-      borderSide: BorderSide(color: Colors.white),
+      borderSide: const BorderSide(color: Colors.white),
       borderRadius: BorderRadius.circular(30),
     ),
     border: OutlineInputBorder(

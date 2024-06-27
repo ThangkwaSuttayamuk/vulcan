@@ -18,7 +18,7 @@ class CartNotifier extends StateNotifier<CartState> {
 
   Future<void> cartFoods() async {
     state = state.copyWith(status: CartStatus.loading);
-    // await Future.delayed(Duration(seconds: 1));
+    await Future.delayed(Duration(seconds: 1));
 
     state = state.copyWith(isLoading: true);
     try {

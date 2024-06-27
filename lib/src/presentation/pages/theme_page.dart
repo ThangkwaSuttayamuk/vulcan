@@ -24,10 +24,10 @@ class _ThemePageState extends ConsumerState<ThemePage> {
                   color: Theme.of(context).colorScheme.secondary,
                   boxShadow: [
                     BoxShadow(
-                      color: Theme.of(context).cardTheme.color!,
+                      color: Theme.of(context).cardTheme.shadowColor!,
                       spreadRadius: 6,
                       blurRadius: 7,
-                      offset: Offset(0, -4),
+                      offset: const Offset(0, -4),
                     )
                   ]),
               child: Padding(
@@ -49,7 +49,7 @@ class _ThemePageState extends ConsumerState<ThemePage> {
                             )),
                       ],
                     ),
-                    Text(
+                    const Text(
                       'Choose Theme',
                       style: TextStyle(
                         fontWeight: FontWeight.bold,
@@ -61,8 +61,8 @@ class _ThemePageState extends ConsumerState<ThemePage> {
               ),
             ),
             ListTile(
-              leading: Icon(Icons.dark_mode),
-              title: Text("Dark Theme"),
+              leading: const Icon(Icons.dark_mode),
+              title: const Text("Dark Theme"),
               trailing: Switch(
                 activeColor: Colors.amber,
                 inactiveThumbColor: Colors.grey.shade700,

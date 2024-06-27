@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_application_1/src/presentation/controller/language/language_provider.dart';
-import 'package:flutter_application_1/src/presentation/controller/language/language_state.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 class LanguageCard extends ConsumerStatefulWidget {
@@ -49,7 +48,7 @@ class _LanguageCardState extends ConsumerState<LanguageCard> {
                             color: Theme.of(context).textTheme.titleLarge?.color,
                             size: 15,
                           )
-                        : SizedBox(),
+                        : const  SizedBox(),
                   ],
                 ),
               ],

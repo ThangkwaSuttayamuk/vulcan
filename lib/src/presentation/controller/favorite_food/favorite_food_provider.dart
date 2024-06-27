@@ -5,7 +5,6 @@ import 'package:flutter_application_1/src/domain/usecases/add_favorite_usecase.d
 import 'package:flutter_application_1/src/domain/usecases/get_all_favorite_usecase.dart';
 import 'package:flutter_application_1/src/domain/usecases/remove_favorite_usecase.dart';
 import 'package:flutter_application_1/src/presentation/controller/favorite_food/favorite_food_controller.dart';
-import 'package:flutter_application_1/src/data/repositories/food_repository_impl.dart';
 import 'package:flutter_application_1/src/presentation/controller/favorite_food/favorite_food_state.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 

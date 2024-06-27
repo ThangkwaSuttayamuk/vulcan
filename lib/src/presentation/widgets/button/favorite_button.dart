@@ -16,47 +16,32 @@ class _FavoriteButtonState extends ConsumerState<FavoriteButton> {
   void initState() {
     WidgetsBinding.instance.addPostFrameCallback((_) {
       ref.read(favoriteProvider.notifier).checkFavorite(widget.foodId);
-      ref.read(favoriteFoodProvider.notifier).fetchFavoriteFoods();
     });
     super.initState();
   }
 
   @override
   Widget build(BuildContext context) {
-    final favoriteState = ref.watch(favoriteProvider);
-    final favoritelistState = ref.watch(favoriteFoodProvider);
+    final isFavorite = ref.watch(favoriteProvider);
+    final favoriteState = ref.read(favoriteProvider.notifier);
+    ref.watch(favoriteFoodProvider);
     final favoriteFoodState = ref.read(favoriteFoodProvider.notifier);
 
     return FloatingActionButton.small(
       backgroundColor: Colors.white,
       onPressed: () {
-     
-        favoriteState.isFavorite == true
+        isFavorite.isFavorite == true
             ? favoriteFoodState.removeFavorite(widget.foodId)
             : favoriteFoodState.addFavorite(widget.foodId);
-
-        ref
-            .read(favoriteProvider.notifier)
-            .statusFavorite(favoriteState.isFavorite);
+        favoriteState.statusFavorite(isFavorite.isFavorite);
       },
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(30)),
       child: Icon(
-        favoriteState.isFavorite
+        isFavorite.isFavorite
             ? Icons.favorite_rounded
             : Icons.favorite_border_outlined,
         color: Colors.pinkAccent,
       ),
     );
   }
-
-  // void toggleFavorite() {
-  //   setState(() {
-  //     favorite = !favorite;
-  //   });
-  //   if (favorite) {
-  //     addFavorite();
-  //   } else {
-  //     removeFavorite();
-  //   }
-  // }
 }
