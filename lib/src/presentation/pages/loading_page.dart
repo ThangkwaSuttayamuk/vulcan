@@ -62,7 +62,7 @@ class _LoadingPageState extends ConsumerState<LoadingPage>
               ..addStatusListener((status) {
                 if (status == AnimationStatus.completed) {
                   _secondController.reverse();
-                  Future.delayed(const Duration(milliseconds: 700), () {
+                  Future.delayed(const Duration(milliseconds: 680), () {
                     setState(() {});
                     _thirdController.forward();
                   });
@@ -84,7 +84,7 @@ class _LoadingPageState extends ConsumerState<LoadingPage>
               ..addStatusListener((status) {
                 if (status == AnimationStatus.completed) {
                   _thirdController.reverse();
-                  Future.delayed(const Duration(milliseconds: 700), () {
+                  Future.delayed(const Duration(milliseconds: 680), () {
                     setState(() {});
                     _forthController.forward();
                   });
@@ -106,7 +106,7 @@ class _LoadingPageState extends ConsumerState<LoadingPage>
               ..addStatusListener((status) {
                 if (status == AnimationStatus.completed) {
                   _forthController.reverse();
-                  Future.delayed(const Duration(milliseconds: 700), () {
+                  Future.delayed(const Duration(milliseconds: 680), () {
                     setState(() {});
                     _fifthController.forward();
                   });
@@ -128,7 +128,7 @@ class _LoadingPageState extends ConsumerState<LoadingPage>
               ..addStatusListener((status) {
                 if (status == AnimationStatus.completed) {
                   _fifthController.reverse();
-                  Future.delayed(const Duration(milliseconds: 700), () {
+                  Future.delayed(const Duration(milliseconds: 680), () {
                     setState(() {});
                     _controller.forward();
                   });

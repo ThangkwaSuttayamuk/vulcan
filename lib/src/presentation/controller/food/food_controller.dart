@@ -28,8 +28,6 @@ class FoodListNotifier extends StateNotifier<FoodListState> {
     }
   }
 
-  
-
   void searchFoods(String query) async {
     state = state.copyWith(searchStatus: HomeStatus.loading);
     await Future.delayed(const Duration(seconds: 1));
