@@ -3,7 +3,6 @@ import 'package:flutter_application_1/src/presentation/pages/cart_page.dart';
 import 'package:flutter_application_1/src/presentation/pages/favorite_page.dart';
 import 'package:flutter_application_1/src/presentation/pages/home_page.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:go_router/go_router.dart';
 
 class RegularIconButton extends ConsumerStatefulWidget {
   final String name;
@@ -19,7 +18,7 @@ class _RegularIconButtonState extends ConsumerState<RegularIconButton> {
   Widget build(BuildContext context) {
     final Map<String, IconData> iconMap = {
       'favorite': Icons.favorite,
-      'cart': Icons.shopping_bag_outlined,
+      'cart': Icons.shopping_cart_outlined,
     };
 
     final String name = widget.name;
@@ -31,13 +30,10 @@ class _RegularIconButtonState extends ConsumerState<RegularIconButton> {
       child: InkWell(
         borderRadius: BorderRadius.circular(30),
         onTap: () {
-          Navigator.push(
-              context,
-              MaterialPageRoute<void>(
-                  builder: (BuildContext context) => getPageByname(name)));
+          Navigator.pushNamed(context, '/$name');
         },
         child: Icon(
-          selectedIcon ?? Icons.error, // default icon if not found
+          selectedIcon ?? Icons.error,
           color: Theme.of(context).textTheme.titleLarge?.color,
         ),
       ),

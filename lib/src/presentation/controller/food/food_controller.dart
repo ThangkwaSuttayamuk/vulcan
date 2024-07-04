@@ -87,4 +87,18 @@ class FoodListNotifier extends StateNotifier<FoodListState> {
       state = state.copyWith(error: e.toString(), status: HomeStatus.failure);
     }
   }
+
+  // Future<void> removeFavorite(int id) async {
+  //   try {
+  //     await removeFavoriteUsecase.call(id);
+  //     final favoriteFoods = await getAllFavoritesUsecase.call(NoParams());
+  //     state = state.copyWith(
+  //         favoriteFoods: favoriteFoods,
+  //         status: favoriteFoods.isEmpty
+  //             ? FavoriteFoodStatus.empty
+  //             : FavoriteFoodStatus.success);
+  //   } catch (e) {
+  //     state = state.copyWith(error: e.toString());
+  //   }
+  // }
 }

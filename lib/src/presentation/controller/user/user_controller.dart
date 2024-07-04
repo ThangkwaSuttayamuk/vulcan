@@ -33,7 +33,7 @@ class UserNotifier extends StateNotifier<UserState> {
 
   void checkLogin() async {
     state = state.copyWith(loginStatus: UserStatus.loading);
-    await Future.delayed(const Duration(seconds: 20));
+    await Future.delayed(const Duration(seconds: 4));
 
     try {
       loginData = await SharedPreferences.getInstance();

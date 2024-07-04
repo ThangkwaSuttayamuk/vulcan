@@ -11,12 +11,11 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class FoodDetail extends ConsumerStatefulWidget {
-  final int id;
-  
+  final id;
 
-  const FoodDetail({
+  const FoodDetail(
+    this.id, {
     super.key,
-    required this.id,
   });
 
   @override

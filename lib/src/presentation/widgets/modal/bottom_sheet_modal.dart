@@ -159,18 +159,21 @@ class BottomSheetModal extends ConsumerWidget {
                             } else {
                               ref.read(orderProvider.notifier).addOrder(
                                   cartstate.getAddress(), cartstate.getTel());
-                              Navigator.push(
-                                context,
-                                PageRouteBuilder(
-                                  pageBuilder: (context, animation,
-                                          secondaryAnimation) =>
-                                      const OrderPage(),
-                                  transitionsBuilder: (context, animation,
-                                      secondaryAnimation, child) {
-                                    return child;
-                                  },
-                                ),
-                              );
+                              // Navigator.push(
+                              //   context,
+                              //   PageRouteBuilder(
+                              //     pageBuilder: (context, animation,
+                              //             secondaryAnimation) =>
+                              //         const OrderPage(),
+                              //     transitionsBuilder: (context, animation,
+                              //         secondaryAnimation, child) {
+                              //       return child;
+                              //     },
+                              //   ),
+                              // );
+
+                              Navigator.pushNamedAndRemoveUntil(context,
+                                  '/order', ModalRoute.withName('/home'));
                             }
                           }))
                 ]),

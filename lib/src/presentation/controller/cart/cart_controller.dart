@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:flutter_application_1/src/core/usecase/usecase.dart';
 import 'package:flutter_application_1/src/domain/usecases/add_to_cart_usecase.dart';
+import 'package:flutter_application_1/src/domain/usecases/delete_form_cart_usecase.dart';
 import 'package:flutter_application_1/src/domain/usecases/get_cart_usecase.dart';
 import 'package:flutter_application_1/src/domain/usecases/remove_to_cart_usecase.dart';
 import 'package:flutter_application_1/src/presentation/controller/cart/cart_state.dart';
@@ -11,9 +12,10 @@ class CartNotifier extends StateNotifier<CartState> {
   final GetCartUsecase getCartUsecase;
   final AddToCartUsecase addToCartUsecase;
   final RemoveToCartUsecase removeToCartUsecase;
+  final DeleteFormCartUsecase deleteFormCartUsecase;
 
-  CartNotifier(
-      this.getCartUsecase, this.addToCartUsecase, this.removeToCartUsecase)
+  CartNotifier(this.getCartUsecase, this.addToCartUsecase,
+      this.removeToCartUsecase, this.deleteFormCartUsecase)
       : super(CartState());
 
   Future<void> cartFoods() async {
@@ -65,6 +67,19 @@ class CartNotifier extends StateNotifier<CartState> {
     }
   }
 
+  Future<void> deleteFormCart(int id) async {
+    try {
+      await deleteFormCartUsecase.call(id);
+      final cartList = await getCartUsecase.call(NoParams());
+      state = state.copyWith(
+          cartList: cartList,
+          isLoading: false,
+          status: cartList.isEmpty ? CartStatus.empty : CartStatus.success);
+    } catch (e) {
+      state = state.copyWith(error: e.toString());
+    }
+  }
+
   Future<void> initData() async {
     state = state.copyWith(
         address: '',
@@ -86,6 +101,7 @@ class CartNotifier extends StateNotifier<CartState> {
   }
 
   int getTotalAmount() {
+    print(state.cartList?.length);
     return state.cartList?.length ?? 0;
   }
 
@@ -105,4 +121,6 @@ class CartNotifier extends StateNotifier<CartState> {
     }
     return total;
   }
+
+  
 }

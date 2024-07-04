@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_application_1/src/presentation/controller/language/language_provider.dart';
-import 'package:flutter_application_1/src/presentation/pages/home_page.dart';
 import 'package:flutter_application_1/src/presentation/widgets/card/language_card.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
@@ -43,18 +42,8 @@ class LanguagePage extends ConsumerWidget {
                           child: InkWell(
                             onTap: () {
                               languageState.saveLanguage(language.language);
-                              Navigator.push(
-                                context,
-                                PageRouteBuilder(
-                                  pageBuilder: (context, animation,
-                                          secondaryAnimation) =>
-                                      const HomePage(),
-                                  transitionsBuilder: (context, animation,
-                                      secondaryAnimation, child) {
-                                    return child;
-                                  },
-                                ),
-                              );
+                              Navigator.pushNamed(context, '/home');
+                              
                             },
                             child: Text(
                               AppLocalizations.of(context)?.language_save ??

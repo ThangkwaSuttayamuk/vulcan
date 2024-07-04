@@ -15,7 +15,6 @@ class UserRepositoryImpl implements UserRepository {
       where: 'username = ? AND password = ?',
       whereArgs: [username, password],
     );
-    print(maps);
 
     if (maps.isNotEmpty) {
       return UserEntity.fromMap(maps.first);

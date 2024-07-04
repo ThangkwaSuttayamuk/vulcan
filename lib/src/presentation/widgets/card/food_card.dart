@@ -38,15 +38,7 @@ class FoodCard extends StatelessWidget {
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
         child: InkWell(
           onTap: () {
-            Navigator.push(
-                context,
-                MaterialPageRoute<void>(
-                    builder: (BuildContext context) => 
-                    // FoodDetail(
-                    //       id: id,
-                    //     )
-                    TestDetailPage(id:id)
-                        ));
+            Navigator.pushNamed(context, '/detail', arguments: id);
           },
           borderRadius: BorderRadius.circular(10),
           child: Column(

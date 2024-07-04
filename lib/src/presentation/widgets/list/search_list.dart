@@ -47,12 +47,8 @@ class SearchList extends ConsumerWidget {
                 final foodItem = searchState.searchfoods?[index];
                 return GestureDetector(
                   onTap: () {
-                    Navigator.push(
-                        context,
-                        MaterialPageRoute<void>(
-                            builder: (BuildContext context) => FoodDetail(
-                                  id: foodItem?.id ?? 0,
-                                )));
+                    Navigator.pushNamed(context, '/detail',
+                        arguments: foodItem?.id);
                   },
                   child: FoodCard(
                     id: foodItem?.id ?? 0,

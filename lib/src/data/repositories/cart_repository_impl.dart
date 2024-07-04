@@ -60,5 +60,14 @@ class CartRepositoryImpl implements CartRepository {
     }
   }
 
+  @override
+  Future<void> deleteFoodFromCart(int foodId) async {
+    final db = await databaseHelper.database;
+    await db.delete(
+      'cart',
+      where: 'food_id = ?',
+      whereArgs: [foodId],
+    );
+  }
   
 }

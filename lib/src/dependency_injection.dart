@@ -3,6 +3,7 @@ import 'package:flutter_application_1/src/data/repositories/user_repository_impl
 import 'package:flutter_application_1/src/domain/repositories/order_repository.dart';
 import 'package:flutter_application_1/src/domain/repositories/user_repository.dart';
 import 'package:flutter_application_1/src/domain/usecases/add_order_usecase.dart';
+import 'package:flutter_application_1/src/domain/usecases/delete_form_cart_usecase.dart';
 import 'package:flutter_application_1/src/domain/usecases/get_order_list_by_id.dart';
 import 'package:flutter_application_1/src/domain/usecases/get_order_usecase.dart';
 import 'package:flutter_application_1/src/domain/usecases/get_user_usecase.dart';
@@ -52,6 +53,7 @@ void init() {
   sl.registerLazySingleton(() => AddToCartUsecase(sl()));
   sl.registerLazySingleton(() => GetCartUsecase(sl()));
   sl.registerLazySingleton(() => RemoveToCartUsecase(sl()));
+  sl.registerLazySingleton(() => DeleteFormCartUsecase(sl()));
   sl.registerLazySingleton(() => AddOrderUsecase(sl()));
   sl.registerLazySingleton(() => GetOrderUsecase(sl()));
   sl.registerLazySingleton(() => GetOrderListByIdUsecase(sl()));
@@ -66,8 +68,11 @@ void init() {
         removeFavorite: sl(),
         getAllFavorites: sl(),
       ));
-  sl.registerFactory(
-      () => CartBloc(getCart: sl(), addToCart: sl(), removeToCart: sl()));
+  sl.registerFactory(() => CartBloc(
+      getCart: sl(),
+      addToCart: sl(),
+      removeToCart: sl(),
+      deleteFormCartUsecase: sl()));
   sl.registerFactory(() => OrderBloc(
       addOrderUsecase: sl(),
       getOrderUsecase: sl(),

@@ -47,18 +47,19 @@ class _OrderPageState extends ConsumerState<OrderPage> {
                   children: [
                     InkWell(
                         onTap: () {
-                          Navigator.push(
-                            context,
-                            PageRouteBuilder(
-                              pageBuilder:
-                                  (context, animation, secondaryAnimation) =>
-                                      const HomePage(),
-                              transitionsBuilder: (context, animation,
-                                  secondaryAnimation, child) {
-                                return child;
-                              },
-                            ),
-                          );
+                          // Navigator.push(
+                          //   context,
+                          //   PageRouteBuilder(
+                          //     pageBuilder:
+                          //         (context, animation, secondaryAnimation) =>
+                          //             const HomePage(),
+                          //     transitionsBuilder: (context, animation,
+                          //         secondaryAnimation, child) {
+                          //       return child;
+                          //     },
+                          //   ),
+                          // );
+                          Navigator.pop(context);
                         },
                         child: const Icon(
                           Icons.arrow_back_ios,

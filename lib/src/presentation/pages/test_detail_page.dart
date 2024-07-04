@@ -9,21 +9,20 @@ import 'package:flutter_application_1/src/presentation/widgets/card/text_card.da
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
-import 'package:go_router/go_router.dart';
 
-class TestDetailPage extends ConsumerStatefulWidget {
-  final int id;
+class DetailPage extends ConsumerStatefulWidget {
+  final id;
 
-  const TestDetailPage({
+  const DetailPage(
+    this.id, {
     super.key,
-    required this.id,
   });
 
   @override
-  _TestDetailPageState createState() => _TestDetailPageState();
+  _DetailPageState createState() => _DetailPageState();
 }
 
-class _TestDetailPageState extends ConsumerState<TestDetailPage> {
+class _DetailPageState extends ConsumerState<DetailPage> {
   late ScrollController _scrollController;
   late double _scrollPosition = 0;
 
@@ -56,16 +55,15 @@ class _TestDetailPageState extends ConsumerState<TestDetailPage> {
     final quantityState = ref.watch(quantityProvider);
     final quantityControllerState = ref.read(quantityProvider.notifier);
     final food = ref.watch(foodListProvider);
-    print(_scrollPosition);
-    return Stack(
-      alignment: Alignment.bottomCenter,
-      children: [
-        Scaffold(
-          body: CustomScrollView(controller: _scrollController, slivers: [
+    return Scaffold(
+      body: Stack(
+        alignment: Alignment.bottomCenter,
+        children: [
+          CustomScrollView(controller: _scrollController, slivers: [
             SliverAppBar(
               leadingWidth: 50.w,
               leading: Padding(
-                padding: EdgeInsets.only(left: 10),
+                padding: const EdgeInsets.only(left: 10),
                 child: InkWell(
                   onTap: () {
                     Navigator.pop(context);
@@ -73,8 +71,8 @@ class _TestDetailPageState extends ConsumerState<TestDetailPage> {
                   child: Container(
                     height: 40.w,
                     width: 40.w,
-                    child: Icon(Icons.close),
-                    decoration: BoxDecoration(
+                    child: const Icon(Icons.close),
+                    decoration: const BoxDecoration(
                         shape: BoxShape.circle, color: Colors.white),
                   ),
                 ),
@@ -90,25 +88,36 @@ class _TestDetailPageState extends ConsumerState<TestDetailPage> {
                 background: Stack(
                   alignment: Alignment.bottomRight,
                   children: [
-                    Container(
-                      decoration: BoxDecoration(
-                          image: DecorationImage(
-                              fit: BoxFit.cover,
-                              image: AssetImage(
-                                  'assets/images/${food.foodById?.image}'))),
+                    Hero(
+                      tag: 'tag-1',
+                      child: Material(
+                        child: InkWell(
+                          onTap: () {
+                            Navigator.pushNamed(context, '/image',
+                                arguments: food.foodById?.image);
+                          },
+                          child: Container(
+                            decoration: BoxDecoration(
+                                image: DecorationImage(
+                                    fit: BoxFit.cover,
+                                    image: AssetImage(
+                                        'assets/images/${food.foodById?.image}'))),
+                          ),
+                        ),
+                      ),
                     ),
                     Padding(
                         padding: const EdgeInsets.all(5),
-                        child: FavoriteButton(foodId: food.foodById?.id ?? 0)),
+                        child: FavoriteButton(foodId: widget.id)),
                   ],
                 ),
-                stretchModes: [
+                stretchModes: const [
                   StretchMode.blurBackground,
                   StretchMode.zoomBackground
                 ],
               ),
               title: PreferredSize(
-                  preferredSize: Size.fromHeight(10),
+                  preferredSize: const Size.fromHeight(10),
                   child: AnimatedOpacity(
                     opacity: _scrollPosition >= 150.h ? 1 : 0,
                     duration: const Duration(milliseconds: 200),
@@ -167,82 +176,84 @@ class _TestDetailPageState extends ConsumerState<TestDetailPage> {
                   TextCard(
                     listOfItem: food.foodById?.ingredients.split(',') ?? [],
                   ),
-                  SizedBox(
+                  const SizedBox(
                     height: 500,
                   )
                 ],
               ),
             )),
           ]),
-        ),
-        Container(
-          alignment: Alignment.topCenter,
-          height: 100,
-          color: Theme.of(context).colorScheme.secondary,
-          child: Padding(
-            padding: const EdgeInsets.only(left: 30, right: 30, top: 15),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Material(
-                      color: Theme.of(context).colorScheme.secondary,
-                      borderRadius: BorderRadius.circular(30),
-                      child: InkWell(
+          Container(
+            alignment: Alignment.topCenter,
+            height: 100,
+            color: Theme.of(context).colorScheme.secondary,
+            child: Padding(
+              padding: const EdgeInsets.only(left: 30, right: 30, top: 15),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Material(
+                        color: Theme.of(context).colorScheme.secondary,
                         borderRadius: BorderRadius.circular(30),
-                        onTap: () {
-                          quantityControllerState.decrease();
-                        },
-                        child: Container(
-                          decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(40),
-                              border: Border.all(color: Colors.grey.shade800)),
-                          child: const Icon(
-                            Icons.remove,
-                            size: 20,
+                        child: InkWell(
+                          borderRadius: BorderRadius.circular(30),
+                          onTap: () {
+                            quantityControllerState.decrease();
+                          },
+                          child: Container(
+                            decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(40),
+                                border:
+                                    Border.all(color: Colors.grey.shade800)),
+                            child: const Icon(
+                              Icons.remove,
+                              size: 20,
+                            ),
                           ),
                         ),
                       ),
-                    ),
-                    SizedBox(
-                        width: 50,
-                        child: Material(
-                          color: Theme.of(context).colorScheme.secondary,
-                          child: Text(
-                            quantityState.quantity.toString(),
-                            textAlign: TextAlign.center,
-                          ),
-                        )),
-                    Material(
-                      color: Theme.of(context).colorScheme.secondary,
-                      borderRadius: BorderRadius.circular(30),
-                      child: InkWell(
+                      SizedBox(
+                          width: 50,
+                          child: Material(
+                            color: Theme.of(context).colorScheme.secondary,
+                            child: Text(
+                              quantityState.quantity.toString(),
+                              textAlign: TextAlign.center,
+                            ),
+                          )),
+                      Material(
+                        color: Theme.of(context).colorScheme.secondary,
                         borderRadius: BorderRadius.circular(30),
-                        onTap: () {
-                          quantityControllerState.increase();
-                        },
-                        child: Container(
-                          decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(40),
-                              border: Border.all(color: Colors.grey.shade800)),
-                          child: const Icon(
-                            Icons.add,
-                            size: 20,
+                        child: InkWell(
+                          borderRadius: BorderRadius.circular(30),
+                          onTap: () {
+                            quantityControllerState.increase();
+                          },
+                          child: Container(
+                            decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(40),
+                                border:
+                                    Border.all(color: Colors.grey.shade800)),
+                            child: const Icon(
+                              Icons.add,
+                              size: 20,
+                            ),
                           ),
                         ),
                       ),
-                    ),
-                  ],
-                ),
-                AddToCartButton(
-                    id: widget.id, price: food.foodById?.price ?? 0.0)
-              ],
+                    ],
+                  ),
+                  AddToCartButton(
+                      id: widget.id, price: food.foodById?.price ?? 0.0)
+                ],
+              ),
             ),
-          ),
-        )
-      ],
+          )
+        ],
+      ),
     );
   }
 }

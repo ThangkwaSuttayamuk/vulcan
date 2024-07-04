@@ -19,11 +19,7 @@ class SettingCard extends StatelessWidget {
             color: Theme.of(context).colorScheme.secondary,
             child: InkWell(
               onTap: () {
-                Navigator.push(
-                    context,
-                    MaterialPageRoute<void>(
-                        builder: (BuildContext context) =>
-                            getPageByname(name)));
+                Navigator.pushNamed(context, '/loading');
               },
               child: Padding(
                 padding:
@@ -39,7 +35,9 @@ class SettingCard extends StatelessWidget {
                             : name == 'theme'
                                 ? AppLocalizations.of(context)?.setting_theme ??
                                     'Theme'
-                                : ''),
+                                : name == 'credit card'
+                                    ? 'Credit Card'
+                                    : ''),
                         const Icon(
                           Icons.arrow_forward_ios,
                           color: Colors.grey,

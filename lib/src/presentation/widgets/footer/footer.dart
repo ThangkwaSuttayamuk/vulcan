@@ -1,15 +1,40 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_application_1/src/presentation/controller/cart/cart_provider.dart';
 import 'package:flutter_application_1/src/presentation/widgets/footer/footer_button.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-class Footer extends StatefulWidget {
-  const Footer({super.key});
+class Footer extends ConsumerStatefulWidget {
+  const Footer({
+    super.key,
+  });
 
   @override
-  State<Footer> createState() => _FooterState();
+  _FooterState createState() => _FooterState();
 }
 
-class _FooterState extends State<Footer> {
+class _FooterState extends ConsumerState<Footer> {
+  late ScrollController _scrollController;
+  late double _scrollPosition = 0;
+
+  _scrollListener() {
+    setState(() {
+      _scrollPosition = _scrollController.position.pixels;
+    });
+  }
+
+  @override
+  void initState() {
+    _scrollController = ScrollController();
+    _scrollController.addListener(_scrollListener);
+    super.initState();
+  }
+
+  @override
+  void dispose() {
+    super.dispose();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Container(

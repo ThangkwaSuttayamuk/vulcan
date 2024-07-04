@@ -20,6 +20,8 @@ class _SettingPageState extends ConsumerState<SettingPage> {
     "theme",
   ];
 
+  final List<String> _information = ["credit card"];
+
   late SharedPreferences loginData;
   late String username;
 
@@ -31,9 +33,6 @@ class _SettingPageState extends ConsumerState<SettingPage> {
 
   void initial() async {
     loginData = await SharedPreferences.getInstance();
-    // setState(() {
-    //   username = loginData.getString('username') ?? '';
-    // });
   }
 
   @override
@@ -59,6 +58,7 @@ class _SettingPageState extends ConsumerState<SettingPage> {
                 header: AppLocalizations.of(context)?.setting_header_group ??
                     'Setting',
                 setting: _setting),
+            SettingGroup(header: 'Information', setting: _information),
             Padding(
               padding: const EdgeInsets.all(8.0),
               child: MaterialButton(
@@ -72,8 +72,8 @@ class _SettingPageState extends ConsumerState<SettingPage> {
                   loginData.setInt('id', 0);
                   if (loginData.getInt('id') == 0 &&
                       loginData.getBool('login') == true) {
-                    Navigator.pushReplacement(context,
-                        MaterialPageRoute(builder: (context) => LoginPage()));
+                    Navigator.pushNamedAndRemoveUntil(
+                        context, '/', (route) => false);
                   }
                 },
                 child: Text(

@@ -29,17 +29,20 @@ class _FooterButtonState extends State<FooterButton> {
       color: Theme.of(context).colorScheme.secondary,
       child: InkWell(
         onTap: () {
-          Navigator.push(
-            context,
-            PageRouteBuilder(
-              pageBuilder: (context, animation, secondaryAnimation) =>
-                  getPageByname(name),
-              transitionsBuilder:
-                  (context, animation, secondaryAnimation, child) {
-                return child;
-              },
-            ),
-          );
+          Navigator.pushNamed(
+                                context,
+                                '/$name');
+          // Navigator.push(
+          //   context,
+          //   PageRouteBuilder(
+          //     pageBuilder: (context, animation, secondaryAnimation) =>
+          //         getPageByname(name),
+          //     transitionsBuilder:
+          //         (context, animation, secondaryAnimation, child) {
+          //       return child;
+          //     },
+          //   ),
+          // );
         },
         borderRadius: BorderRadius.circular(40),
         child: SizedBox(

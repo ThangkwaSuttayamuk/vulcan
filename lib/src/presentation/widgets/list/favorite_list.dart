@@ -55,12 +55,8 @@ class FavoriteList extends ConsumerWidget {
                 final foodItem = favoritelistState.favoriteFoods[index];
                 return GestureDetector(
                   onTap: () {
-                    Navigator.push(
-                        context,
-                        MaterialPageRoute<void>(
-                            builder: (BuildContext context) => FoodDetail(
-                                  id: foodItem.id,
-                                )));
+                    Navigator.pushNamed(context, '/detail',
+                      arguments: foodItem.id);
                   },
                   child: FoodCard(
                     id: foodItem.id,

@@ -6,7 +6,7 @@ class FavoriteNotifier extends StateNotifier<FavoriteState> {
   final IsFavoriteUsecase isFavoriteUsecase;
 
   FavoriteNotifier(this.isFavoriteUsecase)
-      : super(FavoriteState(isFavorite: false));
+      : super(FavoriteState());
 
   Future<void> checkFavorite(int id) async {
     final isFav = await isFavoriteUsecase(id);
