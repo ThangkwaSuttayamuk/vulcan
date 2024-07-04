@@ -1,8 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_application_1/src/presentation/pages/food_detail_page.dart';
-import 'package:flutter_application_1/src/presentation/pages/test_detail_page.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:go_router/go_router.dart';
 
 class FoodCard extends StatelessWidget {
   final int id;
@@ -24,6 +21,7 @@ class FoodCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    
     return Container(
       decoration: BoxDecoration(boxShadow: [
         BoxShadow(
@@ -63,14 +61,59 @@ class FoodCard extends StatelessWidget {
                       name,
                       maxLines: 1,
                       overflow: TextOverflow.ellipsis,
-                      style: TextStyle(fontSize: 14.sp),
+                      style: TextStyle(
+                          fontSize: 16.sp, fontWeight: FontWeight.w500),
                     ),
                     Text(
                       description,
                       maxLines: 1,
                       overflow: TextOverflow.ellipsis,
-                      style: TextStyle(fontSize: 14.sp),
+                      style: TextStyle(
+                          fontSize: 12.sp,
+                          color:
+                              Theme.of(context).textTheme.titleMedium?.color),
                     ),
+                    // SizedBox(
+                    //   height: 5,
+                    // ),
+                    // Row(
+                    //   mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    //   children: [
+                    //     Text(
+                    //       '\$${price}',
+                    //       maxLines: 1,
+                    //       overflow: TextOverflow.ellipsis,
+                    //       style: TextStyle(
+                    //           fontSize: 14.sp, fontWeight: FontWeight.w700),
+                    //     ),
+                    //     Material(
+                    //         borderRadius: BorderRadius.circular(20),
+                    //         child: InkWell(
+                    //           borderRadius: BorderRadius.circular(20),
+                    //           onTap: () {
+                    //             print('add to cart');
+                    //           },
+                    //           child: Stack(
+                    //             alignment: Alignment.center,
+                    //             children: [
+                    //               CircleAvatar(
+                    //                 backgroundColor: Theme.of(context)
+                    //                     .textTheme
+                    //                     .titleLarge
+                    //                     ?.color,
+                    //                 radius: 10.h,
+                    //               ),
+                    //               Icon(
+                    //                 Icons.add,
+                    //                 color:
+                    //                     Theme.of(context).colorScheme.secondary,
+                    //                 size: 20,
+                    //               ),
+                    //             ],
+                    //           ),
+                    //         ))
+                    //   ],
+                    // ),
                   ],
                 ),
               ),
@@ -80,4 +123,6 @@ class FoodCard extends StatelessWidget {
       ),
     );
   }
+
+  
 }

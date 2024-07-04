@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_application_1/src/presentation/controller/cart/cart_provider.dart';
 import 'package:flutter_application_1/src/presentation/controller/order/order_provider.dart';
-import 'package:flutter_application_1/src/presentation/pages/order_page.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
@@ -126,7 +125,7 @@ class BottomSheetModal extends ConsumerWidget {
                   children: [
                     Text(
                       AppLocalizations.of(context)?.cart_total ?? 'Total',
-                      style: TextStyle(fontSize: 18),
+                      style: const TextStyle(fontSize: 18),
                     ),
                     Text(
                       '\$${ref.read(cartProvider.notifier).getTotal()}',
@@ -159,18 +158,6 @@ class BottomSheetModal extends ConsumerWidget {
                             } else {
                               ref.read(orderProvider.notifier).addOrder(
                                   cartstate.getAddress(), cartstate.getTel());
-                              // Navigator.push(
-                              //   context,
-                              //   PageRouteBuilder(
-                              //     pageBuilder: (context, animation,
-                              //             secondaryAnimation) =>
-                              //         const OrderPage(),
-                              //     transitionsBuilder: (context, animation,
-                              //         secondaryAnimation, child) {
-                              //       return child;
-                              //     },
-                              //   ),
-                              // );
 
                               Navigator.pushNamedAndRemoveUntil(context,
                                   '/order', ModalRoute.withName('/home'));

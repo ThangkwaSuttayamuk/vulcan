@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_application_1/src/presentation/controller/user/user_provider.dart';
-import 'package:flutter_application_1/src/presentation/pages/login_page.dart';
 import 'package:flutter_application_1/src/presentation/widgets/card/setting_group.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';

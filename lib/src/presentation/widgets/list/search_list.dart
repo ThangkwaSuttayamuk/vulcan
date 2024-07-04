@@ -1,13 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_application_1/src/presentation/controller/food/food_provider.dart';
 import 'package:flutter_application_1/src/presentation/controller/food/food_state.dart';
-import 'package:flutter_application_1/src/presentation/pages/food_detail_page.dart';
 import 'package:flutter_application_1/src/presentation/widgets/card/food_card.dart';
 import 'package:flutter_application_1/src/presentation/widgets/loading/shimmer_box.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:go_router/go_router.dart';
 
 class SearchList extends ConsumerWidget {
   const SearchList({super.key});

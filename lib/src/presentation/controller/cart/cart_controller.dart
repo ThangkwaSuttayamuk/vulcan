@@ -20,7 +20,7 @@ class CartNotifier extends StateNotifier<CartState> {
 
   Future<void> cartFoods() async {
     state = state.copyWith(status: CartStatus.loading);
-    await Future.delayed(Duration(seconds: 1));
+    await Future.delayed(const Duration(seconds: 1));
 
     state = state.copyWith(isLoading: true);
     try {
@@ -101,7 +101,6 @@ class CartNotifier extends StateNotifier<CartState> {
   }
 
   int getTotalAmount() {
-    print(state.cartList?.length);
     return state.cartList?.length ?? 0;
   }
 

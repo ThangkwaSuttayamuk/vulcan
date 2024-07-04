@@ -63,9 +63,9 @@ class SettingCard extends StatelessWidget {
 
   getPageByname(String name) {
     return name == 'language'
-        ? LanguagePage()
+        ? const LanguagePage()
         : name == 'theme'
-            ? ThemePage()
-            : HomePage();
+            ? const ThemePage()
+            : const HomePage();
   }
 }

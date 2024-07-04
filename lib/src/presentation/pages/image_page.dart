@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 
 class ImagePage extends StatefulWidget {
   final image;
@@ -37,7 +36,7 @@ class _ImagePageState extends State<ImagePage> {
             children: [
               Center(
                 child: AnimatedContainer(
-                  duration: Duration(milliseconds: 200),
+                  duration: const Duration(milliseconds: 200),
                   transform: Matrix4.translationValues(0, offset, 0),
                   child: Hero(
                       tag: 'tag-1',
@@ -46,7 +45,7 @@ class _ImagePageState extends State<ImagePage> {
                 ),
               ),
               IconButton(
-                icon: Icon(Icons.close),
+                icon: const Icon(Icons.close),
                 color: Colors.white,
                 onPressed: () => Navigator.pop(context),
               ),

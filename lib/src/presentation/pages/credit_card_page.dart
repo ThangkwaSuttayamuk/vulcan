@@ -67,8 +67,8 @@ class _CreditCardPageState extends State<CreditCardPage> {
                 color: Colors.red, borderRadius: BorderRadius.circular(30)),
             height: 200.h,
             width: 350.w,
-            child: Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 30),
+            child: const Padding(
+              padding: EdgeInsets.symmetric(horizontal: 30),
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 crossAxisAlignment: CrossAxisAlignment.start,

@@ -1,4 +1,3 @@
-
 import 'package:flutter/material.dart';
 import 'package:flutter_application_1/src/presentation/controller/filter/filter_provider.dart';
 import 'package:flutter_application_1/src/presentation/controller/food/food_provider.dart';
@@ -7,7 +6,7 @@ import 'package:flutter_application_1/src/presentation/widgets/button/filter_but
 import 'package:flutter_application_1/src/presentation/widgets/button/regular_icon_button.dart';
 import 'package:flutter_application_1/src/presentation/widgets/footer/footer.dart';
 import 'package:flutter_application_1/src/presentation/widgets/form/search_animated.dart';
-import 'package:flutter_application_1/src/presentation/widgets/list/test_list.dart';
+import 'package:flutter_application_1/src/presentation/widgets/list/food_list.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -21,6 +20,7 @@ class HomePage extends ConsumerStatefulWidget {
 
 class _HomePageState extends ConsumerState<HomePage>
     with SingleTickerProviderStateMixin {
+
   final List<String> _filter = [
     "burger",
     "pizza",
@@ -34,7 +34,6 @@ class _HomePageState extends ConsumerState<HomePage>
     WidgetsBinding.instance.addPostFrameCallback((_) {
       ref.read(foodListProvider.notifier).fetchFoods();
     });
-
     super.initState();
   }
 
@@ -51,7 +50,7 @@ class _HomePageState extends ConsumerState<HomePage>
           backgroundColor: Theme.of(context).colorScheme.primary,
           body: SafeArea(
             child: Padding(
-              padding:  EdgeInsets.symmetric(horizontal: 20.w),
+              padding: EdgeInsets.symmetric(horizontal: 20.w),
               child: CustomScrollView(
                 physics: foodList.status == HomeStatus.loading
                     ? const NeverScrollableScrollPhysics()
@@ -112,7 +111,7 @@ class _HomePageState extends ConsumerState<HomePage>
                       height: 20.h,
                     ),
                   ),
-                  const TestList(),
+                  const FoodList(),
                   SliverToBoxAdapter(
                     child: Container(
                       height: 70.h,

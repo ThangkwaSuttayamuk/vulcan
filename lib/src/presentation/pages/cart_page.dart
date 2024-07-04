@@ -129,7 +129,7 @@ class _CartPageState extends ConsumerState<CartPage> {
                   ),
                 ),
                 cartlistState.status == CartStatus.loading
-                    ? SizedBox(
+                    ? const SizedBox(
                         height: 40,
                         child: ShimmerBox(),
                       )
@@ -215,20 +215,20 @@ class _CartPageState extends ConsumerState<CartPage> {
   }
 
   Widget loading() {
-    return Column(
+    return const Column(
       children: [
         SizedBox(
           height: 20,
         ),
         Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 20),
+          padding: EdgeInsets.symmetric(horizontal: 20),
           child: SizedBox(height: 120, child: ShimmerBox()),
         ),
         SizedBox(
           height: 20,
         ),
         Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 20),
+          padding: EdgeInsets.symmetric(horizontal: 20),
           child: SizedBox(height: 120, child: ShimmerBox()),
         ),
       ],

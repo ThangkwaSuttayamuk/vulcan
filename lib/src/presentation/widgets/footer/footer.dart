@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_application_1/src/presentation/controller/cart/cart_provider.dart';
 import 'package:flutter_application_1/src/presentation/widgets/footer/footer_button.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -14,19 +13,8 @@ class Footer extends ConsumerStatefulWidget {
 }
 
 class _FooterState extends ConsumerState<Footer> {
-  late ScrollController _scrollController;
-  late double _scrollPosition = 0;
-
-  _scrollListener() {
-    setState(() {
-      _scrollPosition = _scrollController.position.pixels;
-    });
-  }
-
   @override
   void initState() {
-    _scrollController = ScrollController();
-    _scrollController.addListener(_scrollListener);
     super.initState();
   }
 

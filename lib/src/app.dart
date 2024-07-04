@@ -8,12 +8,10 @@ import 'package:flutter_application_1/src/presentation/controller/theme/theme_pr
 import 'package:flutter_application_1/src/presentation/pages/cart_page.dart';
 import 'package:flutter_application_1/src/presentation/pages/credit_card_page.dart';
 import 'package:flutter_application_1/src/presentation/pages/favorite_page.dart';
-import 'package:flutter_application_1/src/presentation/pages/food_detail_page.dart';
 import 'package:flutter_application_1/src/presentation/pages/image_page.dart';
 import 'package:flutter_application_1/src/presentation/pages/language_page.dart';
 import 'package:flutter_application_1/src/presentation/pages/loading_page.dart';
 import 'package:flutter_application_1/src/presentation/pages/login_page.dart';
-import 'package:flutter_application_1/src/presentation/pages/order_detail_page.dart';
 import 'package:flutter_application_1/src/presentation/pages/order_page.dart';
 import 'package:flutter_application_1/src/presentation/pages/search_page.dart';
 import 'package:flutter_application_1/src/presentation/pages/setting_page.dart';

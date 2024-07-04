@@ -61,21 +61,21 @@ class _LoginPageState extends ConsumerState<LoginPage> {
                 const Text("Login Page"),
                 Row(
                   children: [
-                    Text("Username "),
+                    const Text("Username "),
                     username
-                        ? Text(
+                        ? const Text(
                             "*required username",
                             style: TextStyle(color: Colors.red),
                           )
                         : user.status == UserStatus.failure
-                            ? Text(
+                            ? const Text(
                                 '*wrong username or password',
                                 style: TextStyle(color: Colors.red),
                               )
-                            : SizedBox()
+                            : const SizedBox()
                   ],
                 ),
-                SizedBox(
+                const SizedBox(
                   height: 10,
                 ),
                 TextField(
@@ -86,21 +86,21 @@ class _LoginPageState extends ConsumerState<LoginPage> {
                   },
                   controller: _usernameController,
                 ),
-                SizedBox(
+                const SizedBox(
                   height: 10,
                 ),
                 Row(
                   children: [
-                    Text("Password "),
+                    const Text("Password "),
                     password
-                        ? Text(
+                        ? const Text(
                             "*required password",
                             style: TextStyle(color: Colors.red),
                           )
-                        : SizedBox()
+                        : const SizedBox()
                   ],
                 ),
-                SizedBox(
+                const SizedBox(
                   height: 10,
                 ),
                 TextField(

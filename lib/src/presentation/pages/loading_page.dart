@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 class LoadingPage extends ConsumerStatefulWidget {
@@ -26,115 +25,18 @@ class _LoadingPageState extends ConsumerState<LoadingPage>
   @override
   void initState() {
     super.initState();
-    _controller = AnimationController(
-      vsync: this,
-      duration: const Duration(milliseconds: 350),
-      animationBehavior: AnimationBehavior.preserve,
-    );
 
-    _slideAnimation = Tween<Offset>(begin: Offset(0, 0), end: Offset(0, -1))
-        .animate(CurvedAnimation(
-            reverseCurve: Curves.linear,
-            parent: _controller,
-            curve: Curves.linear)
-          ..addStatusListener((status) {
-            if (status == AnimationStatus.completed) {
-              _controller.reverse();
-              Future.delayed(const Duration(milliseconds: 200), () {
-                setState(() {
-                  _secondController.forward();
-                });
-              });
-            }
-          }));
+    _controller = controller();
+    _secondController = controller();
+    _thirdController = controller();
+    _forthController = controller();
+    _fifthController = controller();
 
-    _secondController = AnimationController(
-      vsync: this,
-      duration: const Duration(milliseconds: 350),
-      animationBehavior: AnimationBehavior.preserve,
-    );
-
-    _secondSlideAnimation =
-        Tween<Offset>(begin: Offset(0, 0), end: Offset(0, -1)).animate(
-            CurvedAnimation(
-                reverseCurve: Curves.linear,
-                parent: _secondController,
-                curve: Curves.linear)
-              ..addStatusListener((status) {
-                if (status == AnimationStatus.completed) {
-                  _secondController.reverse();
-                  Future.delayed(const Duration(milliseconds: 200), () {
-                    setState(() {});
-                    _thirdController.forward();
-                  });
-                }
-              }));
-
-    _thirdController = AnimationController(
-      vsync: this,
-      duration: const Duration(milliseconds: 350),
-      animationBehavior: AnimationBehavior.preserve,
-    );
-
-    _thirdSlideAnimation =
-        Tween<Offset>(begin: Offset(0, 0), end: Offset(0, -1)).animate(
-            CurvedAnimation(
-                reverseCurve: Curves.linear,
-                parent: _thirdController,
-                curve: Curves.linear)
-              ..addStatusListener((status) {
-                if (status == AnimationStatus.completed) {
-                  _thirdController.reverse();
-                  Future.delayed(const Duration(milliseconds: 200), () {
-                    setState(() {});
-                    _forthController.forward();
-                  });
-                }
-              }));
-
-    _forthController = AnimationController(
-      vsync: this,
-      duration: const Duration(milliseconds: 350),
-      animationBehavior: AnimationBehavior.preserve,
-    );
-
-    _forthSlideAnimation =
-        Tween<Offset>(begin: const Offset(0, 0), end: const Offset(0, -1))
-            .animate(CurvedAnimation(
-                reverseCurve: Curves.linear,
-                parent: _forthController,
-                curve: Curves.linear)
-              ..addStatusListener((status) {
-                if (status == AnimationStatus.completed) {
-                  _forthController.reverse();
-                  Future.delayed(const Duration(milliseconds: 200), () {
-                    setState(() {});
-                    _fifthController.forward();
-                  });
-                }
-              }));
-
-    _fifthController = AnimationController(
-      vsync: this,
-      duration: const Duration(milliseconds: 350),
-      animationBehavior: AnimationBehavior.preserve,
-    );
-
-    _fifthSlideAnimation =
-        Tween<Offset>(begin: Offset(0, 0), end: Offset(0, -1)).animate(
-            CurvedAnimation(
-                reverseCurve: Curves.linear,
-                parent: _fifthController,
-                curve: Curves.linear)
-              ..addStatusListener((status) {
-                if (status == AnimationStatus.completed) {
-                  _fifthController.reverse();
-                  Future.delayed(const Duration(milliseconds: 680), () {
-                    setState(() {});
-                    _controller.forward();
-                  });
-                }
-              }));
+    _slideAnimation = tween(_controller, _secondController);
+    _secondSlideAnimation = tween(_secondController, _thirdController);
+    _thirdSlideAnimation = tween(_thirdController, _forthController);
+    _forthSlideAnimation = tween(_forthController, _fifthController);
+    _fifthSlideAnimation = tween(_fifthController, _controller);
 
     _controller.forward();
   }
@@ -159,83 +61,69 @@ class _LoadingPageState extends ConsumerState<LoadingPage>
               child: Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              AnimatedBuilder(
-                animation: _controller,
-                builder: (context, child) {
-                  return SlideTransition(
-                    position: _slideAnimation,
-                    child: SizedBox(
-                        height: 30,
-                        child: Image(
-                            image: AssetImage(
-                                'assets/images/icon_burger_active.png'))),
-                  );
-                },
-              ),
-              AnimatedBuilder(
-                animation: _secondController,
-                builder: (context, child) {
-                  return SlideTransition(
-                    position: _secondSlideAnimation,
-                    child: SizedBox(
-                        height: 30,
-                        child: Image(
-                            image: AssetImage(
-                                'assets/images/icon_pizza_active.png'))),
-                  );
-                },
-              ),
-              AnimatedBuilder(
-                animation: _thirdController,
-                builder: (context, child) {
-                  return SlideTransition(
-                    position: _thirdSlideAnimation,
-                    child: SizedBox(
-                        height: 30,
-                        child: Image(
-                            image: AssetImage(
-                                'assets/images/icon_bread_active.png'))),
-                  );
-                },
-              ),
-              AnimatedBuilder(
-                animation: _forthController,
-                builder: (context, child) {
-                  return SlideTransition(
-                    position: _forthSlideAnimation,
-                    child: SizedBox(
-                        height: 30,
-                        child: Image(
-                            image: AssetImage(
-                                'assets/images/icon_salad_active.png'))),
-                  );
-                },
-              ),
-              AnimatedBuilder(
-                animation: _fifthController,
-                builder: (context, child) {
-                  return SlideTransition(
-                    position: _fifthSlideAnimation,
-                    child: SizedBox(
-                        height: 30,
-                        child: Image(
-                            image: AssetImage(
-                                'assets/images/icon_fried_chicken_active.png'))),
-                  );
-                },
-              )
+              animatedBuilder(_controller, _slideAnimation, 'burger'),
+              animatedBuilder(
+                  _secondController, _secondSlideAnimation, 'pizza'),
+              animatedBuilder(_thirdController, _thirdSlideAnimation, 'bread'),
+              animatedBuilder(_forthController, _forthSlideAnimation, 'salad'),
+              animatedBuilder(
+                  _fifthController, _fifthSlideAnimation, 'fried_chicken'),
             ],
           )),
           Padding(
             padding: const EdgeInsets.only(bottom: 40),
             child: Text(
               'HappyMeal',
-              style:
-                  TextStyle(color: Theme.of(context).textTheme.titleLarge?.color,fontWeight: FontWeight.bold),
+              style: TextStyle(
+                  color: Theme.of(context).textTheme.titleLarge?.color,
+                  fontWeight: FontWeight.bold),
             ),
           )
         ],
       ),
+    );
+  }
+
+  AnimationController controller() {
+    return AnimationController(
+      vsync: this,
+      duration: const Duration(milliseconds: 350),
+      animationBehavior: AnimationBehavior.preserve,
+    );
+  }
+
+  Animation<Offset> tween(AnimationController firstController,
+      AnimationController secondController) {
+    return Tween<Offset>(begin: const Offset(0, 0), end: const Offset(0, -1))
+        .animate(CurvedAnimation(
+            reverseCurve: Curves.linear,
+            parent: firstController,
+            curve: Curves.linear)
+          ..addStatusListener((status) {
+            if (status == AnimationStatus.completed) {
+              firstController.reverse();
+              Future.delayed(const Duration(milliseconds: 200), () {
+                setState(() {
+                  secondController.forward();
+                });
+              });
+            }
+          }));
+  }
+
+  AnimatedBuilder animatedBuilder(AnimationController controller,
+      Animation<Offset> sliderAnimation, String image) {
+    return AnimatedBuilder(
+      animation: controller,
+      builder: (context, child) {
+        return SlideTransition(
+          position: sliderAnimation,
+          child: SizedBox(
+              height: 30,
+              child: Image(
+                  image: AssetImage('assets/images/icon_${image}_active.png'))),
+        );
+      },
     );
   }
 }

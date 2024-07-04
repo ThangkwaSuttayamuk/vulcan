@@ -1,9 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_application_1/src/presentation/controller/cart/cart_provider.dart';
-import 'package:flutter_application_1/src/presentation/pages/food_detail_page.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:go_router/go_router.dart';
 
 class FoodCardAddRemove extends ConsumerStatefulWidget {
   final int foodId;
@@ -34,7 +32,6 @@ class _FoodCardAddRemoveState extends ConsumerState<FoodCardAddRemove> {
   @override
   Widget build(BuildContext context) {
     final cartState = ref.read(cartProvider.notifier);
-    print(offset);
     return Padding(
       padding: const EdgeInsets.only(left: 20, right: 20, bottom: 15),
       child: Stack(
@@ -50,8 +47,8 @@ class _FoodCardAddRemoveState extends ConsumerState<FoodCardAddRemove> {
                   onTap: () {
                     cartState.deleteFormCart(widget.foodId);
                   },
-                  child: Stack(alignment: Alignment.center, children: [
-                    Container(
+                  child: const Stack(alignment: Alignment.center, children: [
+                    SizedBox(
                       height: 120,
                       width: 90,
                     ),
@@ -83,7 +80,7 @@ class _FoodCardAddRemoveState extends ConsumerState<FoodCardAddRemove> {
                 });
               } else {
                 setState(() {
-                  offset = 0.0; 
+                  offset = 0.0;
                 });
               }
             },
@@ -151,6 +148,9 @@ class _FoodCardAddRemoveState extends ConsumerState<FoodCardAddRemove> {
                                           borderRadius:
                                               BorderRadius.circular(30),
                                           onTap: () {
+                                            setState(() {
+                                              offset = 0;
+                                            });
                                             cartState
                                                 .removeToCart(widget.foodId);
                                           },

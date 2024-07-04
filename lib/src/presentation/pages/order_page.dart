@@ -1,13 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_application_1/src/presentation/controller/order/order_provider.dart';
 import 'package:flutter_application_1/src/presentation/controller/order/order_state.dart';
-import 'package:flutter_application_1/src/presentation/pages/home_page.dart';
 import 'package:flutter_application_1/src/presentation/pages/order_detail_page.dart';
 
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:go_router/go_router.dart';
 import 'package:intl/intl.dart';
 
 class OrderPage extends ConsumerStatefulWidget {
@@ -47,18 +45,6 @@ class _OrderPageState extends ConsumerState<OrderPage> {
                   children: [
                     InkWell(
                         onTap: () {
-                          // Navigator.push(
-                          //   context,
-                          //   PageRouteBuilder(
-                          //     pageBuilder:
-                          //         (context, animation, secondaryAnimation) =>
-                          //             const HomePage(),
-                          //     transitionsBuilder: (context, animation,
-                          //         secondaryAnimation, child) {
-                          //       return child;
-                          //     },
-                          //   ),
-                          // );
                           Navigator.pop(context);
                         },
                         child: const Icon(
@@ -84,7 +70,7 @@ class _OrderPageState extends ConsumerState<OrderPage> {
         ),
         Expanded(
           child: order.status == OrderStatus.loading
-              ? Center(child: CircularProgressIndicator())
+              ? const Center(child: CircularProgressIndicator())
               : order.error != null
                   ? Center(child: Text("Error: ${order.error}"))
                   : order.status == OrderStatus.empty

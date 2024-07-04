@@ -56,7 +56,6 @@ class _SearchAnimatedState extends State<SearchAnimated>
             _currentIndex = (_currentIndex + 1) % texts.length;
           });
           _controller.forward(from: 0.0);
-          // });
         }
       });
     
@@ -64,12 +63,10 @@ class _SearchAnimatedState extends State<SearchAnimated>
         CurvedAnimation(parent: _controller, curve: Curves.easeOutExpo)
           ..addStatusListener((status) {
             if (status == AnimationStatus.completed) {
-              // Future.delayed(const Duration(seconds: 3), () {
                 setState(() {
                   _currentIndex = (_currentIndex + 1) % texts.length;
                 });
                 _controller.forward(from: 0.0);
-              // });
             }
           });
     _controller.forward();
@@ -105,7 +102,7 @@ class _SearchAnimatedState extends State<SearchAnimated>
                 child: Row(
                   children: <Widget>[
                     const SizedBox(width: 15.0, height: 100.0),
-                    Icon(Icons.search),
+                    const Icon(Icons.search),
                     const SizedBox(width: 10.0, height: 100.0),
                     DefaultTextStyle(
                       style: TextStyle(
