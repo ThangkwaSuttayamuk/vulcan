@@ -16,7 +16,7 @@ import 'package:flutter_application_1/src/presentation/pages/order_page.dart';
 import 'package:flutter_application_1/src/presentation/pages/search_page.dart';
 import 'package:flutter_application_1/src/presentation/pages/setting_page.dart';
 import 'package:flutter_application_1/src/presentation/pages/home_page.dart';
-import 'package:flutter_application_1/src/presentation/pages/test_detail_page.dart';
+import 'package:flutter_application_1/src/presentation/pages/food_detail_page.dart';
 import 'package:flutter_application_1/src/presentation/pages/theme_page.dart';
 import 'package:flutter_application_1/src/presentation/transition/fade.dart';
 import 'package:flutter_application_1/src/presentation/transition/slide_enter_right_to_left.dart';
