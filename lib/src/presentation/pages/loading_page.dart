@@ -21,6 +21,7 @@ class _LoadingPageState extends ConsumerState<LoadingPage>
   late Animation<Offset> _forthSlideAnimation;
   late AnimationController _fifthController;
   late Animation<Offset> _fifthSlideAnimation;
+  List<Color> colorList = [];
 
   @override
   void initState() {
@@ -39,7 +40,7 @@ class _LoadingPageState extends ConsumerState<LoadingPage>
           ..addStatusListener((status) {
             if (status == AnimationStatus.completed) {
               _controller.reverse();
-              Future.delayed(const Duration(milliseconds: 700), () {
+              Future.delayed(const Duration(milliseconds: 200), () {
                 setState(() {
                   _secondController.forward();
                 });
@@ -62,7 +63,7 @@ class _LoadingPageState extends ConsumerState<LoadingPage>
               ..addStatusListener((status) {
                 if (status == AnimationStatus.completed) {
                   _secondController.reverse();
-                  Future.delayed(const Duration(milliseconds: 680), () {
+                  Future.delayed(const Duration(milliseconds: 200), () {
                     setState(() {});
                     _thirdController.forward();
                   });
@@ -84,7 +85,7 @@ class _LoadingPageState extends ConsumerState<LoadingPage>
               ..addStatusListener((status) {
                 if (status == AnimationStatus.completed) {
                   _thirdController.reverse();
-                  Future.delayed(const Duration(milliseconds: 680), () {
+                  Future.delayed(const Duration(milliseconds: 200), () {
                     setState(() {});
                     _forthController.forward();
                   });
@@ -98,7 +99,7 @@ class _LoadingPageState extends ConsumerState<LoadingPage>
     );
 
     _forthSlideAnimation =
-        Tween<Offset>(begin: Offset(0, 0), end: Offset(0, -1)).animate(
+        Tween<Offset>(begin: const Offset(0, 0), end: const Offset(0, -1)).animate(
             CurvedAnimation(
                 reverseCurve: Curves.linear,
                 parent: _forthController,
@@ -106,7 +107,7 @@ class _LoadingPageState extends ConsumerState<LoadingPage>
               ..addStatusListener((status) {
                 if (status == AnimationStatus.completed) {
                   _forthController.reverse();
-                  Future.delayed(const Duration(milliseconds: 680), () {
+                  Future.delayed(const Duration(milliseconds: 200), () {
                     setState(() {});
                     _fifthController.forward();
                   });

@@ -53,7 +53,7 @@ class _HomePageState extends ConsumerState<HomePage>
           backgroundColor: Theme.of(context).colorScheme.primary,
           body: SafeArea(
             child: Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 20),
+              padding:  EdgeInsets.symmetric(horizontal: 20.w),
               child: CustomScrollView(
                 physics: foodList.status == HomeStatus.loading
                     ? const NeverScrollableScrollPhysics()
@@ -125,7 +125,7 @@ class _HomePageState extends ConsumerState<HomePage>
             ),
           ),
         ),
-        Footer()
+        const Footer()
       ],
     );
   }
