@@ -19,7 +19,7 @@ class SettingCard extends StatelessWidget {
             color: Theme.of(context).colorScheme.secondary,
             child: InkWell(
               onTap: () {
-                Navigator.pushNamed(context, '/loading');
+                Navigator.pushNamed(context, '/$name');
               },
               child: Padding(
                 padding:

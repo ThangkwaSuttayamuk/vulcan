@@ -20,30 +20,56 @@ class _SearchAnimatedState extends State<SearchAnimated>
   late AnimationController _controller;
   late Animation<Offset> _slideAnimation;
   late Animation<double> _fadeAnimation;
+  late double beginY = 0.5;
+  late double endY = 0;
 
   @override
   void initState() {
     _controller = AnimationController(
       vsync: this,
-      duration: const Duration(seconds: 2),
+      duration: const Duration(seconds: 3),
       animationBehavior: AnimationBehavior.preserve,
     );
-    _slideAnimation =
-        Tween<Offset>(begin: const Offset(0, 0.5), end: const Offset(0, 0))
-            .animate(CurvedAnimation(
-                reverseCurve: Curves.easeOutExpo,
-                parent: _controller,
-                curve: Curves.easeOutExpo));
+    _slideAnimation = TweenSequence<Offset>([
+      TweenSequenceItem(
+        tween:
+            Tween<Offset>(begin: const Offset(0, 0.5), end: const Offset(0, 0))
+                .chain(CurveTween(curve: Curves.easeOutExpo)),
+        weight: 40,
+      ),
+      TweenSequenceItem(
+        tween:
+            Tween<Offset>(begin: const Offset(0, 0), end: const Offset(0, 0))
+                .chain(CurveTween(curve: Curves.easeOutExpo)),
+        weight: 10,
+      ),
+      TweenSequenceItem(
+        tween:
+            Tween<Offset>(begin: const Offset(0, 0), end: const Offset(0, -0.5))
+                .chain(CurveTween(curve: Curves.easeInExpo)),
+        weight: 40,
+      ),
+    ]).animate(_controller)
+      ..addStatusListener((status) {
+        if (status == AnimationStatus.completed) {
+          setState(() {
+            _currentIndex = (_currentIndex + 1) % texts.length;
+          });
+          _controller.forward(from: 0.0);
+          // });
+        }
+      });
+    
     _fadeAnimation =
         CurvedAnimation(parent: _controller, curve: Curves.easeOutExpo)
           ..addStatusListener((status) {
             if (status == AnimationStatus.completed) {
-              Future.delayed(const Duration(seconds: 3), () {
+              // Future.delayed(const Duration(seconds: 3), () {
                 setState(() {
                   _currentIndex = (_currentIndex + 1) % texts.length;
                 });
                 _controller.forward(from: 0.0);
-              });
+              // });
             }
           });
     _controller.forward();
@@ -83,7 +109,9 @@ class _SearchAnimatedState extends State<SearchAnimated>
                     const SizedBox(width: 10.0, height: 100.0),
                     DefaultTextStyle(
                       style: TextStyle(
-                          fontSize: 14.0, color: Theme.of(context).textTheme.titleMedium?.color),
+                          fontSize: 14.0,
+                          color:
+                              Theme.of(context).textTheme.titleMedium?.color),
                       child: AnimatedBuilder(
                         animation: _controller,
                         builder: (context, child) {
