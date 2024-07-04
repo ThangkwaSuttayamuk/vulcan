@@ -99,8 +99,8 @@ class _LoadingPageState extends ConsumerState<LoadingPage>
     );
 
     _forthSlideAnimation =
-        Tween<Offset>(begin: const Offset(0, 0), end: const Offset(0, -1)).animate(
-            CurvedAnimation(
+        Tween<Offset>(begin: const Offset(0, 0), end: const Offset(0, -1))
+            .animate(CurvedAnimation(
                 reverseCurve: Curves.linear,
                 parent: _forthController,
                 curve: Curves.linear)
@@ -152,77 +152,90 @@ class _LoadingPageState extends ConsumerState<LoadingPage>
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Center(
-          child: Row(
-        mainAxisAlignment: MainAxisAlignment.center,
+      body: Stack(
+        alignment: Alignment.bottomCenter,
         children: [
-          AnimatedBuilder(
-            animation: _controller,
-            builder: (context, child) {
-              return SlideTransition(
-                position: _slideAnimation,
-                child: SizedBox(
-                    height: 30,
-                    child: Image(
-                        image: AssetImage(
-                            'assets/images/icon_burger_active.png'))),
-              );
-            },
-          ),
-          AnimatedBuilder(
-            animation: _secondController,
-            builder: (context, child) {
-              return SlideTransition(
-                position: _secondSlideAnimation,
-                child: SizedBox(
-                    height: 30,
-                    child: Image(
-                        image:
-                            AssetImage('assets/images/icon_pizza_active.png'))),
-              );
-            },
-          ),
-          AnimatedBuilder(
-            animation: _thirdController,
-            builder: (context, child) {
-              return SlideTransition(
-                position: _thirdSlideAnimation,
-                child: SizedBox(
-                    height: 30,
-                    child: Image(
-                        image:
-                            AssetImage('assets/images/icon_bread_active.png'))),
-              );
-            },
-          ),
-          AnimatedBuilder(
-            animation: _forthController,
-            builder: (context, child) {
-              return SlideTransition(
-                position: _forthSlideAnimation,
-                child: SizedBox(
-                    height: 30,
-                    child: Image(
-                        image:
-                            AssetImage('assets/images/icon_salad_active.png'))),
-              );
-            },
-          ),
-          AnimatedBuilder(
-            animation: _fifthController,
-            builder: (context, child) {
-              return SlideTransition(
-                position: _fifthSlideAnimation,
-                child: SizedBox(
-                    height: 30,
-                    child: Image(
-                        image: AssetImage(
-                            'assets/images/icon_fried_chicken_active.png'))),
-              );
-            },
+          Center(
+              child: Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              AnimatedBuilder(
+                animation: _controller,
+                builder: (context, child) {
+                  return SlideTransition(
+                    position: _slideAnimation,
+                    child: SizedBox(
+                        height: 30,
+                        child: Image(
+                            image: AssetImage(
+                                'assets/images/icon_burger_active.png'))),
+                  );
+                },
+              ),
+              AnimatedBuilder(
+                animation: _secondController,
+                builder: (context, child) {
+                  return SlideTransition(
+                    position: _secondSlideAnimation,
+                    child: SizedBox(
+                        height: 30,
+                        child: Image(
+                            image: AssetImage(
+                                'assets/images/icon_pizza_active.png'))),
+                  );
+                },
+              ),
+              AnimatedBuilder(
+                animation: _thirdController,
+                builder: (context, child) {
+                  return SlideTransition(
+                    position: _thirdSlideAnimation,
+                    child: SizedBox(
+                        height: 30,
+                        child: Image(
+                            image: AssetImage(
+                                'assets/images/icon_bread_active.png'))),
+                  );
+                },
+              ),
+              AnimatedBuilder(
+                animation: _forthController,
+                builder: (context, child) {
+                  return SlideTransition(
+                    position: _forthSlideAnimation,
+                    child: SizedBox(
+                        height: 30,
+                        child: Image(
+                            image: AssetImage(
+                                'assets/images/icon_salad_active.png'))),
+                  );
+                },
+              ),
+              AnimatedBuilder(
+                animation: _fifthController,
+                builder: (context, child) {
+                  return SlideTransition(
+                    position: _fifthSlideAnimation,
+                    child: SizedBox(
+                        height: 30,
+                        child: Image(
+                            image: AssetImage(
+                                'assets/images/icon_fried_chicken_active.png'))),
+                  );
+                },
+              )
+            ],
+          )),
+          Padding(
+            padding: const EdgeInsets.only(bottom: 40),
+            child: Text(
+              'HappyMeal',
+              style:
+                  TextStyle(color: Theme.of(context).textTheme.titleLarge?.color,fontWeight: FontWeight.bold),
+            ),
           )
         ],
-      )),
+      ),
     );
   }
 }
