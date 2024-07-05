@@ -13,7 +13,6 @@ class _ThemePageState extends ConsumerState<ThemePage> {
   @override
   Widget build(BuildContext context) {
     final themeState = ref.watch(themeProvider);
-    final themeSetState = ref.read(themeProvider.notifier);
 
     return Scaffold(
         backgroundColor: Theme.of(context).scaffoldBackgroundColor,
@@ -68,7 +67,7 @@ class _ThemePageState extends ConsumerState<ThemePage> {
                 inactiveThumbColor: Colors.grey.shade700,
                 value: themeState.theme,
                 onChanged: (value) {
-                  themeSetState.setTheme(value);
+                  ref.read(themeProvider.notifier).setTheme(value);
                 },
               ),
             )

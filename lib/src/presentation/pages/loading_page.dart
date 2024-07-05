@@ -1,4 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_application_1/src/presentation/controller/user/user_provider.dart';
+import 'package:flutter_application_1/src/presentation/controller/user/user_state.dart';
+import 'package:flutter_application_1/src/presentation/pages/home_page.dart';
+import 'package:flutter_application_1/src/presentation/pages/login_page.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 class LoadingPage extends ConsumerStatefulWidget {
@@ -25,7 +29,9 @@ class _LoadingPageState extends ConsumerState<LoadingPage>
   @override
   void initState() {
     super.initState();
-
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      ref.read(userProvider.notifier).checkLogin();
+    });
     _controller = controller();
     _secondController = controller();
     _thirdController = controller();
@@ -53,6 +59,13 @@ class _LoadingPageState extends ConsumerState<LoadingPage>
 
   @override
   Widget build(BuildContext context) {
+    final user = ref.watch(userProvider);
+    if (user.loginStatus == UserStatus.login) {
+      return HomePage();
+    }
+    if (user.loginStatus == UserStatus.notLogin) {
+      return LoginPage();
+    }
     return Scaffold(
       body: Stack(
         alignment: Alignment.bottomCenter,

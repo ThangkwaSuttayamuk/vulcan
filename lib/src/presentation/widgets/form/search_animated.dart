@@ -19,7 +19,8 @@ class _SearchAnimatedState extends State<SearchAnimated>
   int _currentIndex = 0;
   late AnimationController _controller;
   late Animation<Offset> _slideAnimation;
-  late Animation<double> _fadeAnimation;
+  late Animation<double> _combinedFadeAnimation;
+
   late double beginY = 0.5;
   late double endY = 0;
 
@@ -30,6 +31,7 @@ class _SearchAnimatedState extends State<SearchAnimated>
       duration: const Duration(seconds: 3),
       animationBehavior: AnimationBehavior.preserve,
     );
+
     _slideAnimation = TweenSequence<Offset>([
       TweenSequenceItem(
         tween:
@@ -38,9 +40,8 @@ class _SearchAnimatedState extends State<SearchAnimated>
         weight: 40,
       ),
       TweenSequenceItem(
-        tween:
-            Tween<Offset>(begin: const Offset(0, 0), end: const Offset(0, 0))
-                .chain(CurveTween(curve: Curves.easeOutExpo)),
+        tween: Tween<Offset>(begin: const Offset(0, 0), end: const Offset(0, 0))
+            .chain(CurveTween(curve: Curves.easeOutExpo)),
         weight: 10,
       ),
       TweenSequenceItem(
@@ -58,17 +59,19 @@ class _SearchAnimatedState extends State<SearchAnimated>
           _controller.forward(from: 0.0);
         }
       });
-    
-    _fadeAnimation =
-        CurvedAnimation(parent: _controller, curve: Curves.easeOutExpo)
-          ..addStatusListener((status) {
-            if (status == AnimationStatus.completed) {
-                setState(() {
-                  _currentIndex = (_currentIndex + 1) % texts.length;
-                });
-                _controller.forward(from: 0.0);
-            }
-          });
+
+    _combinedFadeAnimation = TweenSequence([
+      TweenSequenceItem(
+          tween: Tween<double>(begin: 0, end: 1)
+              .chain(CurveTween(curve: Curves.easeOutExpo)),
+          weight: 40),
+      TweenSequenceItem(tween: Tween<double>(begin: 1, end: 1), weight: 10),
+      TweenSequenceItem(
+          tween: Tween<double>(begin: 1, end: 0)
+              .chain(CurveTween(curve: Curves.easeInExpo)),
+          weight: 40),
+    ]).animate(_controller);
+
     _controller.forward();
     super.initState();
   }
@@ -115,7 +118,7 @@ class _SearchAnimatedState extends State<SearchAnimated>
                           return SlideTransition(
                             position: _slideAnimation,
                             child: FadeTransition(
-                              opacity: _fadeAnimation,
+                              opacity: _combinedFadeAnimation,
                               child: Text(
                                 texts[_currentIndex],
                                 key: ValueKey<int>(_currentIndex),

@@ -33,9 +33,7 @@ class _OrderDetailPageState extends ConsumerState<OrderDetailPage> {
   @override
   Widget build(BuildContext context) {
     final order = ref.watch(orderProvider).orderItems;
-    final orderState = ref.read(orderProvider.notifier);
     return Scaffold(
-        // backgroundColor: Theme.of(context).colorScheme.secondary,
         body: Column(
       children: [
         Container(
@@ -161,7 +159,8 @@ class _OrderDetailPageState extends ConsumerState<OrderDetailPage> {
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
                           const Text('Total'),
-                          Text('\$${orderState.getTotal()}')
+                          Text(
+                              '\$${ref.read(orderProvider.notifier).getTotal()}')
                         ],
                       ),
                     )

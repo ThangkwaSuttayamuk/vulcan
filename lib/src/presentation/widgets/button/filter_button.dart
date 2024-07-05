@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_application_1/gen/assets.gen.dart';
 import 'package:flutter_application_1/src/presentation/controller/filter/filter_provider.dart';
 import 'package:flutter_application_1/src/presentation/controller/food/food_provider.dart';
 import 'package:flutter_application_1/src/presentation/controller/theme/theme_provider.dart';
@@ -16,6 +17,10 @@ class FilterButton extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final filterState = ref.watch(filterProvider);
     final theme = ref.watch(themeProvider);
+    final assets = const $AssetsImagesGen();
+
+    final assetImage = getAssetImage(filters[index], theme.theme, assets,
+        filterState.filterName == filters[index]);
 
     return Material(
       shape: RoundedRectangleBorder(
@@ -47,13 +52,51 @@ class FilterButton extends ConsumerWidget {
         },
         child: Padding(
           padding: const EdgeInsets.all(8),
-          child: Image.asset(
-            'assets/images/icon_${filterState.filterName == filters[index] && theme.theme ? filters[index] + "_active_dark" : filterState.filterName == filters[index] ? filters[index] + "_active" : filters[index]}.png',
-            height: 40.h,
-            width: 40.h,
+          child: 
+          assetImage.image(
+            height: 40,
+            width: 40,
           ),
         ),
       ),
     );
+  }
+
+  AssetGenImage getAssetImage(String filterName, bool isDarkTheme,
+      $AssetsImagesGen assets, bool isActive) {
+    switch (filterName) {
+      case 'bread':
+        return isDarkTheme && isActive
+            ? assets.iconBreadActiveDark
+            : isActive
+                ? assets.iconBreadActive
+                : assets.iconBread;
+      case 'burger':
+        return isDarkTheme && isActive
+            ? assets.iconBurgerActiveDark
+            : isActive
+                ? assets.iconBurgerActive
+                : assets.iconBurger;
+      case 'fried_chicken':
+        return isDarkTheme && isActive
+            ? assets.iconFriedChickenActiveDark
+            : isActive
+                ? assets.iconFriedChickenActive
+                : assets.iconFriedChicken;
+      case 'salad':
+        return isDarkTheme && isActive
+            ? assets.iconSaladActiveDark
+            : isActive
+                ? assets.iconSaladActive
+                : assets.iconSalad;
+      case 'pizza':
+        return isDarkTheme && isActive
+            ? assets.iconPizzaActiveDark
+            : isActive
+                ? assets.iconPizzaActive
+                : assets.iconPizza;
+      default:
+        return assets.iconBurger; // Default case
+    }
   }
 }

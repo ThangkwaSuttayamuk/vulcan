@@ -6,11 +6,24 @@ import 'package:flutter_application_1/src/presentation/widgets/loading/shimmer_b
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
-class FavoriteList extends ConsumerWidget {
+class FavoriteList extends ConsumerStatefulWidget {
   const FavoriteList({super.key});
 
   @override
-  Widget build(BuildContext context, WidgetRef ref) {
+  _FavoriteListState createState() => _FavoriteListState();
+}
+
+class _FavoriteListState extends ConsumerState<FavoriteList> {
+  @override
+  void initState() {
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      ref.read(favoriteFoodProvider.notifier).fetchFavoriteFoods();
+    });
+    super.initState();
+  }
+
+  @override
+  Widget build(BuildContext context) {
     final favoritelistState = ref.watch(favoriteFoodProvider);
 
     return Consumer(
@@ -54,7 +67,7 @@ class FavoriteList extends ConsumerWidget {
                 return GestureDetector(
                   onTap: () {
                     Navigator.pushNamed(context, '/detail',
-                      arguments: foodItem.id);
+                        arguments: foodItem.id);
                   },
                   child: FoodCard(
                     id: foodItem.id,

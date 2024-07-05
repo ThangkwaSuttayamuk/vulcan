@@ -15,7 +15,6 @@ class AddToCartButton extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     ref.watch(cartProvider.notifier);
-    final cartlistStateRead = ref.read(cartProvider.notifier);
 
     final food = ref.watch(foodListProvider);
 
@@ -33,7 +32,7 @@ class AddToCartButton extends ConsumerWidget {
       child: InkWell(
         borderRadius: BorderRadius.circular(10),
         onTap: () {
-          cartlistStateRead.addToCart(id, ref.watch(quantityProvider).quantity);
+          ref.read(cartProvider.notifier).addToCart(id, ref.watch(quantityProvider).quantity);
           Navigator.pop(context);
         },
         child: Padding(

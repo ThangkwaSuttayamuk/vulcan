@@ -26,7 +26,6 @@ class _CartPageState extends ConsumerState<CartPage> {
   @override
   Widget build(BuildContext context) {
     final cartlistState = ref.watch(cartProvider);
-    final cartstate = ref.read(cartProvider.notifier);
 
     return Stack(
       alignment: Alignment.bottomCenter,
@@ -151,13 +150,15 @@ class _CartPageState extends ConsumerState<CartPage> {
                                   disabledColor: Colors.grey.shade600,
                                   shape: RoundedRectangleBorder(
                                       borderRadius: BorderRadius.circular(10)),
-                                  onPressed:
-                                      cartlistState.status == CartStatus.empty
-                                          ? null
-                                          : () {
-                                              cartstate.initData();
-                                              showModal();
-                                            }))
+                                  onPressed: cartlistState.status ==
+                                          CartStatus.empty
+                                      ? null
+                                      : () {
+                                          final cartstate =
+                                              ref.read(cartProvider.notifier);
+                                          cartstate.initData();
+                                          showModal();
+                                        }))
                         ],
                       ),
               ],

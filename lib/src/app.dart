@@ -5,6 +5,7 @@ import 'package:flutter_application_1/src/core/theme/light_theme.dart';
 
 import 'package:flutter_application_1/src/presentation/controller/language/language_provider.dart';
 import 'package:flutter_application_1/src/presentation/controller/theme/theme_provider.dart';
+import 'package:flutter_application_1/src/presentation/controller/user/user_provider.dart';
 import 'package:flutter_application_1/src/presentation/pages/cart_page.dart';
 import 'package:flutter_application_1/src/presentation/pages/credit_card_page.dart';
 import 'package:flutter_application_1/src/presentation/pages/favorite_page.dart';
@@ -31,7 +32,7 @@ class FoodApp extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final language = ref.watch(languageProvider).saveLanguage;
     final theme = ref.watch(themeProvider).theme;
-
+    
     SystemChrome.setPreferredOrientations([
       DeviceOrientation.portraitUp,
     ]);
@@ -42,7 +43,7 @@ class FoodApp extends ConsumerWidget {
         splitScreenMode: true,
         builder: (_, child) {
           return MaterialApp(
-            initialRoute: '/',
+            initialRoute: '/loading',
             routes: {
               "/": (context) => const LoginPage(),
               "/home": (context) => const HomePage(),

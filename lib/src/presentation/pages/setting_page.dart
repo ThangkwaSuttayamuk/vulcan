@@ -37,7 +37,6 @@ class _SettingPageState extends ConsumerState<SettingPage> {
   @override
   Widget build(BuildContext context) {
     ref.watch(userProvider);
-    final userState = ref.read(userProvider.notifier);
 
     return Scaffold(
         backgroundColor: Theme.of(context).scaffoldBackgroundColor,
@@ -66,7 +65,7 @@ class _SettingPageState extends ConsumerState<SettingPage> {
                     side: const BorderSide(color: Colors.grey),
                     borderRadius: BorderRadius.circular(10)),
                 onPressed: () {
-                  userState.logOut();
+                  ref.read(userProvider.notifier).logOut();
                   loginData.setBool('login', true);
                   loginData.setInt('id', 0);
                   if (loginData.getInt('id') == 0 &&

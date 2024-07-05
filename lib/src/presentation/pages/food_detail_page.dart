@@ -53,7 +53,7 @@ class _DetailPageState extends ConsumerState<DetailPage> {
   @override
   Widget build(BuildContext context) {
     final quantityState = ref.watch(quantityProvider);
-    final quantityControllerState = ref.read(quantityProvider.notifier);
+
     final food = ref.watch(foodListProvider);
     return Scaffold(
       body: Stack(
@@ -208,7 +208,7 @@ class _DetailPageState extends ConsumerState<DetailPage> {
                         child: InkWell(
                           borderRadius: BorderRadius.circular(30),
                           onTap: () {
-                            quantityControllerState.decrease();
+                            ref.read(quantityProvider.notifier).decrease();
                           },
                           child: Container(
                             decoration: BoxDecoration(
@@ -237,7 +237,7 @@ class _DetailPageState extends ConsumerState<DetailPage> {
                         child: InkWell(
                           borderRadius: BorderRadius.circular(30),
                           onTap: () {
-                            quantityControllerState.increase();
+                            ref.read(quantityProvider.notifier).increase();
                           },
                           child: Container(
                             decoration: BoxDecoration(

@@ -3,6 +3,8 @@ import 'package:flutter_application_1/src/domain/entities/user_entity.dart';
 enum UserStatus {
   initial,
   loading,
+  notLogin,
+  login,
   success,
   failure,
 }

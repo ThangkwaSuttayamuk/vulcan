@@ -10,7 +10,6 @@ class LanguagePage extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final language = ref.watch(languageProvider);
-    final languageState = ref.read(languageProvider.notifier);
 
     return Scaffold(
         backgroundColor: Theme.of(context).scaffoldBackgroundColor,
@@ -41,9 +40,10 @@ class LanguagePage extends ConsumerWidget {
                           color: Theme.of(context).colorScheme.secondary,
                           child: InkWell(
                             onTap: () {
-                              languageState.saveLanguage(language.language);
+                              ref
+                                  .read(languageProvider.notifier)
+                                  .saveLanguage(language.language);
                               Navigator.pushNamed(context, '/home');
-                              
                             },
                             child: Text(
                               AppLocalizations.of(context)?.language_save ??

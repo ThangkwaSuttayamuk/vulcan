@@ -10,7 +10,6 @@ class BottomSheetModal extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final cartlistState = ref.watch(cartProvider);
-    final cartstate = ref.read(cartProvider.notifier);
 
     return Wrap(
       children: [
@@ -73,7 +72,7 @@ class BottomSheetModal extends ConsumerWidget {
                   maxLines: 1,
                   cursorColor: Colors.black,
                   onChanged: (value) {
-                    cartstate.setTel(value);
+                    ref.read(cartProvider.notifier).setTel(value);
                   },
                   decoration: InputDecoration(
                     contentPadding: const EdgeInsets.all(10),
@@ -153,11 +152,18 @@ class BottomSheetModal extends ConsumerWidget {
                           shape: RoundedRectangleBorder(
                               borderRadius: BorderRadius.circular(10)),
                           onPressed: () {
-                            if (cartstate.getAddress().isEmpty ||
-                                cartstate.getTel().isEmpty) {
+                            if (ref
+                                    .read(cartProvider.notifier)
+                                    .getAddress()
+                                    .isEmpty ||
+                                ref
+                                    .read(cartProvider.notifier)
+                                    .getTel()
+                                    .isEmpty) {
                             } else {
                               ref.read(orderProvider.notifier).addOrder(
-                                  cartstate.getAddress(), cartstate.getTel());
+                                  ref.read(cartProvider.notifier).getAddress(),
+                                  ref.read(cartProvider.notifier).getTel());
 
                               Navigator.pushNamedAndRemoveUntil(context,
                                   '/order', ModalRoute.withName('/home'));

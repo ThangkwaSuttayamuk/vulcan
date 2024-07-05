@@ -22,13 +22,12 @@ class _LanguageCardState extends ConsumerState<LanguageCard> {
   @override
   Widget build(BuildContext context) {
     final language = ref.watch(languageProvider);
-    final languageState = ref.read(languageProvider.notifier);
 
     return Material(
         color: Theme.of(context).colorScheme.secondary,
         child: InkWell(
           onTap: () {
-            languageState.setLanguage(widget.title);
+            ref.read(languageProvider.notifier).setLanguage(widget.title);
           },
           child: Padding(
             padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
@@ -45,10 +44,11 @@ class _LanguageCardState extends ConsumerState<LanguageCard> {
                     language.language == widget.title
                         ? Icon(
                             Icons.check,
-                            color: Theme.of(context).textTheme.titleLarge?.color,
+                            color:
+                                Theme.of(context).textTheme.titleLarge?.color,
                             size: 15,
                           )
-                        : const  SizedBox(),
+                        : const SizedBox(),
                   ],
                 ),
               ],
@@ -57,47 +57,3 @@ class _LanguageCardState extends ConsumerState<LanguageCard> {
         ));
   }
 }
-
-
-// class LanguageCard extends ConsumerWidget {
-//   final String title;
-//   const LanguageCard({super.key, required this.title});
-
-//   @override
-//   Widget build(BuildContext context, WidgetRef ref) {
-//     final language = ref.watch(languageProvider);
-//     final languageState = ref.read(languageProvider.notifier);
-
-//     return Material(
-//         color: Colors.white,
-//         child: InkWell(
-//           onTap: () {
-//             languageState.setLanguage(title);
-//           },
-//           child: Padding(
-//             padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
-//             child: Column(
-//               children: [
-//                 Row(
-//                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
-//                   children: [
-//                     Text(title == 'en'
-//                         ? 'English'
-//                         : title == 'th'
-//                             ? 'ไทย'
-//                             : ''),
-//                     language.language == title
-//                         ? Icon(
-//                             Icons.check,
-//                             color: Colors.blue.shade800,
-//                             size: 15,
-//                           )
-//                         : SizedBox(),
-//                   ],
-//                 ),
-//               ],
-//             ),
-//           ),
-//         ));
-//   }
-// }

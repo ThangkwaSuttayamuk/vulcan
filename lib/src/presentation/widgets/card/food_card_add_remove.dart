@@ -31,7 +31,6 @@ class _FoodCardAddRemoveState extends ConsumerState<FoodCardAddRemove> {
 
   @override
   Widget build(BuildContext context) {
-    final cartState = ref.read(cartProvider.notifier);
     return Padding(
       padding: const EdgeInsets.only(left: 20, right: 20, bottom: 15),
       child: Stack(
@@ -45,7 +44,7 @@ class _FoodCardAddRemoveState extends ConsumerState<FoodCardAddRemove> {
                 child: InkWell(
                   borderRadius: BorderRadius.circular(20),
                   onTap: () {
-                    cartState.deleteFormCart(widget.foodId);
+                    ref.read(cartProvider.notifier).deleteFormCart(widget.foodId);
                   },
                   child: const Stack(alignment: Alignment.center, children: [
                     SizedBox(
@@ -151,7 +150,7 @@ class _FoodCardAddRemoveState extends ConsumerState<FoodCardAddRemove> {
                                             setState(() {
                                               offset = 0;
                                             });
-                                            cartState
+                                            ref.read(cartProvider.notifier)
                                                 .removeToCart(widget.foodId);
                                           },
                                           child: Container(
@@ -183,7 +182,7 @@ class _FoodCardAddRemoveState extends ConsumerState<FoodCardAddRemove> {
                                           borderRadius:
                                               BorderRadius.circular(30),
                                           onTap: () {
-                                            cartState.addToCart(
+                                            ref.read(cartProvider.notifier).addToCart(
                                                 widget.foodId, 1);
                                           },
                                           child: Container(
