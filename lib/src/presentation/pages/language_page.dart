@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_application_1/src/presentation/controller/language/language_provider.dart';
+import 'package:flutter_application_1/src/presentation/widgets/button/language_button.dart';
 import 'package:flutter_application_1/src/presentation/widgets/card/language_card.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
@@ -9,7 +10,8 @@ class LanguagePage extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final language = ref.watch(languageProvider);
+    final language =
+        ref.watch(languageProvider.select((value) => value.language));
 
     return Scaffold(
         backgroundColor: Theme.of(context).scaffoldBackgroundColor,
@@ -36,22 +38,7 @@ class LanguagePage extends ConsumerWidget {
                               Icons.arrow_back_ios,
                               size: 20,
                             )),
-                        Material(
-                          color: Theme.of(context).colorScheme.secondary,
-                          child: InkWell(
-                            onTap: () {
-                              ref
-                                  .read(languageProvider.notifier)
-                                  .saveLanguage(language.language);
-                              Navigator.pushNamed(context, '/home');
-                            },
-                            child: Text(
-                              AppLocalizations.of(context)?.language_save ??
-                                  'Done',
-                              style: const TextStyle(fontSize: 14),
-                            ),
-                          ),
-                        )
+                        const LanguageButton()
                       ],
                     ),
                     Text(

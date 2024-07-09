@@ -19,6 +19,7 @@ import 'package:flutter_application_1/src/presentation/pages/setting_page.dart';
 import 'package:flutter_application_1/src/presentation/pages/home_page.dart';
 import 'package:flutter_application_1/src/presentation/pages/food_detail_page.dart';
 import 'package:flutter_application_1/src/presentation/pages/theme_page.dart';
+import 'package:flutter_application_1/src/presentation/transition/bottom_to_top.dart';
 import 'package:flutter_application_1/src/presentation/transition/fade.dart';
 import 'package:flutter_application_1/src/presentation/transition/slide_enter_right_to_left.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
@@ -32,7 +33,7 @@ class FoodApp extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final language = ref.watch(languageProvider).saveLanguage;
     final theme = ref.watch(themeProvider).theme;
-    
+
     SystemChrome.setPreferredOrientations([
       DeviceOrientation.portraitUp,
     ]);

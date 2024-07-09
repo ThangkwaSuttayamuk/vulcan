@@ -22,13 +22,12 @@ class _FavoriteButtonState extends ConsumerState<FavoriteButton> {
 
   @override
   Widget build(BuildContext context) {
-    final isFavorite = ref.watch(favoriteProvider);
-    ref.watch(favoriteFoodProvider);
+    final isFavorite = ref.watch(favoriteProvider.select((value)=>value.isFavorite));
 
     return FloatingActionButton.small(
       backgroundColor: Colors.white,
       onPressed: () {
-        isFavorite.isFavorite == true
+        isFavorite == true
             ? ref
                 .read(favoriteFoodProvider.notifier)
                 .removeFavorite(widget.foodId)
@@ -37,11 +36,11 @@ class _FavoriteButtonState extends ConsumerState<FavoriteButton> {
                 .addFavorite(widget.foodId);
         ref
             .read(favoriteProvider.notifier)
-            .statusFavorite(isFavorite.isFavorite);
+            .statusFavorite(isFavorite);
       },
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(30)),
       child: Icon(
-        isFavorite.isFavorite
+        isFavorite
             ? Icons.favorite_rounded
             : Icons.favorite_border_outlined,
         color: Colors.pinkAccent,

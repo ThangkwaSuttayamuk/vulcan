@@ -12,10 +12,12 @@ class SearchList extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final searchState = ref.watch(foodListProvider);
+    final searchState = ref.watch(foodListProvider.select((value)=>value.searchStatus));
+    final searchError = ref.watch(foodListProvider.select((value)=>value.error));
+    final searchFood=ref.watch(foodListProvider.select((value)=>value.searchfoods));
     return Consumer(
         builder: (BuildContext context, WidgetRef refHome, Widget? widget) {
-      switch (searchState.searchStatus) {
+      switch (searchState) {
         case HomeStatus.loading:
           return const Expanded(
             child: ShimmerView(
@@ -24,7 +26,7 @@ class SearchList extends ConsumerWidget {
           );
         case HomeStatus.failure:
           return Expanded(
-              child: Center(child: Text('Error: ${searchState.error}')));
+              child: Center(child: Text('Error: $searchError')));
         case HomeStatus.empty:
           return Expanded(
               child: Center(
@@ -40,9 +42,9 @@ class SearchList extends ConsumerWidget {
                 crossAxisSpacing: 20.h,
                 mainAxisSpacing: 40.w, maxCrossAxisExtent: 180.w,
               ),
-              itemCount: searchState.searchfoods?.length,
+              itemCount: searchFood?.length,
               itemBuilder: (context, index) {
-                final foodItem = searchState.searchfoods?[index];
+                final foodItem = searchFood?[index];
                 return GestureDetector(
                   onTap: () {
                     Navigator.pushNamed(context, '/detail',
