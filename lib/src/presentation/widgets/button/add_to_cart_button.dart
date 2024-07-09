@@ -14,11 +14,10 @@ class AddToCartButton extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    ref.watch(cartProvider.notifier);
+    final foodStatus =
+        ref.watch(foodListProvider.select((value) => value.status));
 
-    final food = ref.watch(foodListProvider);
-
-    if (food.status != HomeStatus.success) {
+    if (foodStatus != HomeStatus.success) {
       return SizedBox(
         height: 40.h,
         width: 200.h,
@@ -32,7 +31,9 @@ class AddToCartButton extends ConsumerWidget {
       child: InkWell(
         borderRadius: BorderRadius.circular(10),
         onTap: () {
-          ref.read(cartProvider.notifier).addToCart(id, ref.watch(quantityProvider).quantity);
+          ref
+              .read(cartProvider.notifier)
+              .addToCart(id, ref.watch(quantityProvider).quantity);
           Navigator.pop(context);
         },
         child: Padding(

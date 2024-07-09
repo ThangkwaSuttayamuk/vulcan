@@ -2,10 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:flutter_application_1/src/presentation/controller/cart/cart_provider.dart';
 import 'package:flutter_application_1/src/presentation/controller/cart/cart_state.dart';
 import 'package:flutter_application_1/src/presentation/widgets/card/food_card_add_remove.dart';
+import 'package:flutter_application_1/src/presentation/widgets/list/cart_list.dart';
 import 'package:flutter_application_1/src/presentation/widgets/loading/shimmer_box.dart';
 import 'package:flutter_application_1/src/presentation/widgets/modal/bottom_sheet_modal.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class CartPage extends ConsumerStatefulWidget {
   const CartPage({super.key});
@@ -25,7 +27,8 @@ class _CartPageState extends ConsumerState<CartPage> {
 
   @override
   Widget build(BuildContext context) {
-    final cartlistState = ref.watch(cartProvider);
+    final cartStatus = ref.watch(cartProvider.select((value) => value.status));
+    final cartError = ref.watch(cartProvider.select((value) => value.error));
 
     return Stack(
       alignment: Alignment.bottomCenter,
@@ -35,9 +38,9 @@ class _CartPageState extends ConsumerState<CartPage> {
             backgroundColor: Theme.of(context).colorScheme.secondary,
             title: Text(
               '${AppLocalizations.of(context)?.cart_header ?? 'Cart'} (${ref.read(cartProvider.notifier).getTotalAmount()})',
-              style: const TextStyle(
+              style: TextStyle(
                 fontWeight: FontWeight.bold,
-                fontSize: 20,
+                fontSize: 20.sp,
               ),
             ),
           ),
@@ -45,11 +48,11 @@ class _CartPageState extends ConsumerState<CartPage> {
               child: Column(
             children: [
               Expanded(
-                child: cartlistState.status == CartStatus.loading
+                child: cartStatus == CartStatus.loading
                     ? Center(child: loading())
-                    : cartlistState.error != null
-                        ? Center(child: Text("Error: ${cartlistState.error}"))
-                        : cartlistState.status == CartStatus.empty
+                    : cartError != null
+                        ? Center(child: Text("Error: $cartError"))
+                        : cartStatus == CartStatus.empty
                             ? Center(
                                 child: Text(
                                 AppLocalizations.of(context)?.cart_empty ??
@@ -58,28 +61,14 @@ class _CartPageState extends ConsumerState<CartPage> {
                                   color: Colors.grey.shade700,
                                 ),
                               ))
-                            : SingleChildScrollView(
+                            : const SingleChildScrollView(
                                 child: Column(
                                   children: [
-                                    const SizedBox(
+                                    SizedBox(
                                       height: 15,
                                     ),
-                                    Column(
-                                        children: List.generate(
-                                            cartlistState.cartList?.length ?? 0,
-                                            (i) {
-                                      final cartItem =
-                                          cartlistState.cartList?[i];
-                                      return FoodCardAddRemove(
-                                          foodId: cartItem?.foodId ?? 0,
-                                          name: cartItem?.name ?? '',
-                                          description:
-                                              cartItem?.description ?? '',
-                                          price: cartItem?.price ?? 0.0,
-                                          image: cartItem?.image ?? '',
-                                          quantity: cartItem?.quantity ?? 0);
-                                    })),
-                                    const SizedBox(
+                                    CartList(),
+                                    SizedBox(
                                       height: 100,
                                     )
                                   ],
@@ -127,7 +116,7 @@ class _CartPageState extends ConsumerState<CartPage> {
                     ],
                   ),
                 ),
-                cartlistState.status == CartStatus.loading
+                cartStatus == CartStatus.loading
                     ? const SizedBox(
                         height: 40,
                         child: ShimmerBox(),
@@ -150,13 +139,12 @@ class _CartPageState extends ConsumerState<CartPage> {
                                   disabledColor: Colors.grey.shade600,
                                   shape: RoundedRectangleBorder(
                                       borderRadius: BorderRadius.circular(10)),
-                                  onPressed: cartlistState.status ==
-                                          CartStatus.empty
+                                  onPressed: cartStatus == CartStatus.empty
                                       ? null
                                       : () {
-                                          final cartstate =
+                                          final cartState =
                                               ref.read(cartProvider.notifier);
-                                          cartstate.initData();
+                                          cartState.initData();
                                           showModal();
                                         }))
                         ],

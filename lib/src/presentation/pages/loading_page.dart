@@ -53,6 +53,7 @@ class _LoadingPageState extends ConsumerState<LoadingPage>
     _secondController.dispose();
     _thirdController.dispose();
     _forthController.dispose();
+    _fifthController.dispose();
 
     super.dispose();
   }
@@ -60,40 +61,50 @@ class _LoadingPageState extends ConsumerState<LoadingPage>
   @override
   Widget build(BuildContext context) {
     final user = ref.watch(userProvider);
-    if (user.loginStatus == UserStatus.login) {
-      return HomePage();
-    }
-    if (user.loginStatus == UserStatus.notLogin) {
-      return LoginPage();
-    }
     return Scaffold(
-      body: Stack(
-        alignment: Alignment.bottomCenter,
-        children: [
-          Center(
-              child: Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              animatedBuilder(_controller, _slideAnimation, 'burger'),
-              animatedBuilder(
-                  _secondController, _secondSlideAnimation, 'pizza'),
-              animatedBuilder(_thirdController, _thirdSlideAnimation, 'bread'),
-              animatedBuilder(_forthController, _forthSlideAnimation, 'salad'),
-              animatedBuilder(
-                  _fifthController, _fifthSlideAnimation, 'fried_chicken'),
-            ],
-          )),
-          Padding(
-            padding: const EdgeInsets.only(bottom: 40),
-            child: Text(
-              'HappyMeal',
-              style: TextStyle(
-                  color: Theme.of(context).textTheme.titleLarge?.color,
-                  fontWeight: FontWeight.bold),
-            ),
-          )
-        ],
+      body: AnimatedSwitcher(
+        duration: const Duration(milliseconds: 500),
+        transitionBuilder: (Widget child, Animation<double> animation) {
+          final offsetAnimation = Tween<Offset>(
+            begin: const Offset(0, 1),
+            end: Offset.zero,
+          ).animate(animation);
+          return SlideTransition(position: offsetAnimation, child: child);
+        },
+        child: user.loginStatus == UserStatus.login
+            ? HomePage()
+            : user.loginStatus == UserStatus.notLogin
+            ? LoginPage()
+            : buildLoadingContent(context),
       ),
+    );
+  }
+
+  Widget buildLoadingContent(BuildContext context) {
+    return Stack(
+      alignment: Alignment.bottomCenter,
+      children: [
+        Center(
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                animatedBuilder(_controller, _slideAnimation, 'burger'),
+                animatedBuilder(_secondController, _secondSlideAnimation, 'pizza'),
+                animatedBuilder(_thirdController, _thirdSlideAnimation, 'bread'),
+                animatedBuilder(_forthController, _forthSlideAnimation, 'salad'),
+                animatedBuilder(_fifthController, _fifthSlideAnimation, 'fried_chicken'),
+              ],
+            )),
+        Padding(
+          padding: const EdgeInsets.only(bottom: 40),
+          child: Text(
+            'HappyMeal',
+            style: TextStyle(
+                color: Theme.of(context).textTheme.titleLarge?.color,
+                fontWeight: FontWeight.bold),
+          ),
+        )
+      ],
     );
   }
 
@@ -109,19 +120,19 @@ class _LoadingPageState extends ConsumerState<LoadingPage>
       AnimationController secondController) {
     return Tween<Offset>(begin: const Offset(0, 0), end: const Offset(0, -1))
         .animate(CurvedAnimation(
-            reverseCurve: Curves.linear,
-            parent: firstController,
-            curve: Curves.linear)
-          ..addStatusListener((status) {
-            if (status == AnimationStatus.completed) {
-              firstController.reverse();
-              Future.delayed(const Duration(milliseconds: 200), () {
-                setState(() {
-                  secondController.forward();
-                });
-              });
-            }
-          }));
+        reverseCurve: Curves.linear,
+        parent: firstController,
+        curve: Curves.linear)
+      ..addStatusListener((status) {
+        if (status == AnimationStatus.completed) {
+          firstController.reverse();
+          Future.delayed(const Duration(milliseconds: 200), () {
+            setState(() {
+              secondController.forward();
+            });
+          });
+        }
+      }));
   }
 
   AnimatedBuilder animatedBuilder(AnimationController controller,

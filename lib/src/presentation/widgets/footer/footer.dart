@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_application_1/src/presentation/widgets/footer/footer_button.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class Footer extends ConsumerStatefulWidget {
   const Footer({
@@ -26,7 +27,7 @@ class _FooterState extends ConsumerState<Footer> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      height: 80,
+      height: 80.h,
       decoration: BoxDecoration(
           color: Theme.of(context).colorScheme.secondary,
           boxShadow: const [

@@ -40,9 +40,10 @@ class _HomePageState extends ConsumerState<HomePage>
 
   @override
   Widget build(BuildContext context) {
-    final foodList = ref.watch(foodListProvider);
-    final filterState = ref.watch(filterProvider);
-    final filter = filterState.filterName;
+    final foodStatus =
+        ref.watch(foodListProvider.select((value) => value.status));
+    final filterName =
+        ref.watch(filterProvider.select((value) => value.filterName));
 
     return Stack(
       alignment: Alignment.bottomCenter,
@@ -53,7 +54,7 @@ class _HomePageState extends ConsumerState<HomePage>
             child: Padding(
               padding: EdgeInsets.symmetric(horizontal: 20.w),
               child: CustomScrollView(
-                physics: foodList.status == HomeStatus.loading
+                physics: foodStatus == HomeStatus.loading
                     ? const NeverScrollableScrollPhysics()
                     : const AlwaysScrollableScrollPhysics(),
                 slivers: [
@@ -93,7 +94,7 @@ class _HomePageState extends ConsumerState<HomePage>
                   SliverAppBar(
                     backgroundColor: Theme.of(context).colorScheme.primary,
                     automaticallyImplyLeading: false,
-                    pinned: filter == '' ? false : true,
+                    pinned: filterName == '' ? false : true,
                     stretch: false,
                     flexibleSpace: SizedBox(
                       child: Row(
@@ -115,7 +116,7 @@ class _HomePageState extends ConsumerState<HomePage>
                   const FoodList(),
                   SliverToBoxAdapter(
                     child: Container(
-                      height: 70.h,
+                      height: 110.h,
                     ),
                   ),
                 ],

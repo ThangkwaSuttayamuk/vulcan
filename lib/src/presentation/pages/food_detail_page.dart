@@ -36,9 +36,9 @@ class _DetailPageState extends ConsumerState<DetailPage> {
   void initState() {
     _scrollController = ScrollController();
     _scrollController.addListener(_scrollListener);
+
     WidgetsBinding.instance.addPostFrameCallback((_) {
       ref.read(quantityProvider.notifier).initData();
-      ref.read(cartProvider.notifier);
       ref.read(foodListProvider.notifier).getFoodById(widget.id);
     });
 
@@ -52,9 +52,8 @@ class _DetailPageState extends ConsumerState<DetailPage> {
 
   @override
   Widget build(BuildContext context) {
-    final quantityState = ref.watch(quantityProvider);
-
     final food = ref.watch(foodListProvider);
+
     return Scaffold(
       body: Stack(
         alignment: Alignment.bottomCenter,
@@ -222,15 +221,20 @@ class _DetailPageState extends ConsumerState<DetailPage> {
                           ),
                         ),
                       ),
-                      SizedBox(
-                          width: 50,
-                          child: Material(
-                            color: Theme.of(context).colorScheme.secondary,
-                            child: Text(
-                              quantityState.quantity.toString(),
-                              textAlign: TextAlign.center,
-                            ),
-                          )),
+                      Consumer(builder: (BuildContext context, WidgetRef conRef,
+                          Widget? child) {
+                        final quantity = conRef.watch(
+                            quantityProvider.select((value) => value.quantity));
+                        return SizedBox(
+                            width: 50,
+                            child: Material(
+                              color: Theme.of(context).colorScheme.secondary,
+                              child: Text(
+                                quantity.toString(),
+                                textAlign: TextAlign.center,
+                              ),
+                            ));
+                      }),
                       Material(
                         color: Theme.of(context).colorScheme.secondary,
                         borderRadius: BorderRadius.circular(30),
