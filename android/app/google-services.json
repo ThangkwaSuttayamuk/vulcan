@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "720289701165",
+    "project_id": "pushnotitutorial-cf120",
+    "storage_bucket": "pushnotitutorial-cf120.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:720289701165:android:e3ad9caba2fa6beb5c47a4",
+        "android_client_info": {
+          "package_name": "com.example.flutterApplication1"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAWWAhkcf8G0KukKNzdGS0M5Wz_y0RY72k"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:720289701165:android:fd4475f0f4509be55c47a4",
+        "android_client_info": {
+          "package_name": "com.example.flutter_application_1"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAWWAhkcf8G0KukKNzdGS0M5Wz_y0RY72k"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

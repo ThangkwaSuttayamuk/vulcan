@@ -10,6 +10,7 @@ class ScreenshotLocker {
     if (Platform.isIOS) {
       await _channel.invokeMethod('enablescreen');
     } else {
+
       await FlutterWindowManager.clearFlags(FlutterWindowManager.FLAG_SECURE);
     }
   }

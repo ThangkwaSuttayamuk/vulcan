@@ -39,10 +39,8 @@ class UserNotifier extends StateNotifier<UserState> {
       loginData = await SharedPreferences.getInstance();
       newUser = (loginData.getBool('login') ?? true);
       if (newUser) {
-        print(newUser);
         state = state.copyWith(loginStatus: UserStatus.notLogin);
       } else {
-        print(newUser);
         state = state.copyWith(loginStatus: UserStatus.login);
       }
     } catch (e) {

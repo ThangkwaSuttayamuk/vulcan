@@ -32,7 +32,7 @@ class FoodList extends ConsumerWidget {
               return GestureDetector(
                 onTap: () {
                   Navigator.pushNamed(context, '/detail',
-                      arguments: foodItem?.id);
+                      arguments: {'id':foodItem?.id,'formPage':'home'});
                 },
                 child: FoodCard(
                   id: foodItem?.id ?? 0,

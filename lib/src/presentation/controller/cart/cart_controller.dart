@@ -5,6 +5,7 @@ import 'package:flutter_application_1/src/domain/usecases/add_to_cart_usecase.da
 import 'package:flutter_application_1/src/domain/usecases/delete_form_cart_usecase.dart';
 import 'package:flutter_application_1/src/domain/usecases/get_cart_usecase.dart';
 import 'package:flutter_application_1/src/domain/usecases/remove_to_cart_usecase.dart';
+import 'package:flutter_application_1/src/domain/usecases/update_cart_quantity_usecase.dart';
 import 'package:flutter_application_1/src/presentation/controller/cart/cart_state.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
@@ -13,9 +14,14 @@ class CartNotifier extends StateNotifier<CartState> {
   final AddToCartUsecase addToCartUsecase;
   final RemoveToCartUsecase removeToCartUsecase;
   final DeleteFormCartUsecase deleteFormCartUsecase;
+  final UpdateCartQuantityUsecase updateCartQuantityUsecase;
 
-  CartNotifier(this.getCartUsecase, this.addToCartUsecase,
-      this.removeToCartUsecase, this.deleteFormCartUsecase)
+  CartNotifier(
+      this.getCartUsecase,
+      this.addToCartUsecase,
+      this.removeToCartUsecase,
+      this.deleteFormCartUsecase,
+      this.updateCartQuantityUsecase)
       : super(CartState());
 
   Future<void> cartFoods() async {
@@ -79,6 +85,21 @@ class CartNotifier extends StateNotifier<CartState> {
     }
   }
 
+  Future<void> updateQuantityCart(int id, int newQuantity) async {
+
+    final params = UpdateCartQuantityUsecaseTypeParam(id, newQuantity);
+    try {
+      await updateCartQuantityUsecase.call(params);
+      final cartList = await getCartUsecase.call(NoParams());
+      state = state.copyWith(
+          cartList: cartList,
+          isLoading: false,
+          status: cartList.isEmpty ? CartStatus.empty : CartStatus.success);
+    } catch (e) {
+      state = state.copyWith(error: e.toString());
+    }
+  }
+
   Future<void> initData() async {
     state = state.copyWith(
         address: '',
@@ -119,6 +140,4 @@ class CartNotifier extends StateNotifier<CartState> {
     }
     return total;
   }
-
-  
 }

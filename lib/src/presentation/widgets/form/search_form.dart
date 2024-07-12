@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_application_1/src/presentation/controller/food/food_provider.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class SearchForm extends ConsumerStatefulWidget {
   const SearchForm({super.key});
@@ -26,10 +27,11 @@ class _SearchFormState extends ConsumerState<SearchForm> {
   Widget build(BuildContext context) {
     return Expanded(
       child: SizedBox(
-        height: 50,
+        height: 45.h,
         child: Consumer(
             builder: (BuildContext context, WidgetRef ref, Widget? child) {
           return TextField(
+
             cursorColor:Theme.of(context).iconTheme.color,
               focusNode: _focusNode,
               controller: _searchController,

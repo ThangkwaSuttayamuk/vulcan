@@ -44,7 +44,9 @@ class _FoodCardAddRemoveState extends ConsumerState<FoodCardAddRemove> {
                 child: InkWell(
                   borderRadius: BorderRadius.circular(20),
                   onTap: () {
-                    ref.read(cartProvider.notifier).deleteFormCart(widget.foodId);
+                    ref
+                        .read(cartProvider.notifier)
+                        .deleteFormCart(widget.foodId);
                   },
                   child: const Stack(alignment: Alignment.center, children: [
                     SizedBox(
@@ -91,8 +93,11 @@ class _FoodCardAddRemoveState extends ConsumerState<FoodCardAddRemove> {
                 color: Theme.of(context).colorScheme.secondary,
                 child: InkWell(
                   onTap: () {
-                    Navigator.pushNamed(context, '/detail',
-                        arguments: widget.foodId);
+                    Navigator.pushNamed(context, '/detail', arguments: {
+                      "id": widget.foodId,
+                      "formPage": 'cart',
+                      "quantity": widget.quantity
+                    });
                   },
                   borderRadius: BorderRadius.circular(20),
                   child: Padding(
@@ -150,7 +155,8 @@ class _FoodCardAddRemoveState extends ConsumerState<FoodCardAddRemove> {
                                             setState(() {
                                               offset = 0;
                                             });
-                                            ref.read(cartProvider.notifier)
+                                            ref
+                                                .read(cartProvider.notifier)
                                                 .removeToCart(widget.foodId);
                                           },
                                           child: Container(
@@ -182,8 +188,9 @@ class _FoodCardAddRemoveState extends ConsumerState<FoodCardAddRemove> {
                                           borderRadius:
                                               BorderRadius.circular(30),
                                           onTap: () {
-                                            ref.read(cartProvider.notifier).addToCart(
-                                                widget.foodId, 1);
+                                            ref
+                                                .read(cartProvider.notifier)
+                                                .addToCart(widget.foodId, 1);
                                           },
                                           child: Container(
                                             decoration: BoxDecoration(

@@ -5,6 +5,7 @@ import 'package:flutter_application_1/src/presentation/widgets/card/food_card.da
 import 'package:flutter_application_1/src/presentation/widgets/loading/shimmer_box.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class FavoriteList extends ConsumerStatefulWidget {
   const FavoriteList({super.key});
@@ -53,13 +54,11 @@ class _FavoriteListState extends ConsumerState<FavoriteList> {
           return Expanded(
             child: GridView.builder(
               padding: const EdgeInsets.only(bottom: 100, left: 20, right: 20),
-              gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                crossAxisCount: 2,
-                crossAxisSpacing: 20,
-                mainAxisSpacing: 40,
-                childAspectRatio: (MediaQuery.of(context).size.width /
-                        MediaQuery.of(context).size.height) /
-                    0.53,
+              gridDelegate: SliverGridDelegateWithMaxCrossAxisExtent(
+                  crossAxisSpacing: 20.h,
+                  mainAxisSpacing: 30.w,
+                  maxCrossAxisExtent: 180.w,
+                  mainAxisExtent: 170.h
               ),
               itemCount: favoritelistState.favoriteFoods.length,
               itemBuilder: (context, index) {

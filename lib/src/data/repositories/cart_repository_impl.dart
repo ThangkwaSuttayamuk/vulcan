@@ -38,6 +38,7 @@ class CartRepositoryImpl implements CartRepository {
     });
   }
 
+
   @override
   Future<void> removeToCart(int foodId) async {
     final db = await databaseHelper.database;
@@ -69,5 +70,15 @@ class CartRepositoryImpl implements CartRepository {
       whereArgs: [foodId],
     );
   }
-  
+
+  @override
+  Future<void> updateCartQuantity(int foodId, int newQuantity) async {
+    final db = await databaseHelper.database;
+
+    await db.rawUpdate('''
+          UPDATE cart
+          SET quantity = ?
+          WHERE food_id = ?
+        ''', [newQuantity, foodId]);
+  }
 }

@@ -36,7 +36,8 @@ class SettingCard extends StatelessWidget {
                                 ? AppLocalizations.of(context)?.setting_theme ??
                                     'Theme'
                                 : name == 'credit card'
-                                    ? 'Credit Card'
+                                    ? AppLocalizations.of(context)?.setting_credit_card ??
+                            'Credit Card'
                                     : ''),
                         const Icon(
                           Icons.arrow_forward_ios,

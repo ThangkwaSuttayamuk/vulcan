@@ -21,7 +21,6 @@ class FoodCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    
     return Container(
       decoration: BoxDecoration(boxShadow: [
         BoxShadow(
@@ -36,7 +35,8 @@ class FoodCard extends StatelessWidget {
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
         child: InkWell(
           onTap: () {
-            Navigator.pushNamed(context, '/detail', arguments: id);
+            Navigator.pushNamed(context, '/detail',
+                arguments: {"id": id, "formPage": "home"});
           },
           borderRadius: BorderRadius.circular(10),
           child: Column(
@@ -73,47 +73,6 @@ class FoodCard extends StatelessWidget {
                           color:
                               Theme.of(context).textTheme.titleMedium?.color),
                     ),
-                    // SizedBox(
-                    //   height: 5,
-                    // ),
-                    // Row(
-                    //   mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    //   children: [
-                    //     Text(
-                    //       '\$${price}',
-                    //       maxLines: 1,
-                    //       overflow: TextOverflow.ellipsis,
-                    //       style: TextStyle(
-                    //           fontSize: 14.sp, fontWeight: FontWeight.w700),
-                    //     ),
-                    //     Material(
-                    //         borderRadius: BorderRadius.circular(20),
-                    //         child: InkWell(
-                    //           borderRadius: BorderRadius.circular(20),
-                    //           onTap: () {
-                    //             print('add to cart');
-                    //           },
-                    //           child: Stack(
-                    //             alignment: Alignment.center,
-                    //             children: [
-                    //               CircleAvatar(
-                    //                 backgroundColor: Theme.of(context)
-                    //                     .textTheme
-                    //                     .titleLarge
-                    //                     ?.color,
-                    //                 radius: 10.h,
-                    //               ),
-                    //               Icon(
-                    //                 Icons.add,
-                    //                 color:
-                    //                     Theme.of(context).colorScheme.secondary,
-                    //                 size: 20,
-                    //               ),
-                    //             ],
-                    //           ),
-                    //         ))
-                    //   ],
-                    // ),
                   ],
                 ),
               ),
@@ -123,6 +82,4 @@ class FoodCard extends StatelessWidget {
       ),
     );
   }
-
-  
 }

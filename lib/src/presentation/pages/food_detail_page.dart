@@ -5,16 +5,18 @@ import 'package:flutter_application_1/src/presentation/controller/food/food_prov
 import 'package:flutter_application_1/src/presentation/controller/quantity/quantity_provider.dart';
 import 'package:flutter_application_1/src/presentation/widgets/button/add_to_cart_button.dart';
 import 'package:flutter_application_1/src/presentation/widgets/button/favorite_button.dart';
+import 'package:flutter_application_1/src/presentation/widgets/button/update_cart_button.dart';
 import 'package:flutter_application_1/src/presentation/widgets/card/text_card.dart';
+import 'package:flutter_application_1/src/presentation/widgets/modal/update_cart_modal.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class DetailPage extends ConsumerStatefulWidget {
-  final id;
+  final dynamic arg;
 
   const DetailPage(
-    this.id, {
+    this.arg, {
     super.key,
   });
 
@@ -38,8 +40,12 @@ class _DetailPageState extends ConsumerState<DetailPage> {
     _scrollController.addListener(_scrollListener);
 
     WidgetsBinding.instance.addPostFrameCallback((_) {
-      ref.read(quantityProvider.notifier).initData();
-      ref.read(foodListProvider.notifier).getFoodById(widget.id);
+      if (widget.arg['formPage'] == 'cart') {
+        ref.read(quantityProvider.notifier).cartData(widget.arg['quantity']);
+      } else {
+        ref.read(quantityProvider.notifier).initData();
+      }
+      ref.read(foodListProvider.notifier).getFoodById(widget.arg['id']);
     });
 
     super.initState();
@@ -66,7 +72,14 @@ class _DetailPageState extends ConsumerState<DetailPage> {
                 padding: const EdgeInsets.only(left: 10),
                 child: InkWell(
                   onTap: () {
-                    Navigator.pop(context);
+                    if(widget.arg['formPage']=='cart'){
+                      showModal();
+                      // Navigator.pop(context);
+                    }
+                    else{
+                      Navigator.pop(context);
+                    }
+
                   },
                   child: Container(
                     height: 40.w,
@@ -114,7 +127,7 @@ class _DetailPageState extends ConsumerState<DetailPage> {
                     ),
                     Padding(
                         padding: const EdgeInsets.all(5),
-                        child: FavoriteButton(foodId: widget.id)),
+                        child: FavoriteButton(foodId: widget.arg['id'])),
                   ],
                 ),
                 stretchModes: const [
@@ -207,7 +220,13 @@ class _DetailPageState extends ConsumerState<DetailPage> {
                         child: InkWell(
                           borderRadius: BorderRadius.circular(30),
                           onTap: () {
-                            ref.read(quantityProvider.notifier).decrease();
+                            if (widget.arg['formPage'] == 'cart') {
+                              ref
+                                  .read(quantityProvider.notifier)
+                                  .updateDecrease();
+                            } else {
+                              ref.read(quantityProvider.notifier).decrease();
+                            }
                           },
                           child: Container(
                             decoration: BoxDecoration(
@@ -241,7 +260,13 @@ class _DetailPageState extends ConsumerState<DetailPage> {
                         child: InkWell(
                           borderRadius: BorderRadius.circular(30),
                           onTap: () {
-                            ref.read(quantityProvider.notifier).increase();
+                            if (widget.arg['formPage'] == 'cart') {
+                              ref
+                                  .read(quantityProvider.notifier)
+                                  .updateIncrease();
+                            } else {
+                              ref.read(quantityProvider.notifier).increase();
+                            }
                           },
                           child: Container(
                             decoration: BoxDecoration(
@@ -257,8 +282,11 @@ class _DetailPageState extends ConsumerState<DetailPage> {
                       ),
                     ],
                   ),
-                  AddToCartButton(
-                      id: widget.id, price: food.foodById?.price ?? 0.0)
+                  widget.arg['formPage'] == 'cart'
+                      ? UpdateCartButton(id: widget.arg['id'])
+                      : AddToCartButton(
+                          id: widget.arg['id'],
+                          price: food.foodById?.price ?? 0.0)
                 ],
               ),
             ),
@@ -266,5 +294,20 @@ class _DetailPageState extends ConsumerState<DetailPage> {
         ],
       ),
     );
+  }
+  Future showModal() {
+    return showModalBottomSheet<void>(
+        backgroundColor: Theme.of(context).colorScheme.secondary,
+        context: context,
+        isScrollControlled: true,
+        showDragHandle: true,
+        shape: const RoundedRectangleBorder(
+          borderRadius: BorderRadius.vertical(
+            top: Radius.circular(25.0),
+          ),
+        ),
+        builder: (context) {
+          return const UpdateCartModal();
+        });
   }
 }

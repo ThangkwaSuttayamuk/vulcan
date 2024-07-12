@@ -5,6 +5,7 @@ import 'package:flutter_application_1/src/domain/usecases/add_to_cart_usecase.da
 import 'package:flutter_application_1/src/domain/usecases/delete_form_cart_usecase.dart';
 import 'package:flutter_application_1/src/domain/usecases/get_cart_usecase.dart';
 import 'package:flutter_application_1/src/domain/usecases/remove_to_cart_usecase.dart';
+import 'package:flutter_application_1/src/domain/usecases/update_cart_quantity_usecase.dart';
 import 'package:flutter_application_1/src/presentation/controller/cart/cart_controller.dart';
 import 'package:flutter_application_1/src/presentation/controller/cart/cart_state.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -24,8 +25,11 @@ final removeToCart =
 final deleteFormCart =
     Provider((ref) => DeleteFormCartUsecase(ref.read(cartRepsitryProvider)));
 
+final updateQuanityCart =
+Provider((ref) => UpdateCartQuantityUsecase(ref.read(cartRepsitryProvider)));
+
 final cartProvider =
     StateNotifierProvider.autoDispose<CartNotifier, CartState>((ref) {
   return CartNotifier(
-      ref.read(getCart), ref.read(addToCart), ref.read(removeToCart),ref.read(deleteFormCart));
+      ref.read(getCart), ref.read(addToCart), ref.read(removeToCart),ref.read(deleteFormCart),ref.read(updateQuanityCart));
 });

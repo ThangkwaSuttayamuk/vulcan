@@ -9,6 +9,7 @@ import 'package:flutter_application_1/src/domain/usecases/get_order_usecase.dart
 import 'package:flutter_application_1/src/domain/usecases/get_user_usecase.dart';
 import 'package:flutter_application_1/src/domain/usecases/insert_multiple_foods_usecase.dart';
 import 'package:flutter_application_1/src/domain/usecases/remove_to_cart_usecase.dart';
+import 'package:flutter_application_1/src/domain/usecases/update_cart_quantity_usecase.dart';
 import 'package:flutter_application_1/src/presentation/bloc/cart_bloc.dart';
 import 'package:flutter_application_1/src/presentation/bloc/order_bloc.dart';
 import 'package:flutter_application_1/src/presentation/bloc/user_bloc.dart';
@@ -54,6 +55,7 @@ void init() {
   sl.registerLazySingleton(() => GetCartUsecase(sl()));
   sl.registerLazySingleton(() => RemoveToCartUsecase(sl()));
   sl.registerLazySingleton(() => DeleteFormCartUsecase(sl()));
+  sl.registerLazySingleton(() => UpdateCartQuantityUsecase(sl()));
   sl.registerLazySingleton(() => AddOrderUsecase(sl()));
   sl.registerLazySingleton(() => GetOrderUsecase(sl()));
   sl.registerLazySingleton(() => GetOrderListByIdUsecase(sl()));
@@ -72,7 +74,8 @@ void init() {
       getCart: sl(),
       addToCart: sl(),
       removeToCart: sl(),
-      deleteFormCartUsecase: sl()));
+      deleteFormCartUsecase: sl(),
+      updateCartQuantityUsecase: sl()));
   sl.registerFactory(() => OrderBloc(
       addOrderUsecase: sl(),
       getOrderUsecase: sl(),

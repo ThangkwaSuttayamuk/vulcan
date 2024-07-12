@@ -1,3 +1,4 @@
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_application_1/src/config/sceneshot_locker.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
@@ -21,6 +22,7 @@ class _CreditCardPageState extends State<CreditCardPage> {
   @override
   Widget build(BuildContext context) {
     _screenshotLocker.disableScreenshots();
+    // final message = ModalRoute.of(context)!.settings.arguments as RemoteMessage;
 
     return Scaffold(
         body: Column(
@@ -82,7 +84,10 @@ class _CreditCardPageState extends State<CreditCardPage> {
               ),
             ),
           ),
-        )
+        ),
+        // Text(message.notification!.title.toString()),
+        // Text(message.notification!.body.toString()),
+        // Text(message.data.toString()),
       ],
     ));
   }

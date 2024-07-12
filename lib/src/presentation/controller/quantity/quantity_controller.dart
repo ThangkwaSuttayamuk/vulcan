@@ -8,19 +8,32 @@ class QuantityNotifier extends StateNotifier<QuantityState> {
     state = state.copyWith(quantity: 1);
   }
 
+  void cartData(int quantity) {
+    state = state.copyWith(quantity: quantity);
+  }
+
   void decrease() {
     state.quantity > 1
-        ? state = state.copyWith(quantity: state.quantity-1)
+        ? state = state.copyWith(quantity: state.quantity - 1)
         : null;
   }
 
   void increase() {
     state.quantity >= 1
-        ? state = state.copyWith(quantity: state.quantity+1)
+        ? state = state.copyWith(quantity: state.quantity + 1)
         : null;
   }
 
-  
+  void updateDecrease(){
+    state.quantity > 0
+        ? state = state.copyWith(quantity: state.quantity - 1)
+        : null;
+  }
 
+  void updateIncrease(){
+    state.quantity >= 0
+        ? state = state.copyWith(quantity: state.quantity + 1)
+        : null;
+  }
 
 }
