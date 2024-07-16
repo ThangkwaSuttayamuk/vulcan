@@ -13,11 +13,17 @@ void main() async {
   await Firebase.initializeApp();
   FirebaseApi.initNotification();
 
-
-  await FirebaseMessaging.instance.getInitialMessage();
-  await FirebaseMessaging.instance.requestPermission();
-  await FirebaseMessaging.onMessageOpenedApp.listen((event) {
-    print(("THIS IS EVENT :: :: $event"));
+  FirebaseMessaging.onMessage.listen((RemoteMessage message) {
+    RemoteNotification? notification = message.notification;
+    AndroidNotification? android = message.notification?.android;
+    if (notification != null && android != null) {
+      FirebaseApi.showLocalNotification(
+        notification.title ?? '',
+        notification.body ?? '',
+        message.data['payload'] ?? '',
+      );
+    }
   });
+
   runApp(const ProviderScope(child: FoodApp()));
 }

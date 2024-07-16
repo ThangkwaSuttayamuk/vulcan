@@ -4,6 +4,7 @@ import 'package:flutter_application_1/src/data/firbase_api.dart';
 import 'package:flutter_application_1/src/presentation/controller/filter/filter_provider.dart';
 import 'package:flutter_application_1/src/presentation/controller/food/food_provider.dart';
 import 'package:flutter_application_1/src/presentation/controller/food/food_state.dart';
+import 'package:flutter_application_1/src/presentation/widgets/button/dragable_button.dart';
 import 'package:flutter_application_1/src/presentation/widgets/button/filter_button.dart';
 import 'package:flutter_application_1/src/presentation/widgets/button/regular_icon_button.dart';
 import 'package:flutter_application_1/src/presentation/widgets/footer/footer.dart';
@@ -22,8 +23,6 @@ class HomePage extends ConsumerStatefulWidget {
 
 class _HomePageState extends ConsumerState<HomePage>
     with SingleTickerProviderStateMixin {
-
-
   final List<String> _filter = [
     "burger",
     "pizza",
@@ -34,25 +33,12 @@ class _HomePageState extends ConsumerState<HomePage>
 
   @override
   void initState() {
-    FirebaseMessaging.onMessage.listen((RemoteMessage message) {
-      RemoteNotification? notification = message.notification;
-      AndroidNotification? android = message.notification?.android;
-      if (notification != null && android != null) {
-        FirebaseApi.showLocalNotification(
-          notification.title ?? '',
-          notification.body ?? '',
-          message.data['payload'] ?? '',
-        );
-      }
-    });
+
     WidgetsBinding.instance.addPostFrameCallback((_) {
       ref.read(foodListProvider.notifier).fetchFoods();
     });
     super.initState();
   }
-
-
-
 
   @override
   Widget build(BuildContext context) {
@@ -141,8 +127,7 @@ class _HomePageState extends ConsumerState<HomePage>
           ),
         ),
         const Footer(),
-
-      ],
+        const DragableButton()],
     );
   }
 }

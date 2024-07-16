@@ -85,52 +85,56 @@ class _SearchAnimatedState extends State<SearchAnimated>
   @override
   Widget build(BuildContext context) {
     return SliverAppBar(
-      backgroundColor: Theme.of(context).colorScheme.primary,
-      automaticallyImplyLeading: false,
-      floating: true,
-      pinned: true,
-      elevation: 0,
-      stretch: false,
-      flexibleSpace: SizedBox(
+        backgroundColor: Theme.of(context).colorScheme.primary,
+        automaticallyImplyLeading: false,
+        floating: true,
+        pinned: true,
+        elevation: 0,
+        stretch: false,
+        flexibleSpace: SizedBox(
           height: 45.h,
-          child: GestureDetector(
-              onTap: () => Navigator.pushNamed(context, '/search'),
-              child: AbsorbPointer(
-                  child: Container(
-                height: 40,
-                decoration: BoxDecoration(
-                    color: Theme.of(context).colorScheme.secondary,
-                    borderRadius: BorderRadius.circular(30),
-                    border: Border.all(color: Colors.grey.shade700)),
-                child: Row(
-                  children: <Widget>[
-                    const SizedBox(width: 15.0, height: 100.0),
-                    const Icon(Icons.search),
-                    const SizedBox(width: 10.0, height: 100.0),
-                    DefaultTextStyle(
-                      style: TextStyle(
-                          fontSize: 14.0,
-                          color:
-                              Theme.of(context).textTheme.titleMedium?.color),
-                      child: AnimatedBuilder(
-                        animation: _controller,
-                        builder: (context, child) {
-                          return SlideTransition(
-                            position: _slideAnimation,
-                            child: FadeTransition(
-                              opacity: _combinedFadeAnimation,
-                              child: Text(
-                                texts[_currentIndex],
-                                key: ValueKey<int>(_currentIndex),
-                              ),
-                            ),
-                          );
-                        },
-                      ),
+          child: Material(
+              borderRadius: BorderRadius.circular(20),
+              child: InkWell(
+                  onTap: () => Navigator.pushNamed(context, '/search'),
+                  child: AbsorbPointer(
+                      child: Container(
+                    height: 40,
+                    decoration: BoxDecoration(
+                        color: Theme.of(context).colorScheme.secondary,
+                        borderRadius: BorderRadius.circular(30),
+                        border: Border.all(color: Colors.grey.shade700)),
+                    child: Row(
+                      children: <Widget>[
+                        const SizedBox(width: 15.0, height: 100.0),
+                        const Icon(Icons.search),
+                        const SizedBox(width: 10.0, height: 100.0),
+                        DefaultTextStyle(
+                          style: TextStyle(
+                              fontSize: 14.0,
+                              color: Theme.of(context)
+                                  .textTheme
+                                  .titleMedium
+                                  ?.color),
+                          child: AnimatedBuilder(
+                            animation: _controller,
+                            builder: (context, child) {
+                              return SlideTransition(
+                                position: _slideAnimation,
+                                child: FadeTransition(
+                                  opacity: _combinedFadeAnimation,
+                                  child: Text(
+                                    texts[_currentIndex],
+                                    key: ValueKey<int>(_currentIndex),
+                                  ),
+                                ),
+                              );
+                            },
+                          ),
+                        ),
+                      ],
                     ),
-                  ],
-                ),
-              )))),
-    );
+                  )))),
+        ));
   }
 }

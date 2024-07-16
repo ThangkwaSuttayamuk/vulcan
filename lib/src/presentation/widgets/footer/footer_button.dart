@@ -32,17 +32,7 @@ class _FooterButtonState extends State<FooterButton> {
           Navigator.pushNamed(
                                 context,
                                 '/$name');
-          // Navigator.push(
-          //   context,
-          //   PageRouteBuilder(
-          //     pageBuilder: (context, animation, secondaryAnimation) =>
-          //         getPageByname(name),
-          //     transitionsBuilder:
-          //         (context, animation, secondaryAnimation, child) {
-          //       return child;
-          //     },
-          //   ),
-          // );
+
         },
         borderRadius: BorderRadius.circular(40),
         child: SizedBox(

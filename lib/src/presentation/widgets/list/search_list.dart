@@ -12,9 +12,12 @@ class SearchList extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final searchState = ref.watch(foodListProvider.select((value)=>value.searchStatus));
-    final searchError = ref.watch(foodListProvider.select((value)=>value.error));
-    final searchFood=ref.watch(foodListProvider.select((value)=>value.searchfoods));
+    final searchState =
+        ref.watch(foodListProvider.select((value) => value.searchStatus));
+    final searchError =
+        ref.watch(foodListProvider.select((value) => value.error));
+    final searchFood =
+        ref.watch(foodListProvider.select((value) => value.searchfoods));
     return Consumer(
         builder: (BuildContext context, WidgetRef refHome, Widget? widget) {
       switch (searchState) {
@@ -25,8 +28,7 @@ class SearchList extends ConsumerWidget {
             ),
           );
         case HomeStatus.failure:
-          return Expanded(
-              child: Center(child: Text('Error: $searchError')));
+          return Expanded(child: Center(child: Text('Error: $searchError')));
         case HomeStatus.empty:
           return Expanded(
               child: Center(
@@ -38,25 +40,28 @@ class SearchList extends ConsumerWidget {
             child: GridView.builder(
               padding: const EdgeInsets.only(bottom: 100, left: 20, right: 20),
               gridDelegate: SliverGridDelegateWithMaxCrossAxisExtent(
-                // crossAxisCount: 2,
-                crossAxisSpacing: 20.h,
-                mainAxisSpacing: 40.w, maxCrossAxisExtent: 180.w,
-              ),
+                  crossAxisSpacing: 20.h,
+                  mainAxisSpacing: 30.w,
+                  maxCrossAxisExtent: 180.w,
+                  mainAxisExtent: 170.h),
               itemCount: searchFood?.length,
               itemBuilder: (context, index) {
                 final foodItem = searchFood?[index];
-                return GestureDetector(
-                  onTap: () {
-                    Navigator.pushNamed(context, '/detail',
-                        arguments: foodItem?.id);
-                  },
-                  child: FoodCard(
-                    id: foodItem?.id ?? 0,
-                    name: foodItem?.name ?? '',
-                    description: foodItem?.description ?? '',
-                    price: foodItem?.price ?? 0.0,
-                    ingredients: foodItem?.ingredients ?? '',
-                    image: foodItem?.image ?? '',
+                return Material(
+                  borderRadius: BorderRadius.circular(20),
+                  child: InkWell(
+                    onTap: () {
+                      Navigator.pushNamed(context, '/detail',
+                          arguments: foodItem?.id);
+                    },
+                    child: FoodCard(
+                      id: foodItem?.id ?? 0,
+                      name: foodItem?.name ?? '',
+                      description: foodItem?.description ?? '',
+                      price: foodItem?.price ?? 0.0,
+                      ingredients: foodItem?.ingredients ?? '',
+                      image: foodItem?.image ?? '',
+                    ),
                   ),
                 );
               },

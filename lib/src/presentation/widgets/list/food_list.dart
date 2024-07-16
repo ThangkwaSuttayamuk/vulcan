@@ -19,20 +19,21 @@ class FoodList extends ConsumerWidget {
       case HomeStatus.success:
         return SliverGrid(
           gridDelegate: SliverGridDelegateWithMaxCrossAxisExtent(
-            crossAxisSpacing: 20.h,
-            mainAxisSpacing: 30.w,
-            maxCrossAxisExtent: 180.w,
-            mainAxisExtent: 170.h
-          ),
+              crossAxisSpacing: 20.h,
+              mainAxisSpacing: 30.w,
+              maxCrossAxisExtent: 180.w,
+              mainAxisExtent: 170.h),
           delegate: SliverChildBuilderDelegate(
             (BuildContext context, int index) {
               final foodItem = (filter == ''
                   ? (foodListState.foods?[index])
                   : (foodListState.filterfoods?[index]));
-              return GestureDetector(
+              return Material(
+                borderRadius: BorderRadius.circular(20),
+                  child: InkWell(
                 onTap: () {
                   Navigator.pushNamed(context, '/detail',
-                      arguments: {'id':foodItem?.id,'formPage':'home'});
+                      arguments: {'id': foodItem?.id, 'formPage': 'home'});
                 },
                 child: FoodCard(
                   id: foodItem?.id ?? 0,
@@ -42,7 +43,7 @@ class FoodList extends ConsumerWidget {
                   ingredients: foodItem?.ingredients ?? '',
                   image: foodItem?.image ?? '',
                 ),
-              );
+              ));
             },
             childCount: filter == ''
                 ? (foodListState.foods?.length)

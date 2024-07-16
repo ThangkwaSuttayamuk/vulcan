@@ -28,8 +28,7 @@ class UpdateCartModal extends ConsumerWidget {
                           fontSize: 18,
                         ),
                         textAlign: TextAlign.center,
-                        // AppLocalizations.of(context)?.cart_adrdess ??
-                        //     'Delivery Address:',
+
                       ),
                     )
                   ],

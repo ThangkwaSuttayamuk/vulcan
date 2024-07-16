@@ -85,4 +85,8 @@ class FoodListNotifier extends StateNotifier<FoodListState> {
       state = state.copyWith(error: e.toString(), status: HomeStatus.failure);
     }
   }
+
+  void closeBanner() {
+    state = state.copyWith(showBanner: false);
+  }
 }

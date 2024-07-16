@@ -6,16 +6,19 @@ class FoodListState {
   final HomeStatus status;
   final HomeStatus searchStatus;
   final HomeStatus filterStatus;
+  final bool showBanner;
   final FoodEntity? foodById;
   final List<FoodEntity>? foods;
   final List<FoodEntity>? filterfoods;
   final List<FoodEntity>? searchfoods;
+
   final String? error;
 
   const FoodListState({
     this.status = HomeStatus.initial,
     this.searchStatus = HomeStatus.initial,
     this.filterStatus = HomeStatus.initial,
+    this.showBanner = true,
     this.foodById,
     this.foods,
     this.filterfoods,
@@ -27,6 +30,7 @@ class FoodListState {
     HomeStatus? status,
     HomeStatus? searchStatus,
     HomeStatus? filterStatus,
+    bool? showBanner,
     FoodEntity? foodById,
     List<FoodEntity>? foods,
     List<FoodEntity>? filterfoods,
@@ -37,6 +41,7 @@ class FoodListState {
       status: status ?? this.status,
       searchStatus: searchStatus ?? this.searchStatus,
       filterStatus: filterStatus ?? this.filterStatus,
+      showBanner: showBanner ?? this.showBanner,
       foodById: foodById ?? this.foodById,
       foods: foods ?? this.foods,
       filterfoods: filterfoods ?? this.filterfoods,

@@ -58,25 +58,26 @@ class _FavoriteListState extends ConsumerState<FavoriteList> {
                   crossAxisSpacing: 20.h,
                   mainAxisSpacing: 30.w,
                   maxCrossAxisExtent: 180.w,
-                  mainAxisExtent: 170.h
-              ),
+                  mainAxisExtent: 170.h),
               itemCount: favoritelistState.favoriteFoods.length,
               itemBuilder: (context, index) {
                 final foodItem = favoritelistState.favoriteFoods[index];
-                return GestureDetector(
-                  onTap: () {
-                    Navigator.pushNamed(context, '/detail',
-                        arguments: foodItem.id);
-                  },
-                  child: FoodCard(
-                    id: foodItem.id,
-                    name: foodItem.name,
-                    description: foodItem.description,
-                    price: foodItem.price,
-                    ingredients: foodItem.ingredients,
-                    image: foodItem.image,
-                  ),
-                );
+                return Material(
+                    borderRadius: BorderRadius.circular(20),
+                    child: InkWell(
+                      onTap: () {
+                        Navigator.pushNamed(context, '/detail',
+                            arguments: foodItem.id);
+                      },
+                      child: FoodCard(
+                        id: foodItem.id,
+                        name: foodItem.name,
+                        description: foodItem.description,
+                        price: foodItem.price,
+                        ingredients: foodItem.ingredients,
+                        image: foodItem.image,
+                      ),
+                    ));
               },
             ),
           );

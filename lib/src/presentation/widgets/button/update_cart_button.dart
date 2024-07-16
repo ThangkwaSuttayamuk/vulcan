@@ -39,7 +39,8 @@ class UpdateCartButton extends ConsumerWidget {
                   .read(cartProvider.notifier)
                   .updateQuantityCart(id, quantity);
 
-          Navigator.pop(context);
+          Navigator.pushNamedAndRemoveUntil(
+              context, '/cart',ModalRoute.withName('/loading'));
         },
         child: Padding(
           padding: EdgeInsets.symmetric(horizontal: 30.w, vertical: 10.h),
