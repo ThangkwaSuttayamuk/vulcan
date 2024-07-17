@@ -24,7 +24,6 @@ class FirebaseNotification {
 
     FirebaseMessaging messaging = FirebaseMessaging.instance;
 
-    //For Handling the Notification in Terminated State
     FirebaseMessaging.onBackgroundMessage(firebaseMessagingBackgroundHandler);
 
     NotificationSettings settings = await messaging.requestPermission(

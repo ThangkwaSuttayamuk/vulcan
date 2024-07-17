@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_application_1/src/presentation/controller/float_button/float_button_provider.dart';
 import 'package:flutter_application_1/src/presentation/controller/food/food_provider.dart';
@@ -13,6 +15,12 @@ class DragableButton extends ConsumerStatefulWidget {
 
 class _DragableButtonState extends ConsumerState<DragableButton>
     with SingleTickerProviderStateMixin {
+
+  String percentage = '30%';
+  Timer? _timer;
+  List<String> percentages = ['30%', '40%'];
+  int _currentIndex = 0;
+
   double minHeight = 80.h;
   double minWidth = 10.h;
 
@@ -21,8 +29,24 @@ class _DragableButtonState extends ConsumerState<DragableButton>
     WidgetsBinding.instance.addPostFrameCallback((_) {
       ref.read(floatButtonProvider.notifier).initPosition();
     });
+    _startTimer();
 
     super.initState();
+  }
+
+  @override
+  void dispose() {
+    _timer?.cancel();
+    super.dispose();
+  }
+
+  void _startTimer() {
+    _timer = Timer.periodic(Duration(seconds: 2), (timer) {
+      setState(() {
+        _currentIndex = (_currentIndex + 1) % percentages.length;
+        percentage = percentages[_currentIndex];
+      });
+    });
   }
 
   @override
@@ -93,7 +117,17 @@ class _DragableButtonState extends ConsumerState<DragableButton>
                     child: CircleAvatar(
                       radius: 32.w,
                       backgroundColor: Colors.blue,
-                      child: Text('30%', style: TextStyle(color: Colors.white)),
+                      child: AnimatedSwitcher(
+                        duration: Duration(seconds: 0),
+                        transitionBuilder: (Widget child, Animation<double> animation) {
+                          return child;
+                        },
+                        child: Text(
+                          percentage,
+                          key: ValueKey<String>(percentage),
+                          style: TextStyle(color: Colors.white),
+                        ),
+                      ),
                     ),
                   ),
                   Material(
@@ -101,6 +135,7 @@ class _DragableButtonState extends ConsumerState<DragableButton>
                     child: InkWell(
                       borderRadius: BorderRadius.circular(30),
                       onTap: () {
+                        _timer?.cancel();
                         ref.read(foodListProvider.notifier).closeBanner();
                       },
                       child: Stack(

@@ -15,22 +15,15 @@ void main() async {
 
   FirebaseNotification.registerNotification();
 
-  //For Handling the Notification in Terminated State
   FirebaseNotification.checkForInitialMessage();
 
-  //For Handling the Notification when app is in background but not terminated
   FirebaseMessaging.onMessageOpenedApp.listen((RemoteMessage message) {
-    print("onMessageOpenedApp");
     PushNotificationEntity notification = PushNotificationEntity(
       title: message.notification?.title ?? '',
       body: message.notification?.body ?? '',
       dataTitle: message.data['title'] ?? '',
       dataBody: message.data['body'] ?? ''
     );
-    print("Notification Title: ${notification.title}");
-    print("Notification Body: ${notification.body}");
-    print("Notification Data Title: ${notification.dataTitle}");
-    print("Notification Data Body: ${notification.dataBody}");
 
   });
 
