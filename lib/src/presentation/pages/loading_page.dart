@@ -1,3 +1,4 @@
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_application_1/src/presentation/controller/user/user_provider.dart';
 import 'package:flutter_application_1/src/presentation/controller/user/user_state.dart';
@@ -45,6 +46,8 @@ class _LoadingPageState extends ConsumerState<LoadingPage>
     _fifthSlideAnimation = tween(_fifthController, _controller);
 
     _controller.forward();
+
+
   }
 
   @override

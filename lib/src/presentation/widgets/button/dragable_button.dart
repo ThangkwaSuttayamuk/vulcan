@@ -32,6 +32,7 @@ class _DragableButtonState extends ConsumerState<DragableButton>
 
     final showBanner =
         ref.watch(foodListProvider.select((value) => value.showBanner));
+
     double maxHeight = MediaQuery.of(context).size.height - 160.h;
     double maxWidth = MediaQuery.of(context).size.width - 80.w;
 

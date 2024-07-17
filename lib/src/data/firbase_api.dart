@@ -67,4 +67,6 @@ class FirebaseApi {
     print('เข้า background');
     print(message.notification?.title ?? 'error');
   }
+
+
 }
