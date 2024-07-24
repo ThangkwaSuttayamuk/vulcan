@@ -1,16 +1,18 @@
-# flutter_application_1
+# food ordering app 🍔😋📱
+during Blurbik Vulcan Training
+Learning About
+- Clean Architecture
+- Sqflite (for using sqlite local database in flutter)
+- Riverpod Stage Management
+- FLutter gen (for handle file image and font in assets folder)
+- Language (TH/EN by using I18n)
+- Theme (dark/light)
+- Animated and Curve [link for Animated](https://docs.flutter.dev/ui/widgets/animation) [and Curve](https://api.flutter.dev/flutter/animation/Curves-class.html)
+- FVM for control version flutter
+- Share Preference (to make stay login and remember me)
+- Navigator [link](https://medium.com/goodwin-corporation/flutter-ว่ากันด้วยเรื่อง-push-push-pop-pop-pop-pop-push-push-9960304447c3)
+- Platform Channel (for disable scene shot in credit card page)
+- Firebase Notification (recieve message form 3 stage Foreground, Background and Terminated State)
 
-A new Flutter project.
 
-## Getting Started
 
-This project is a starting point for a Flutter application.
-
-A few resources to get you started if this is your first Flutter project:
-
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
-
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
