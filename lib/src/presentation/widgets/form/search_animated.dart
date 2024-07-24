@@ -12,7 +12,7 @@ class _SearchAnimatedState extends State<SearchAnimated>
     with SingleTickerProviderStateMixin {
   final List<String> texts = [
     'Hawaiian Pizza 🍕',
-    'Buy 1 get 1 free CheeseBurger 🍔kpokokokokokokokokokokokokokokokok',
+    'Buy 1 get 1 free CheeseBurger 🍔',
     'Healthy Fresh Salad 🥗'
   ];
 
