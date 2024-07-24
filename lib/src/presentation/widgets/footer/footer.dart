@@ -27,7 +27,7 @@ class _FooterState extends ConsumerState<Footer> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      height: 80.h,
+      height: 65.h,
       decoration: BoxDecoration(
           color: Theme.of(context).colorScheme.secondary,
           boxShadow: const [
@@ -45,12 +45,16 @@ class _FooterState extends ConsumerState<Footer> {
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
             FooterButton(
+              name: "home",
+              title: AppLocalizations.of(context)?.footer_home ?? 'home',
+            ),
+            FooterButton(
               name: "order",
               title: AppLocalizations.of(context)?.footer_order ?? 'order',
             ),
             FooterButton(
-              name: "home",
-              title: AppLocalizations.of(context)?.footer_home ?? 'home',
+              name: "message",
+              title: AppLocalizations.of(context)?.footer_message ?? 'message',
             ),
             FooterButton(
               name: "setting",

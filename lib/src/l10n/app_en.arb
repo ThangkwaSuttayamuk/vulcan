@@ -39,9 +39,11 @@
     "theme_header": "Choose Theme",
     "theme_light": "Light Theme",
     "theme_dark": "Dark Theme",
+    "message_header": "Message",
     "footer_order": "order",
     "footer_home": "home",
     "footer_setting": "setting",
+    "footer_message": "message",
     "log_out": "Log Out"
 }
   

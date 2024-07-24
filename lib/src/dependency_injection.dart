@@ -1,9 +1,13 @@
+import 'package:flutter_application_1/src/data/repositories/notification_repository_impl.dart';
 import 'package:flutter_application_1/src/data/repositories/order_repository_impl.dart';
 import 'package:flutter_application_1/src/data/repositories/user_repository_impl.dart';
+import 'package:flutter_application_1/src/domain/repositories/notification_repository.dart';
 import 'package:flutter_application_1/src/domain/repositories/order_repository.dart';
 import 'package:flutter_application_1/src/domain/repositories/user_repository.dart';
+import 'package:flutter_application_1/src/domain/usecases/add_notification_usecase.dart';
 import 'package:flutter_application_1/src/domain/usecases/add_order_usecase.dart';
 import 'package:flutter_application_1/src/domain/usecases/delete_form_cart_usecase.dart';
+import 'package:flutter_application_1/src/domain/usecases/get_notification_usecase.dart';
 import 'package:flutter_application_1/src/domain/usecases/get_order_list_by_id.dart';
 import 'package:flutter_application_1/src/domain/usecases/get_order_usecase.dart';
 import 'package:flutter_application_1/src/domain/usecases/get_user_usecase.dart';
@@ -11,6 +15,7 @@ import 'package:flutter_application_1/src/domain/usecases/insert_multiple_foods_
 import 'package:flutter_application_1/src/domain/usecases/remove_to_cart_usecase.dart';
 import 'package:flutter_application_1/src/domain/usecases/update_cart_quantity_usecase.dart';
 import 'package:flutter_application_1/src/presentation/bloc/cart_bloc.dart';
+import 'package:flutter_application_1/src/presentation/bloc/notification_bloc.dart';
 import 'package:flutter_application_1/src/presentation/bloc/order_bloc.dart';
 import 'package:flutter_application_1/src/presentation/bloc/user_bloc.dart';
 import 'package:get_it/get_it.dart';
@@ -41,6 +46,8 @@ void init() {
   sl.registerLazySingleton<CartRepository>(() => CartRepositoryImpl(sl()));
   sl.registerLazySingleton<OrderRepository>(() => OrderRepositoryImpl(sl()));
   sl.registerLazySingleton<UserRepository>(() => UserRepositoryImpl(sl()));
+  sl.registerLazySingleton<NotificationRepository>(
+      () => NotificationRepositoryImpl(sl()));
 
   // Use cases
   sl.registerLazySingleton(() => GetFoodsUsecase(sl()));
@@ -60,6 +67,8 @@ void init() {
   sl.registerLazySingleton(() => GetOrderUsecase(sl()));
   sl.registerLazySingleton(() => GetOrderListByIdUsecase(sl()));
   sl.registerLazySingleton(() => GetUserUsecase(sl()));
+  sl.registerLazySingleton(() => AddNotificationUsecase(sl()));
+  sl.registerLazySingleton(() => GetNotificationUsecase(sl()));
 
   // Blocs
   sl.registerFactory(() => FoodBloc(
@@ -81,4 +90,6 @@ void init() {
       getOrderUsecase: sl(),
       getOrderListByIdUsecase: sl()));
   sl.registerFactory(() => UserBloc(getUser: sl()));
+  sl.registerFactory(() => NotificationBloc(
+      addNotificationUsecase: sl(), getNotificationUsecase: sl()));
 }

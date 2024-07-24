@@ -12,7 +12,7 @@ class _SearchAnimatedState extends State<SearchAnimated>
     with SingleTickerProviderStateMixin {
   final List<String> texts = [
     'Hawaiian Pizza 🍕',
-    'Buy 1 get 1 free CheeseBurger 🍔',
+    'Buy 1 get 1 free CheeseBurger 🍔kpokokokokokokokokokokokokokokokok',
     'Healthy Fresh Salad 🥗'
   ];
 
@@ -109,29 +109,33 @@ class _SearchAnimatedState extends State<SearchAnimated>
                         const SizedBox(width: 15.0, height: 100.0),
                         const Icon(Icons.search),
                         const SizedBox(width: 10.0, height: 100.0),
-                        DefaultTextStyle(
-                          style: TextStyle(
-                              fontSize: 14.0,
-                              color: Theme.of(context)
-                                  .textTheme
-                                  .titleMedium
-                                  ?.color),
-                          child: AnimatedBuilder(
-                            animation: _controller,
-                            builder: (context, child) {
-                              return SlideTransition(
-                                position: _slideAnimation,
-                                child: FadeTransition(
-                                  opacity: _combinedFadeAnimation,
-                                  child: Text(
-                                    texts[_currentIndex],
-                                    key: ValueKey<int>(_currentIndex),
+                        Expanded(
+                          child: DefaultTextStyle(
+                            maxLines: 1,
+                            overflow: TextOverflow.ellipsis,
+                            style: TextStyle(
+                                fontSize: 14.0,
+                                color: Theme.of(context)
+                                    .textTheme
+                                    .titleMedium
+                                    ?.color),
+                            child: AnimatedBuilder(
+                              animation: _controller,
+                              builder: (context, child) {
+                                return SlideTransition(
+                                  position: _slideAnimation,
+                                  child: FadeTransition(
+                                    opacity: _combinedFadeAnimation,
+                                    child: Text(
+                                      texts[_currentIndex],
+                                      key: ValueKey<int>(_currentIndex),
+                                    ),
                                   ),
-                                ),
-                              );
-                            },
+                                );
+                              },
+                            ),
                           ),
-                        ),
+                        ),const SizedBox(width: 10.0, height: 100.0),
                       ],
                     ),
                   )))),

@@ -6,15 +6,9 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 class FloatButtonNotifier extends StateNotifier<FloatButtonState> {
   FloatButtonNotifier(super.state);
 
-  void initPosition() {
-    final double physicalHeight = WidgetsBinding
-        .instance.platformDispatcher.views.first.physicalSize.height;
-    final double physicalWidth = WidgetsBinding
-        .instance.platformDispatcher.views.first.physicalSize.width;
-    final double devicePixelRatio =
-        WidgetsBinding.instance.platformDispatcher.views.first.devicePixelRatio;
-    final double height = (physicalHeight / devicePixelRatio) - 160.h;
-    final double width = (physicalWidth / devicePixelRatio) - 80.w;
+  void initPosition(double x, double y) {
+    final double height = y - 160.h;
+    final double width = x - 80.w;
     state = state.copyWith(dx: width, dy: height);
   }
 

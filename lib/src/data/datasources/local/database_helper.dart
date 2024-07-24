@@ -26,6 +26,7 @@ class DatabaseHelper {
 
   Future<Database> _initDatabase() async {
     String path = join(await getDatabasesPath(), 'food_database.db');
+    // deleteDatabase(path);
     return await openDatabase(
       path,
       version: 1,
@@ -84,6 +85,16 @@ class DatabaseHelper {
             quantity INTEGER,
             FOREIGN KEY (order_id) REFERENCES orders(id),
             FOREIGN KEY (food_id) REFERENCES foods(id)
+          )
+        ''');
+
+        await db.execute('''
+          CREATE TABLE notification (
+            id INTEGER PRIMARY KEY,
+            title TEXT,
+            period TEXT,
+            description TEXT,
+            image TEXT
           )
         ''');
       },

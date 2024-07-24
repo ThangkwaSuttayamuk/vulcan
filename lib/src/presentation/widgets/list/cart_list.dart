@@ -8,6 +8,7 @@ class CartList extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    final GlobalKey<AnimatedListState> _listKey = GlobalKey<AnimatedListState>();
     final cartList = ref.watch(cartProvider.select((value) => value.cartList));
 
     return Column(
@@ -23,3 +24,5 @@ class CartList extends ConsumerWidget {
     }));
   }
 }
+
+

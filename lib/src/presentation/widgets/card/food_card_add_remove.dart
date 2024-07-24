@@ -32,8 +32,9 @@ class _FoodCardAddRemoveState extends ConsumerState<FoodCardAddRemove> {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.only(left: 20, right: 20, bottom: 15),
+      padding: EdgeInsets.only(left: 20.w, right: 20.w, bottom: 15.h),
       child: Stack(
+        alignment: Alignment.centerRight,
         children: [
           Row(
             mainAxisAlignment: MainAxisAlignment.end,
@@ -44,14 +45,18 @@ class _FoodCardAddRemoveState extends ConsumerState<FoodCardAddRemove> {
                 child: InkWell(
                   borderRadius: BorderRadius.circular(20),
                   onTap: () {
+                    setState(() {
+                      offset = 0;
+                    });
+
                     ref
                         .read(cartProvider.notifier)
                         .deleteFormCart(widget.foodId);
                   },
-                  child: const Stack(alignment: Alignment.center, children: [
+                  child: Stack(alignment: Alignment.center, children: [
                     SizedBox(
-                      height: 120,
-                      width: 90,
+                      height: 120.h,
+                      width: 85.w,
                     ),
                     Icon(Icons.delete_rounded, color: Colors.white),
                   ]),
@@ -63,6 +68,11 @@ class _FoodCardAddRemoveState extends ConsumerState<FoodCardAddRemove> {
             onHorizontalDragUpdate: (details) {
               setState(() {
                 offset += details.delta.dx;
+                if (offset < -100) {
+                  offset = -100;
+                } else if (offset >= 0) {
+                  offset = 0;
+                }
                 if (offset < 0) {
                   isSwipingLeft = true;
                 } else {
@@ -107,8 +117,8 @@ class _FoodCardAddRemoveState extends ConsumerState<FoodCardAddRemove> {
                         Padding(
                           padding: const EdgeInsets.only(right: 20),
                           child: Container(
-                            height: 80,
-                            width: 80,
+                            height: 80.h,
+                            width: 80.w,
                             decoration: BoxDecoration(
                                 borderRadius: BorderRadius.circular(20),
                                 image: DecorationImage(
@@ -131,8 +141,8 @@ class _FoodCardAddRemoveState extends ConsumerState<FoodCardAddRemove> {
                                   ),
                                 ],
                               ),
-                              const SizedBox(
-                                height: 40,
+                              SizedBox(
+                                height: 40.h,
                               ),
                               Row(
                                 mainAxisAlignment:
@@ -174,7 +184,7 @@ class _FoodCardAddRemoveState extends ConsumerState<FoodCardAddRemove> {
                                         ),
                                       ),
                                       SizedBox(
-                                          width: 50,
+                                          width: 50.w,
                                           child: Text(
                                             widget.quantity.toString(),
                                             textAlign: TextAlign.center,

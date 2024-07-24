@@ -20,7 +20,7 @@ class _CartPageState extends ConsumerState<CartPage> {
   @override
   void initState() {
     WidgetsBinding.instance.addPostFrameCallback((_) {
-      ref.read(cartProvider.notifier).cartFoods();
+      // ref.read(cartProvider.notifier).cartFoods();
     });
     super.initState();
   }
@@ -28,6 +28,7 @@ class _CartPageState extends ConsumerState<CartPage> {
   @override
   Widget build(BuildContext context) {
     final cartStatus = ref.watch(cartProvider.select((value) => value.status));
+    final cartList = ref.watch(cartProvider.select((value) => value.cartList));
     final cartError = ref.watch(cartProvider.select((value) => value.error));
 
     return Stack(
@@ -37,7 +38,7 @@ class _CartPageState extends ConsumerState<CartPage> {
           appBar: AppBar(
             backgroundColor: Theme.of(context).colorScheme.secondary,
             title: Text(
-              '${AppLocalizations.of(context)?.cart_header ?? 'Cart'} (${ref.read(cartProvider.notifier).getTotalAmount()})',
+              '${AppLocalizations.of(context)?.cart_header ?? 'Cart'} (${cartList?.length})',
               style: TextStyle(
                 fontWeight: FontWeight.bold,
                 fontSize: 20.sp,
@@ -69,7 +70,7 @@ class _CartPageState extends ConsumerState<CartPage> {
                                     ),
                                     CartList(),
                                     SizedBox(
-                                      height: 100,
+                                      height: 130,
                                     )
                                   ],
                                 ),

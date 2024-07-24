@@ -19,6 +19,7 @@ class _FooterButtonState extends State<FooterButton> {
       'order': Icons.history,
       'home': Icons.home,
       'setting': Icons.settings,
+      'message': Icons.message
     };
 
     final String name = widget.name;
@@ -29,10 +30,7 @@ class _FooterButtonState extends State<FooterButton> {
       color: Theme.of(context).colorScheme.secondary,
       child: InkWell(
         onTap: () {
-          Navigator.pushNamed(
-                                context,
-                                '/$name');
-
+          Navigator.pushNamed(context, '/$name');
         },
         borderRadius: BorderRadius.circular(40),
         child: SizedBox(
@@ -44,18 +42,10 @@ class _FooterButtonState extends State<FooterButton> {
                 Icon(
                   selectedIcon ?? Icons.error, // default icon if not found
                 ),
-                Text(widget.title)
+                Text(widget.title, style: TextStyle(fontSize: 12))
               ],
             )),
       ),
     );
-  }
-
-  getPageByname(String name) {
-    return name == 'order'
-        ? const OrderPage()
-        : name == 'setting'
-            ? const SettingPage()
-            : const HomePage();
   }
 }

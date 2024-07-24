@@ -1,5 +1,6 @@
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_application_1/src/presentation/controller/cart/cart_provider.dart';
 import 'package:flutter_application_1/src/presentation/controller/user/user_provider.dart';
 import 'package:flutter_application_1/src/presentation/controller/user/user_state.dart';
 import 'package:flutter_application_1/src/presentation/pages/home_page.dart';
@@ -15,6 +16,8 @@ class LoadingPage extends ConsumerStatefulWidget {
 
 class _LoadingPageState extends ConsumerState<LoadingPage>
     with TickerProviderStateMixin {
+  bool _isDisposed = false;
+
   late AnimationController _controller;
   late Animation<Offset> _slideAnimation;
   late AnimationController _secondController;
@@ -32,6 +35,7 @@ class _LoadingPageState extends ConsumerState<LoadingPage>
     super.initState();
     WidgetsBinding.instance.addPostFrameCallback((_) {
       ref.read(userProvider.notifier).checkLogin();
+      // ref.read(cartProvider.notifier).cartFoods();
     });
     _controller = controller();
     _secondController = controller();
@@ -46,18 +50,22 @@ class _LoadingPageState extends ConsumerState<LoadingPage>
     _fifthSlideAnimation = tween(_fifthController, _controller);
 
     _controller.forward();
-
-
   }
 
   @override
   void dispose() {
-    _controller.dispose();
-    _secondController.dispose();
-    _thirdController.dispose();
-    _forthController.dispose();
-    _fifthController.dispose();
+    @override
+    void dispose() {
+      if (!_isDisposed) {
+        _controller.dispose();
+        _secondController.dispose();
+        _thirdController.dispose();
+        _forthController.dispose();
+        _fifthController.dispose();
+        _isDisposed = true;
+      }
 
+    }
     super.dispose();
   }
 
@@ -77,11 +85,29 @@ class _LoadingPageState extends ConsumerState<LoadingPage>
         child: user.loginStatus == UserStatus.login
             ? HomePage()
             : user.loginStatus == UserStatus.notLogin
-            ? LoginPage()
-            : buildLoadingContent(context),
+                ? LoginPage()
+                : buildLoadingContent(context),
       ),
     );
   }
+
+  // Widget homePage() {
+  //   _controller.dispose();
+  //   // _secondController.dispose();
+  //   //     // _thirdController.dispose();
+  //   //     // _forthController.dispose();
+  //   //     // _fifthController.dispose();
+  //   return HomePage();
+  // }
+
+  // Widget loginPage() {
+  //   _controller.dispose();
+  //   // _secondController.dispose();
+  //   // _thirdController.dispose();
+  //   // _forthController.dispose();
+  //   // _fifthController.dispose();
+  //   return LoginPage();
+  // }
 
   Widget buildLoadingContent(BuildContext context) {
     return Stack(
@@ -89,15 +115,16 @@ class _LoadingPageState extends ConsumerState<LoadingPage>
       children: [
         Center(
             child: Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                animatedBuilder(_controller, _slideAnimation, 'burger'),
-                animatedBuilder(_secondController, _secondSlideAnimation, 'pizza'),
-                animatedBuilder(_thirdController, _thirdSlideAnimation, 'bread'),
-                animatedBuilder(_forthController, _forthSlideAnimation, 'salad'),
-                animatedBuilder(_fifthController, _fifthSlideAnimation, 'fried_chicken'),
-              ],
-            )),
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            animatedBuilder(_controller, _slideAnimation, 'burger'),
+            animatedBuilder(_secondController, _secondSlideAnimation, 'pizza'),
+            animatedBuilder(_thirdController, _thirdSlideAnimation, 'bread'),
+            animatedBuilder(_forthController, _forthSlideAnimation, 'salad'),
+            animatedBuilder(
+                _fifthController, _fifthSlideAnimation, 'fried_chicken'),
+          ],
+        )),
         Padding(
           padding: const EdgeInsets.only(bottom: 40),
           child: Text(
@@ -123,19 +150,19 @@ class _LoadingPageState extends ConsumerState<LoadingPage>
       AnimationController secondController) {
     return Tween<Offset>(begin: const Offset(0, 0), end: const Offset(0, -1))
         .animate(CurvedAnimation(
-        reverseCurve: Curves.linear,
-        parent: firstController,
-        curve: Curves.linear)
-      ..addStatusListener((status) {
-        if (status == AnimationStatus.completed) {
-          firstController.reverse();
-          Future.delayed(const Duration(milliseconds: 200), () {
-            setState(() {
-              secondController.forward();
-            });
-          });
-        }
-      }));
+            reverseCurve: Curves.linear,
+            parent: firstController,
+            curve: Curves.linear)
+          ..addStatusListener((status) {
+            if (status == AnimationStatus.completed) {
+              firstController.reverse();
+              Future.delayed(const Duration(milliseconds: 200), () {
+                setState(() {
+                  secondController.forward();
+                });
+              });
+            }
+          }));
   }
 
   AnimatedBuilder animatedBuilder(AnimationController controller,

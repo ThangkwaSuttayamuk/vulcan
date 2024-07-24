@@ -1,6 +1,5 @@
-import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_application_1/src/data/firbase_api.dart';
+import 'package:flutter_application_1/src/presentation/controller/cart/cart_provider.dart';
 import 'package:flutter_application_1/src/presentation/controller/filter/filter_provider.dart';
 import 'package:flutter_application_1/src/presentation/controller/food/food_provider.dart';
 import 'package:flutter_application_1/src/presentation/controller/food/food_state.dart';
@@ -33,9 +32,9 @@ class _HomePageState extends ConsumerState<HomePage>
 
   @override
   void initState() {
-
     WidgetsBinding.instance.addPostFrameCallback((_) {
       ref.read(foodListProvider.notifier).fetchFoods();
+      ref.read(cartProvider.notifier).cartFoods();
     });
     super.initState();
   }
@@ -46,6 +45,7 @@ class _HomePageState extends ConsumerState<HomePage>
         ref.watch(foodListProvider.select((value) => value.status));
     final filterName =
         ref.watch(filterProvider.select((value) => value.filterName));
+    final cartList = ref.watch(cartProvider.select((value) => value.cartList));
 
     return Stack(
       alignment: Alignment.bottomCenter,
@@ -127,7 +127,8 @@ class _HomePageState extends ConsumerState<HomePage>
           ),
         ),
         const Footer(),
-        const DragableButton()],
+        // const DragableButton(),
+      ],
     );
   }
 }
