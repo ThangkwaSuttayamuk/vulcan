@@ -1,6 +1,8 @@
 # food ordering app 🍔😋📱
 during Blurbik Vulcan Training
-[![IMAGE ALT TEXT HERE](https://img.youtube.com/vi/Upd9p8Hsn7o)](https://www.youtube.com/watch?v=Upd9p8Hsn7o)
+
+https://github.com/user-attachments/assets/0744efbb-6a86-49fc-bb7a-517f1cb11b01
+
 Learning About
 - Clean Architecture
 - Sqflite (for using sqlite local database in flutter)
