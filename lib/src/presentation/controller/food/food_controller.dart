@@ -17,7 +17,7 @@ class FoodListNotifier extends StateNotifier<FoodListState> {
 
   Future<void> fetchFoods() async {
     state = state.copyWith(status: HomeStatus.loading);
-    await Future.delayed(const Duration(seconds: 1));
+    // await Future.delayed(const Duration(seconds: 1));
     try {
       List<FoodEntity> response = await getFoodsUsecase.call(NoParams());
       state = state.copyWith(
@@ -30,7 +30,7 @@ class FoodListNotifier extends StateNotifier<FoodListState> {
 
   void searchFoods(String query) async {
     state = state.copyWith(searchStatus: HomeStatus.loading);
-    await Future.delayed(const Duration(seconds: 1));
+    // await Future.delayed(const Duration(seconds: 1));
 
     try {
       if (query == '') {
@@ -58,7 +58,7 @@ class FoodListNotifier extends StateNotifier<FoodListState> {
 
   Future<void> filterFoodsByCategory(String category) async {
     state = state.copyWith(status: HomeStatus.loading);
-    await Future.delayed(const Duration(seconds: 1));
+    // await Future.delayed(const Duration(seconds: 1));
 
     try {
       final filteredFoods = state.foods

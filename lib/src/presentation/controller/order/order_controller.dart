@@ -21,7 +21,7 @@ class OrderNotifier extends StateNotifier<OrderState> {
 
   Future<void> orderlist() async {
     state = state.copyWith(status: OrderStatus.loading);
-    await Future.delayed(const Duration(seconds: 1));
+    // await Future.delayed(const Duration(seconds: 1));
 
     try {
       final orderList = await getOrderUsecase.call(NoParams());

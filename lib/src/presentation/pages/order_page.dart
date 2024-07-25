@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_application_1/src/presentation/controller/order/order_provider.dart';
 import 'package:flutter_application_1/src/presentation/controller/order/order_state.dart';
+import 'package:flutter_application_1/src/presentation/pages/home_page.dart';
 import 'package:flutter_application_1/src/presentation/pages/order_detail_page.dart';
 
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
@@ -45,7 +46,11 @@ class _OrderPageState extends ConsumerState<OrderPage> {
                   children: [
                     InkWell(
                         onTap: () {
-                          Navigator.pop(context);
+                          Navigator.push(
+                              context,
+                              MaterialPageRoute<void>(
+                                  builder: (BuildContext context) =>
+                                      HomePage()));
                         },
                         child: const Icon(
                           Icons.arrow_back_ios,

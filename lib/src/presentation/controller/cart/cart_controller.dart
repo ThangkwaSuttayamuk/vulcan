@@ -29,8 +29,6 @@ class CartNotifier extends StateNotifier<CartState> {
     state = state.copyWith(isLoading: true);
     try {
       final cartList = await getCartUsecase.call(NoParams());
-      print('====================');
-      print(cartList.length);
       state = state.copyWith(
           cartList: cartList,
           isLoading: false,
@@ -87,7 +85,6 @@ class CartNotifier extends StateNotifier<CartState> {
   }
 
   Future<void> updateQuantityCart(int id, int newQuantity) async {
-
     final params = UpdateCartQuantityUsecaseTypeParam(id, newQuantity);
     try {
       await updateCartQuantityUsecase.call(params);

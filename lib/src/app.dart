@@ -55,8 +55,6 @@ class _FoodAppState extends ConsumerState<FoodApp> {
           message.data['image']);
       print("Recieved Message: ${message.data['period']}");
     });
-
-
   }
 
   @override

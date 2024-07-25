@@ -165,8 +165,10 @@ class BottomSheetModal extends ConsumerWidget {
                                   ref.read(cartProvider.notifier).getAddress(),
                                   ref.read(cartProvider.notifier).getTel());
 
-                              Navigator.pushNamedAndRemoveUntil(context,
-                                  '/order', ModalRoute.withName('/home'));
+                              Navigator.pushNamedAndRemoveUntil(
+                                  context,
+                                  '/order',
+                                  ModalRoute.withName('/loading'));
                             }
                           }))
                 ]),
