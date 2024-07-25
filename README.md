@@ -22,6 +22,7 @@ To Login app please using
 - Username (user1 or user2)
 - Password (password)
 
+(If you want to clone this code after clone thit project don't forget to change the name of project form vulcan to flutter_application_1)
 
 
 
