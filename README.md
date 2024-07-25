@@ -16,6 +16,12 @@ Learning About
 - Navigator [link](https://medium.com/goodwin-corporation/flutter-ว่ากันด้วยเรื่อง-push-push-pop-pop-pop-pop-push-push-9960304447c3)
 - Platform Channel (for disable scene shot in credit card page)
 - Firebase Notification (recieve message form 3 stage Foreground, Background and Terminated State)
-- Flutter Scene Utils 
+- Flutter Scene Utils
+
+To Login app please using
+- Username (user1 or user2)
+- Password (password)
+
+
 
 
