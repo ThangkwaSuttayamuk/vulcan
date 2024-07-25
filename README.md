@@ -1,5 +1,6 @@
 # food ordering app 🍔😋📱
 during Blurbik Vulcan Training
+[![IMAGE ALT TEXT HERE](https://img.youtube.com/vi/Upd9p8Hsn7o)](https://www.youtube.com/watch?v=Upd9p8Hsn7o)
 Learning About
 - Clean Architecture
 - Sqflite (for using sqlite local database in flutter)
@@ -13,6 +14,6 @@ Learning About
 - Navigator [link](https://medium.com/goodwin-corporation/flutter-ว่ากันด้วยเรื่อง-push-push-pop-pop-pop-pop-push-push-9960304447c3)
 - Platform Channel (for disable scene shot in credit card page)
 - Firebase Notification (recieve message form 3 stage Foreground, Background and Terminated State)
-
+- Flutter Scene Utils 
 
 
