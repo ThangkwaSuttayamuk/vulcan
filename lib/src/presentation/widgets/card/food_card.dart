@@ -1,3 +1,4 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
@@ -49,7 +50,9 @@ class FoodCard extends StatelessWidget {
                         topRight: Radius.circular(10)),
                     image: DecorationImage(
                         fit: BoxFit.cover,
-                        image: AssetImage('assets/images/$image'))),
+                        image: AssetImage(
+                          'assets/images/$image',
+                        ))),
               ),
               Padding(
                 padding: const EdgeInsets.all(10),

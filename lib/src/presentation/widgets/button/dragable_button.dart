@@ -15,8 +15,10 @@ class DragableButton extends ConsumerStatefulWidget {
 
 class _DragableButtonState extends ConsumerState<DragableButton>
     with SingleTickerProviderStateMixin {
-  double x = 0;
-  double y = 0;
+
+  bool isFirst = false;
+  double x =0;
+  double y =0;
   String percentage = '30%';
   Timer? _timer;
   List<String> percentages = ['30%', '40%'];
@@ -25,17 +27,8 @@ class _DragableButtonState extends ConsumerState<DragableButton>
   double minHeight = 80.h;
   double minWidth = 10.h;
 
-  bool isFirst = true;
   @override
   void initState() {
-    // WidgetsBinding.instance.addPostFrameCallback((_) {
-    //   x = MediaQuery.of(context).size.width;
-    //   y = MediaQuery.of(context).size.height;
-    //   ref.read(floatButtonProvider.notifier).initPosition(x, y);
-    // });
-    // x = MediaQuery.of(context).size.width;
-    // y = MediaQuery.of(context).size.height;
-    // ref.read(floatButtonProvider.notifier).initPosition(x, y);
     _startTimer();
 
     super.initState();

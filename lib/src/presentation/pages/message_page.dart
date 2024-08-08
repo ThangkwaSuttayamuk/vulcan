@@ -1,7 +1,9 @@
+import 'package:firebase_remote_config/firebase_remote_config.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_application_1/src/presentation/controller/notification/notification_provider.dart';
 import 'package:flutter_application_1/src/presentation/controller/theme/theme_provider.dart';
+import 'package:flutter_application_1/src/presentation/widgets/list/banner_list.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_application_1/gen/assets.gen.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -18,13 +20,16 @@ class MessagePage extends ConsumerStatefulWidget {
 
 class _MessagePageState extends ConsumerState<MessagePage> {
   final assets = const $AssetsImagesGen();
+
   @override
   void initState() {
     WidgetsBinding.instance.addPostFrameCallback((_) {
       ref.read(notificationProvider.notifier).notificationList();
     });
+
     super.initState();
   }
+
 
   @override
   Widget build(BuildContext context) {
@@ -76,80 +81,92 @@ class _MessagePageState extends ConsumerState<MessagePage> {
           Expanded(
             child: SingleChildScrollView(
               child: Column(
-                  children: List.generate(notification?.length ?? 0, (i) {
-                final notificationItem = notification?[i];
+                children: [
+                  SizedBox(
+                    height: 10.h,
+                  ),
+                  BannerList(),
+                  SizedBox(
+                    height: 10.h,
+                  ),
+                  Column(
+                      children: List.generate(notification?.length ?? 0, (i) {
+                    final notificationItem = notification?[i];
 
-                return Material(
-                  child: InkWell(
-                    onTap: () {
-                      print(notificationItem?.id);
-                      Navigator.pushNamed(context, '/notification_detail',
-                          arguments: {
-                            "id": notificationItem?.id,
-                            "title": notificationItem?.title,
-                            "period": notificationItem?.period,
-                            "description": notificationItem?.description,
-                            "image": notificationItem?.image
-                          });
-                    },
-                    child: Column(
-                      children: [
-                        Padding(
-                          padding: EdgeInsets.symmetric(
-                              vertical: 8.h, horizontal: 20.w),
-                          child: Row(
-                            children: [
-                              Stack(
-                                alignment: Alignment.center,
+                    return Material(
+                      child: InkWell(
+                        onTap: () {
+                          print(notificationItem?.id);
+                          Navigator.pushNamed(context, '/notification_detail',
+                              arguments: {
+                                "id": notificationItem?.id,
+                                "title": notificationItem?.title,
+                                "period": notificationItem?.period,
+                                "description": notificationItem?.description,
+                                "image": notificationItem?.image
+                              });
+                        },
+                        child: Column(
+                          children: [
+                            Padding(
+                              padding: EdgeInsets.symmetric(
+                                  vertical: 8.h, horizontal: 20.w),
+                              child: Row(
                                 children: [
-                                  CircleAvatar(
-                                    backgroundColor: theme
-                                        ? Theme.of(context)
-                                            .colorScheme
-                                            .secondary
-                                        : Colors.blue.shade800,
-                                  ),
-                                  assets.iconBurger.image(
-                                    height: 30,
-                                    width: 30,
-                                  )
-                                ],
-                              ),
-                              SizedBox(
-                                width: 10.w,
-                              ),
-                              Expanded(
-                                child: Padding(
-                                  padding: const EdgeInsets.all(8.0),
-                                  child: Column(
-                                    mainAxisAlignment: MainAxisAlignment.start,
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.start,
+                                  Stack(
+                                    alignment: Alignment.center,
                                     children: [
-                                      Text("${notificationItem?.title}",
-                                          maxLines: 1,
-                                          overflow: TextOverflow.ellipsis),
-                                      Text(
-                                        '${notificationItem?.description}9999999999999999999999999',
-                                        maxLines: 1,
-                                        overflow: TextOverflow.ellipsis,
+                                      CircleAvatar(
+                                        backgroundColor: theme
+                                            ? Theme.of(context)
+                                                .colorScheme
+                                                .secondary
+                                            : Colors.blue.shade800,
+                                      ),
+                                      assets.iconBurger.image(
+                                        height: 30,
+                                        width: 30,
                                       )
                                     ],
                                   ),
-                                ),
+                                  SizedBox(
+                                    width: 10.w,
+                                  ),
+                                  Expanded(
+                                    child: Padding(
+                                      padding: const EdgeInsets.all(8.0),
+                                      child: Column(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.start,
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.start,
+                                        children: [
+                                          Text("${notificationItem?.title}",
+                                              maxLines: 1,
+                                              overflow: TextOverflow.ellipsis),
+                                          Text(
+                                            '${notificationItem?.description}9999999999999999999999999',
+                                            maxLines: 1,
+                                            overflow: TextOverflow.ellipsis,
+                                          )
+                                        ],
+                                      ),
+                                    ),
+                                  ),
+                                ],
                               ),
-                            ],
-                          ),
+                            ),
+                            Divider(
+                              color: Colors.grey.shade400,
+                              height: 0,
+                            ),
+                          ],
                         ),
-                        Divider(
-                          color: Colors.grey.shade400,
-                          height: 0,
-                        ),
-                      ],
-                    ),
-                  ),
-                );
-              })),
+                      ),
+                    );
+                  })),
+                ],
+              ),
             ),
           ),
         ],

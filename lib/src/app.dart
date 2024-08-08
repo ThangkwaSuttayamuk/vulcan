@@ -42,7 +42,6 @@ class _FoodAppState extends ConsumerState<FoodApp> {
   void initState() {
     super.initState();
 
-    // Get Firebase Token
     _firebaseMessaging.getToken().then((token) {
       print('Firebase Token: $token');
     });

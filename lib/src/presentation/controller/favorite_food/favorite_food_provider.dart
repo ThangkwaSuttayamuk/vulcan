@@ -8,6 +8,8 @@ import 'package:flutter_application_1/src/presentation/controller/favorite_food/
 import 'package:flutter_application_1/src/presentation/controller/favorite_food/favorite_food_state.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+import '../../../domain/usecases/is_favorite_usecase.dart';
+
 
 final favoriteFoodRepositoryProvider =
     Provider<FoodRepository>((ref) => FoodRepositoryImpl(sl()));
@@ -18,12 +20,15 @@ final getAllFavorite = Provider((ref)=>GetAllFavoritesUsecase(ref.read(favoriteF
 
 final removeFavorite = Provider((ref)=>RemoveFavoriteUsecase(ref.read(favoriteFoodRepositoryProvider)));
 
+final isFavorite = Provider((ref)=>IsFavoriteUsecase(ref.read(favoriteFoodRepositoryProvider)));
+
 final favoriteFoodProvider =
     StateNotifierProvider.autoDispose<FavoriteFoodNotifier, FavoriteFoodState>(
         (ref) {
   return FavoriteFoodNotifier(
     ref.read(addToFavorite),
     ref.read(getAllFavorite),
-    ref.read(removeFavorite)
+    ref.read(removeFavorite),
+    ref.read(isFavorite)
   );
 });

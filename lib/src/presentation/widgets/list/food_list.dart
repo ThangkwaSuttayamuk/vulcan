@@ -41,7 +41,7 @@ class FoodList extends ConsumerWidget {
                   description: foodItem?.description ?? '',
                   price: foodItem?.price ?? 0.0,
                   ingredients: foodItem?.ingredients ?? '',
-                  image: foodItem?.image ?? '',
+                  image: foodItem?.image ?? 'default.png',
                 ),
               ));
             },

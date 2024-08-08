@@ -5,13 +5,16 @@ import 'package:flutter_application_1/src/domain/usecases/remove_favorite_usecas
 import 'package:flutter_application_1/src/presentation/controller/favorite_food/favorite_food_state.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+import '../../../domain/usecases/is_favorite_usecase.dart';
+
 class FavoriteFoodNotifier extends StateNotifier<FavoriteFoodState> {
   final AddToFavoritesUsecase addToFavoritesUsecase;
   final GetAllFavoritesUsecase getAllFavoritesUsecase;
   final RemoveFavoriteUsecase removeFavoriteUsecase;
+  final IsFavoriteUsecase isFavoriteUsecase;
 
   FavoriteFoodNotifier(this.addToFavoritesUsecase, this.getAllFavoritesUsecase,
-      this.removeFavoriteUsecase)
+      this.removeFavoriteUsecase, this.isFavoriteUsecase)
       : super(FavoriteFoodState(favoriteFoods: []));
 
   Future<void> fetchFavoriteFoods() async {
@@ -56,5 +59,14 @@ class FavoriteFoodNotifier extends StateNotifier<FavoriteFoodState> {
     } catch (e) {
       state = state.copyWith(error: e.toString());
     }
+  }
+
+  Future<void> checkFavorite(int id) async {
+    final isFav = await isFavoriteUsecase(id);
+    state = state.copyWith(isFavorite: isFav);
+  }
+
+  Future<void> statusFavorite(bool status) async {
+    state = state.copyWith(isFavorite: !status);
   }
 }
